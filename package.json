@@ -1,0 +1,32 @@
+{
+  "name": "24turismo-next",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@sanity/client": "^7.11.2",
+    "@sanity/image-url": "^1.2.0",
+    "@sanity/vision": "^4.10.3",
+    "framer-motion": "^12.23.15",
+    "lucide-react": "^0.544.0",
+    "next": "15.5.4",
+    "next-sanity": "^10.1.4",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1",
+    "sanity": "^4.10.3",
+    "styled-components": "^6.1.19"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.21",
+    "eslint": "^8.57.0",
+    "eslint-config-next": "15.5.4",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^3.4.12",
+    "typescript": "5.9.3"
+  }
+}
