@@ -1,12 +1,14 @@
 import Header from '../../components/Header';
-import HeroEventos from '../../components/eventos/HeroEventos';
+import Hero from '../../components/Hero';
 import Metrics from '../../components/Metrics';
-import ServicesEventos from '../../components/eventos/ServicesEventos';
-import NextEventEventos from '../../components/eventos/NextEventEventos';
+import About from '../../components/About';
+import ClientsSection from '../../components/ClientsSection';
+import Services from '../../components/Services';
+import SelfBooking from '../../components/SelfBooking';
+import WhyChoose from '../../components/WhyChoose';
 import AboutCompany from '../../components/AboutCompany';
 import Testimonials from '../../components/Testimonials';
-import CTAEventos from '../../components/eventos/CTAEventos';
-import ContactEventos from '../../components/eventos/ContactEventos';
+import Contact from '../../components/Contact';
 import Footer from '../../components/Footer';
 
 export default function Eventos() {
@@ -14,14 +16,16 @@ export default function Eventos() {
     <div className="min-h-screen bg-white">
       <Header />
       <main>
-        <HeroEventos />
+        <Hero />
         <Metrics />
-        <ServicesEventos />
-        <NextEventEventos />
+        <About />
+        <ClientsSection />
+        <Services />
+        <SelfBooking />
+        <WhyChoose />
         <AboutCompany />
         <Testimonials />
-        <CTAEventos />
-        <ContactEventos />
+        <Contact />
       </main>
       <Footer />
     </div>
