@@ -1,8 +1,8 @@
-import Header from '@/components/Header';
-import HeroCBEnf from '@/components/cbenf/HeroCBEnf';
-import AboutCBEnf from '@/components/cbenf/AboutCBEnf';
-import ContactCBEnf from '@/components/cbenf/ContactCBEnf';
-import Footer from '@/components/Footer';
+import Header from '../../../components/Header';
+import HeroCBEnf from '../../../components/cbenf/HeroCBEnf';
+import AboutCBEnf from '../../../components/cbenf/AboutCBEnf';
+import ContactCBEnf from '../../../components/cbenf/ContactCBEnf';
+import Footer from '../../../components/Footer';
 
 export default function CBEnf() {
   return (

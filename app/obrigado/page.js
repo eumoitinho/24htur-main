@@ -1,6 +1,6 @@
-import Header from '@/components/Header';
-import ThankYouContent from '@/components/obrigado/ThankYouContent';
-import Footer from '@/components/Footer';
+import Header from '../../components/Header';
+import ThankYouContent from '../../components/obrigado/ThankYouContent';
+import Footer from '../../components/Footer';
 
 export default function Obrigado() {
   return (
