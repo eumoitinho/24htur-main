@@ -1,18 +1,29 @@
 import { useState, useEffect } from 'react';
 import { getDocuments } from '../lib/sanity';
-import { CompletePage, SimplePage, Homepage, EventosPage, LazerPage, ThankYouPage } from '../types/sanity';
+import {
+  CompletePage,
+  Homepage,
+  EventosPage,
+  LazerPage,
+  ThankYouPage,
+  SobrePage,
+  EquipePage,
+  EventosInfoPage,
+  OpcoesViagemPage,
+  TrabalheConoscoPage
+} from '../types/sanity';
 
 export const useCompletePage = (slug?: string) => {
-  const [pageData, setPageData] = useState<CompletePage | null>(null);
+  const [data, setData] = useState<CompletePage | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchPageData = async () => {
+    const fetchData = async () => {
       try {
         setLoading(true);
-        const data = await getDocuments('completePage', slug);
-        setPageData(data);
+        const result = await getDocuments('completePage', slug);
+        setData(result);
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Erro ao carregar página');
         console.error('Erro ao carregar página:', err);
@@ -21,98 +32,23 @@ export const useCompletePage = (slug?: string) => {
       }
     };
 
-    fetchPageData();
+    fetchData();
   }, [slug]);
 
-  return { pageData, loading, error };
-};
-
-export const useEventosPage = () => {
-  const [pageData, setPageData] = useState<EventosPage | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    const fetchPageData = async () => {
-      try {
-        setLoading(true);
-        const data = await getDocuments('eventosPage');
-        setPageData(data);
-      } catch (err) {
-        setError(err instanceof Error ? err.message : 'Erro ao carregar página de eventos');
-        console.error('Erro ao carregar página de eventos:', err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchPageData();
-  }, []);
-
-  return { pageData, loading, error };
-};
-
-export const useLazerPage = () => {
-  const [pageData, setPageData] = useState<LazerPage | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    const fetchPageData = async () => {
-      try {
-        setLoading(true);
-        const data = await getDocuments('lazerPage');
-        setPageData(data);
-      } catch (err) {
-        setError(err instanceof Error ? err.message : 'Erro ao carregar página de lazer');
-        console.error('Erro ao carregar página de lazer:', err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchPageData();
-  }, []);
-
-  return { pageData, loading, error };
-};
-
-export const useThankYouPage = () => {
-  const [pageData, setPageData] = useState<ThankYouPage | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    const fetchPageData = async () => {
-      try {
-        setLoading(true);
-        const data = await getDocuments('thankYouPage');
-        setPageData(data);
-      } catch (err) {
-        setError(err instanceof Error ? err.message : 'Erro ao carregar página de obrigado');
-        console.error('Erro ao carregar página de obrigado:', err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchPageData();
-  }, []);
-
-  return { pageData, loading, error };
+  return { data, loading, error };
 };
 
 export const useHomepage = () => {
-  const [pageData, setPageData] = useState<Homepage | null>(null);
+  const [data, setData] = useState<Homepage | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchPageData = async () => {
+    const fetchData = async () => {
       try {
         setLoading(true);
-        const data = await getDocuments('homepage');
-        setPageData(data);
+        const result = await getDocuments('homepage');
+        setData(result);
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Erro ao carregar página inicial');
         console.error('Erro ao carregar página inicial:', err);
@@ -121,23 +57,23 @@ export const useHomepage = () => {
       }
     };
 
-    fetchPageData();
+    fetchData();
   }, []);
 
-  return { pageData, loading, error };
+  return { data, loading, error };
 };
 
 export const useEventosPage = () => {
-  const [pageData, setPageData] = useState<EventosPage | null>(null);
+  const [data, setData] = useState<EventosPage | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchPageData = async () => {
+    const fetchData = async () => {
       try {
         setLoading(true);
-        const data = await getDocuments('eventosPage');
-        setPageData(data);
+        const result = await getDocuments('eventosPage');
+        setData(result);
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Erro ao carregar página de eventos');
         console.error('Erro ao carregar página de eventos:', err);
@@ -146,23 +82,23 @@ export const useEventosPage = () => {
       }
     };
 
-    fetchPageData();
+    fetchData();
   }, []);
 
-  return { pageData, loading, error };
+  return { data, loading, error };
 };
 
 export const useLazerPage = () => {
-  const [pageData, setPageData] = useState<LazerPage | null>(null);
+  const [data, setData] = useState<LazerPage | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchPageData = async () => {
+    const fetchData = async () => {
       try {
         setLoading(true);
-        const data = await getDocuments('lazerPage');
-        setPageData(data);
+        const result = await getDocuments('lazerPage');
+        setData(result);
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Erro ao carregar página de lazer');
         console.error('Erro ao carregar página de lazer:', err);
@@ -171,23 +107,23 @@ export const useLazerPage = () => {
       }
     };
 
-    fetchPageData();
+    fetchData();
   }, []);
 
-  return { pageData, loading, error };
+  return { data, loading, error };
 };
 
 export const useThankYouPage = () => {
-  const [pageData, setPageData] = useState<ThankYouPage | null>(null);
+  const [data, setData] = useState<ThankYouPage | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchPageData = async () => {
+    const fetchData = async () => {
       try {
         setLoading(true);
-        const data = await getDocuments('thankYouPage');
-        setPageData(data);
+        const result = await getDocuments('thankYouPage');
+        setData(result);
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Erro ao carregar página de obrigado');
         console.error('Erro ao carregar página de obrigado:', err);
@@ -196,208 +132,133 @@ export const useThankYouPage = () => {
       }
     };
 
-    fetchPageData();
+    fetchData();
   }, []);
 
-  return { pageData, loading, error };
+  return { data, loading, error };
 };
 
-export const useSimplePage = (slug?: string) => {
-  const [pageData, setPageData] = useState<SimplePage | null>(null);
+export const useSobrePage = () => {
+  const [data, setData] = useState<SobrePage | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchPageData = async () => {
+    const fetchData = async () => {
       try {
         setLoading(true);
-        const data = await getDocuments('simplePage', slug);
-        setPageData(data);
+        const result = await getDocuments('sobrePage');
+        setData(result);
       } catch (err) {
-        setError(err instanceof Error ? err.message : 'Erro ao carregar página');
-        console.error('Erro ao carregar página:', err);
+        setError(err instanceof Error ? err.message : 'Erro ao carregar página sobre');
+        console.error('Erro ao carregar página sobre:', err);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchPageData();
-  }, [slug]);
+    fetchData();
+  }, []);
 
-  return { pageData, loading, error };
+  return { data, loading, error };
 };
 
-export const useEventosPage = () => {
-  const [pageData, setPageData] = useState<EventosPage | null>(null);
+export const useEquipePage = () => {
+  const [data, setData] = useState<EquipePage | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchPageData = async () => {
+    const fetchData = async () => {
       try {
         setLoading(true);
-        const data = await getDocuments('eventosPage');
-        setPageData(data);
+        const result = await getDocuments('equipePage');
+        setData(result);
       } catch (err) {
-        setError(err instanceof Error ? err.message : 'Erro ao carregar página de eventos');
-        console.error('Erro ao carregar página de eventos:', err);
+        setError(err instanceof Error ? err.message : 'Erro ao carregar página equipe');
+        console.error('Erro ao carregar página equipe:', err);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchPageData();
+    fetchData();
   }, []);
 
-  return { pageData, loading, error };
+  return { data, loading, error };
 };
 
-export const useLazerPage = () => {
-  const [pageData, setPageData] = useState<LazerPage | null>(null);
+export const useEventosInfoPage = () => {
+  const [data, setData] = useState<EventosInfoPage | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchPageData = async () => {
+    const fetchData = async () => {
       try {
         setLoading(true);
-        const data = await getDocuments('lazerPage');
-        setPageData(data);
+        const result = await getDocuments('eventosInfoPage');
+        setData(result);
       } catch (err) {
-        setError(err instanceof Error ? err.message : 'Erro ao carregar página de lazer');
-        console.error('Erro ao carregar página de lazer:', err);
+        setError(err instanceof Error ? err.message : 'Erro ao carregar página eventos-info');
+        console.error('Erro ao carregar página eventos-info:', err);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchPageData();
+    fetchData();
   }, []);
 
-  return { pageData, loading, error };
+  return { data, loading, error };
 };
 
-export const useThankYouPage = () => {
-  const [pageData, setPageData] = useState<ThankYouPage | null>(null);
+export const useOpcoesViagemPage = () => {
+  const [data, setData] = useState<OpcoesViagemPage | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchPageData = async () => {
+    const fetchData = async () => {
       try {
         setLoading(true);
-        const data = await getDocuments('thankYouPage');
-        setPageData(data);
+        const result = await getDocuments('opcoesViagemPage');
+        setData(result);
       } catch (err) {
-        setError(err instanceof Error ? err.message : 'Erro ao carregar página de obrigado');
-        console.error('Erro ao carregar página de obrigado:', err);
+        setError(err instanceof Error ? err.message : 'Erro ao carregar página opções de viagem');
+        console.error('Erro ao carregar página opções de viagem:', err);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchPageData();
+    fetchData();
   }, []);
 
-  return { pageData, loading, error };
+  return { data, loading, error };
 };
 
-export const useHomepage = () => {
-  const [pageData, setPageData] = useState<Homepage | null>(null);
+export const useTrabalheConoscoPage = () => {
+  const [data, setData] = useState<TrabalheConoscoPage | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchPageData = async () => {
+    const fetchData = async () => {
       try {
         setLoading(true);
-        const data = await getDocuments('homepage');
-        setPageData(data);
+        const result = await getDocuments('trabalheConoscoPage');
+        setData(result);
       } catch (err) {
-        setError(err instanceof Error ? err.message : 'Erro ao carregar página inicial');
-        console.error('Erro ao carregar página inicial:', err);
+        setError(err instanceof Error ? err.message : 'Erro ao carregar página trabalhe conosco');
+        console.error('Erro ao carregar página trabalhe conosco:', err);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchPageData();
+    fetchData();
   }, []);
 
-  return { pageData, loading, error };
-};
-
-export const useEventosPage = () => {
-  const [pageData, setPageData] = useState<EventosPage | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    const fetchPageData = async () => {
-      try {
-        setLoading(true);
-        const data = await getDocuments('eventosPage');
-        setPageData(data);
-      } catch (err) {
-        setError(err instanceof Error ? err.message : 'Erro ao carregar página de eventos');
-        console.error('Erro ao carregar página de eventos:', err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchPageData();
-  }, []);
-
-  return { pageData, loading, error };
-};
-
-export const useLazerPage = () => {
-  const [pageData, setPageData] = useState<LazerPage | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    const fetchPageData = async () => {
-      try {
-        setLoading(true);
-        const data = await getDocuments('lazerPage');
-        setPageData(data);
-      } catch (err) {
-        setError(err instanceof Error ? err.message : 'Erro ao carregar página de lazer');
-        console.error('Erro ao carregar página de lazer:', err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchPageData();
-  }, []);
-
-  return { pageData, loading, error };
-};
-
-export const useThankYouPage = () => {
-  const [pageData, setPageData] = useState<ThankYouPage | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    const fetchPageData = async () => {
-      try {
-        setLoading(true);
-        const data = await getDocuments('thankYouPage');
-        setPageData(data);
-      } catch (err) {
-        setError(err instanceof Error ? err.message : 'Erro ao carregar página de obrigado');
-        console.error('Erro ao carregar página de obrigado:', err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchPageData();
-  }, []);
-
-  return { pageData, loading, error };
+  return { data, loading, error };
 };

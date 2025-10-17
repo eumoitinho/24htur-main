@@ -398,143 +398,175 @@ export interface ThankYouPage {
   };
 }
 
-export interface SimplePage {
+export interface SobrePage {
   _id: string;
-  _type: 'simplePage';
+  _type: 'sobrePage';
   title: string;
-  slug: {
-    current: string;
-  };
   isActive: boolean;
   seoTitle?: string;
   seoDescription?: string;
-  
+
   // Hero Section
   hero: {
-    backgroundImage?: SanityImage;
-    logo?: SanityImage;
-    badgeText: string;
-    title: any[];
+    title: string;
     subtitle: string;
-    ctaText: string;
-    ctaAction: string;
-    ctaLink?: string;
-    whatsappNumber?: string;
-    infoCards: {
-      _key: string;
-      icon: string;
-      title: string;
-      content: any[];
-    }[];
-    color: string;
   };
-  
+
   // About Section
   about: {
-    isActive: boolean;
-    badgeText: string;
-    title: any[];
-    subtitle: string;
-    mainTitle: string;
-    description: any[];
-    image?: SanityImage;
-    stats: {
-      _key: string;
-      value: string;
-      label: string;
-    }[];
-    schedule: {
-      _key: string;
-      icon: string;
-      title: string;
-      date: string;
-      description: string;
-      isHighlight?: boolean;
-    }[];
-    color: string;
+    title: string;
+    description: string;
+    mission: string;
+    vision: string;
   };
+
+  // Values Section
+  values: {
+    icon: any;
+    title: string;
+    description: string;
+  }[];
+}
+
+export interface EquipePage {
+  _id: string;
+  _type: 'equipePage';
+  title: string;
+  isActive: boolean;
+  seoTitle?: string;
+  seoDescription?: string;
+
+  // Hero Section
+  hero: {
+    title: string;
+    subtitle: string;
+  };
+
+  // Team Section
+  team: {
+    name: string;
+    position: string;
+    bio: string;
+    email?: string;
+    phone?: string;
+    linkedin?: string;
+    image?: string;
+  }[];
+
+  // Benefits Section
+  benefits: {
+    icon: any;
+    title: string;
+    description: string;
+  }[];
+}
+
+export interface EventosInfoPage {
+  _id: string;
+  _type: 'eventosInfoPage';
+  title: string;
+  isActive: boolean;
+  seoTitle?: string;
+  seoDescription?: string;
+
+  // Hero Section
+  hero: {
+    title: string;
+    subtitle: string;
+    ctaText: string;
+  };
+
+  // About Section
+  about: {
+    title: string;
+    description: string;
+  };
+
+  // Features Section
+  features: {
+    icon: any;
+    title: string;
+    description: string;
+  }[];
 
   // Services Section
   services: {
-    isActive: boolean;
-    title: string;
-    subtitle: string;
-    color: string;
-    cards: {
-      _key: string;
-      name: string;
-      price: string;
-      description: string;
-      highlight?: boolean;
-      image?: SanityImage;
-    }[];
-  };
-
-  // Extras Section
-  extras: {
-    isActive: boolean;
-    title: string;
-    subtitle: string;
-    color: string;
-    cards: {
-      _key: string;
-      name: string;
-      price: string;
-      description: string;
-      image?: SanityImage;
-    }[];
-  };
-
-  // Payment Section
-  payment: {
-    isActive: boolean;
+    icon: any;
     title: string;
     description: string;
-    color: string;
-    options: {
-      _key: string;
-      title: string;
-      description: string;
-      highlight?: boolean;
-    }[];
-  };
+  }[];
 
-  // Why Choose Section
-  whyChoose: {
-    isActive: boolean;
-    title: string;
-    color: string;
-    reasons: {
-      _key: string;
-      title: string;
-      description: string;
-    }[];
-  };
-
-  // Company Section
-  company: {
-    isActive: boolean;
-    title: string;
-    description: any[];
-    image?: SanityImage;
-    color: string;
-  };
-
-  // Contact Section
-  contact: {
-    isActive: boolean;
-    title: string;
-    subtitle: string;
-    buttonText: string;
-    color: string;
-  };
-
-  // Contact Form Section
-  contactForm: {
-    isActive: boolean;
+  // CTA Section
+  cta: {
     title: string;
     description: string;
-    submitButtonText: string;
-    successMessage: string;
   };
+}
+
+export interface OpcoesViagemPage {
+  _id: string;
+  _type: 'opcoesViagemPage';
+  title: string;
+  isActive: boolean;
+  seoTitle?: string;
+  seoDescription?: string;
+
+  // Hero Section
+  hero: {
+    title: string;
+    subtitle: string;
+  };
+
+  // Options Section
+  options: {
+    icon: any;
+    title: string;
+    description: string;
+    features: string[];
+  }[];
+
+  // Benefits Section
+  benefits: {
+    icon: any;
+    title: string;
+    description: string;
+  }[];
+
+  // CTA Section
+  cta: {
+    title: string;
+    description: string;
+  };
+}
+
+export interface TrabalheConoscoPage {
+  _id: string;
+  _type: 'trabalheConoscoPage';
+  title: string;
+  isActive: boolean;
+  seoTitle?: string;
+  seoDescription?: string;
+
+  // Hero Section
+  hero: {
+    title: string;
+    subtitle: string;
+    ctaText: string;
+  };
+
+  // Benefits Section
+  benefits: {
+    icon: any;
+    title: string;
+    description: string;
+  }[];
+
+  // Positions Section
+  positions: {
+    title: string;
+    location: string;
+    type: string;
+    department: string;
+    requirements: string[];
+  }[];
 }
