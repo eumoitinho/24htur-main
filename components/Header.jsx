@@ -17,13 +17,12 @@ const Header = () => {
       hasDropdown: true,
       dropdownItems: [
         { href: '/lazer', label: 'Viagens de Lazer' },
-        { href: '/eventos', label: 'Eventos Corporativos' },
+        { href: '/eventos', label: 'Viagens para Eventos' },
         { href: '/corporate', label: 'Viagens Corporativas' }
       ]
     },
     { href: '/sobre', label: 'Sobre' },
     { href: '/equipe', label: 'Equipe' },
-    { href: '/eventos-info', label: 'Eventos' },
     { href: '/opcoes-viagem', label: 'Opções de Viagem' },
     { href: '/trabalhe-conosco', label: 'Trabalhe Conosco' },
   ];
@@ -66,12 +65,15 @@ const Header = () => {
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -10 }}
                         transition={{ duration: 0.2 }}
+                        onMouseEnter={() => setServicesDropdownOpen(true)}
+                        onMouseLeave={() => setServicesDropdownOpen(false)}
                       >
                         {item.dropdownItems?.map((dropdownItem, dropdownIndex) => (
                           <a
                             key={dropdownItem.href}
                             href={dropdownItem.href}
-                            className="block px-4 py-3 text-sm text-brand-dark hover:bg-brand-beige hover:text-brand-gold transition-colors"
+                            className="block px-4 py-3 text-sm text-brand-dark hover:bg-brand-beige hover:text-brand-gold transition-colors cursor-pointer"
+                            onClick={() => setServicesDropdownOpen(false)}
                           >
                             {dropdownItem.label}
                           </a>

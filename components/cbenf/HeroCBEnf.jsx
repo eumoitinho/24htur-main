@@ -6,7 +6,7 @@ import { ArrowRight, Calendar, MapPin, Users } from 'lucide-react';
 
 const HeroCBEnf = () => {
   const handleCTAClick = () => {
-    const formSection = document.getElementById('contato');
+    const formSection = document.getElementById('formulario-contato');
     formSection?.scrollIntoView({ behavior: 'smooth' });
   };
 

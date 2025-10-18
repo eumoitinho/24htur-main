@@ -4,36 +4,63 @@ import { motion } from 'framer-motion';
 import { Heart, Shield, Star, Users } from 'lucide-react';
 import { useSobrePage } from '../../utils/hooks/useSanityData';
 
+const ICONS_MAP = {
+  Paixão: Heart,
+  Confiança: Shield,
+  Excelência: Star,
+  Relacionamento: Users,
+};
+
+const defaultValues = [
+  {
+    icon: Heart,
+    title: "Paixão",
+    description: "Amamos o que fazemos e isso se reflete em cada viagem que organizamos."
+  },
+  {
+    icon: Shield,
+    title: "Confiança",
+    description: "Transparência e honestidade em todas as nossas relações comerciais."
+  },
+  {
+    icon: Star,
+    title: "Excelência",
+    description: "Buscamos sempre superar expectativas e entregar o melhor serviço."
+  },
+  {
+    icon: Users,
+    title: "Relacionamento",
+    description: "Construímos parcerias duradouras baseadas no respeito mútuo."
+  }
+];
+
 const ValuesSobre = () => {
   const { data: sobreData, loading, error } = useSobrePage();
-
-  const defaultValues = [
-    {
-      icon: Heart,
-      title: "Paixão",
-      description: "Amamos o que fazemos e isso se reflete em cada viagem que organizamos."
-    },
-    {
-      icon: Shield,
-      title: "Confiança",
-      description: "Transparência e honestidade em todas as nossas relações comerciais."
-    },
-    {
-      icon: Star,
-      title: "Excelência",
-      description: "Buscamos sempre superar expectativas e entregar o melhor serviço."
-    },
-    {
-      icon: Users,
-      title: "Relacionamento",
-      description: "Construímos parcerias duradouras baseadas no respeito mútuo."
-    }
-  ];
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error loading content</div>;
 
-  const values = sobreData?.values || defaultValues;
+  let values = defaultValues;
+
+  // Defensive guard for values coming from CMS
+  if (
+    sobreData &&
+    Array.isArray(sobreData.values) &&
+    sobreData.values.length > 0
+  ) {
+    // Map CMS data into the renderable array, attaching icons if possible
+    values = sobreData.values.map((value, idx) => {
+      let title = value.title || '';
+      // Try to map to icon by title, fallback to Heart icon or one by index
+      const icon = ICONS_MAP[title] || defaultValues[idx]?.icon || Heart;
+      return {
+        ...value,
+        icon: icon,
+        title: value.title || defaultValues[idx]?.title || "",
+        description: value.description || defaultValues[idx]?.description || "",
+      };
+    });
+  }
 
   return (
     <section className="py-20 bg-brand-beige">
@@ -55,7 +82,7 @@ const ValuesSobre = () => {
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {values.map((value, index) => {
+          {Array.isArray(values) ? values.map((value, index) => {
             const IconComponent = value.icon || Heart;
             return (
               <motion.div
@@ -78,7 +105,7 @@ const ValuesSobre = () => {
                 </p>
               </motion.div>
             );
-          })}
+          }) : null}
         </div>
       </div>
     </section>

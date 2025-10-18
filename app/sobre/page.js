@@ -1,17 +1,27 @@
 import Header from '../../components/Header';
-import HeroSobre from '../../components/sobre/HeroSobre';
-import AboutSobre from '../../components/sobre/AboutSobre';
-import ValuesSobre from '../../components/sobre/ValuesSobre';
 import Footer from '../../components/Footer';
+import SobrePage from '../../components/sobre/SobrePage';
+import { client } from '../../utils/lib/sanity';
 
-export default function Sobre() {
+async function getSobreData() {
+  try {
+    const query = `*[_type == "sobrePage"][0]`;
+    const data = await client.fetch(query);
+    return data;
+  } catch (error) {
+    console.error('Erro ao buscar dados da página sobre:', error);
+    return null;
+  }
+}
+
+export default async function Sobre() {
+  const sobreData = await getSobreData();
+
   return (
     <div className="min-h-screen bg-white">
       <Header />
       <main>
-        <HeroSobre />
-        <AboutSobre />
-        <ValuesSobre />
+        <SobrePage data={sobreData} />
       </main>
       <Footer />
     </div>

@@ -2,136 +2,94 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { CheckCircle, Award, Users, Shield, Clock } from 'lucide-react';
+import { Clock, Handshake, Award, Users, Network, FileText, Star } from 'lucide-react';
 
 const WhyChooseCBEnf = () => {
-  const benefits = [
-    "Experiência de 15+ anos organizando viagens para eventos científicos",
-    "Parcerias exclusivas com hotéis próximos ao convention center",
-    "Tarifas especiais negociadas diretamente com companhias aéreas",
-    "Equipe especializada em turismo científico e de saúde",
-    "Suporte presencial durante todo o evento em Goiânia",
-    "Flexibilidade para personalizar seu pacote conforme necessidade"
-  ];
-
-  const stats = [
+  const diferenciais = [
     {
-      icon: Users,
-      number: "2.500+",
-      text: "Congressistas atendidos em eventos anteriores"
+      icon: <Clock className="w-10 h-10" />,
+      title: 'Disponibilidade 24/7',
+      description: 'Suporte técnico permanente com atendimento especializado da própria equipe.'
     },
     {
-      icon: Award,
-      number: "15+",
-      text: "Anos organizando viagens científicas"
+      icon: <Handshake className="w-10 h-10" />,
+      title: 'Negociação de tarifas',
+      description: 'Condições comerciais diferenciadas através de nossa rede de fornecedores.'
     },
     {
-      icon: Shield,
-      number: "100%",
-      text: "Satisfação garantida"
+      icon: <Award className="w-10 h-10" />,
+      title: 'Expertise técnica',
+      description: 'Equipe com formação superior e +20 anos de experiência no setor.'
     },
     {
-      icon: Clock,
-      number: "24/7",
-      text: "Suporte durante o evento"
+      icon: <Users className="w-10 h-10" />,
+      title: 'Gestão personalizada',
+      description: 'Atendimento dedicado com profissional especializado no seu perfil.'
+    },
+    {
+      icon: <Network className="w-10 h-10" />,
+      title: 'Rede consolidada',
+      description: 'Parcerias estratégicas com ampla rede de fornecedores nacionais e internacionais.'
+    },
+    {
+      icon: <FileText className="w-10 h-10" />,
+      title: 'Controle financeiro',
+      description: 'Sistema de relatórios gerenciais parametrizados por centros de custos.'
     }
   ];
 
   return (
-    <section className="py-16 sm:py-20 lg:py-24 bg-white">
-      <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-          {/* Left content */}
-          <div>
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              viewport={{ once: true }}
-            >
-              <div className="inline-flex items-center gap-2 rounded-full bg-brand-gold/10 px-4 py-2 ring-1 ring-brand-gold/20">
-                <div className="h-2 w-2 rounded-full bg-brand-gold"></div>
-                <span className="text-sm font-semibold text-brand-gold uppercase tracking-wide">Por que escolher a 24H</span>
-              </div>
+    <section className="py-20 bg-white relative overflow-hidden">
+      {/* Background decoration */}
+      <div className="absolute inset-0 opacity-5">
+        <div className="absolute top-0 left-0 w-96 h-96 bg-amber-500 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 right-0 w-96 h-96 bg-yellow-500 rounded-full blur-3xl" />
+      </div>
 
-              <h2 className="mt-6 text-3xl sm:text-4xl lg:text-5xl font-semibold tracking-tight text-slate-900 leading-tight">
-                Especialistas em <span className="text-brand-gold">turismo científico</span>
-              </h2>
+      <div className="container mx-auto px-8 lg:px-16 relative">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+          className="text-center mb-12"
+        >
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+            Por que escolher a{' '}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#D38E17] to-[#F59E0B]">
+              24H
+            </span>?
+          </h2>
+        </motion.div>
 
-              <p className="mt-6 text-lg text-slate-600 leading-relaxed">
-                Somos referência na organização de viagens para eventos científicos e congressos médicos. Nossa experiência garante que você chegue descansado, hospedado no melhor local e pronto para aproveitar cada momento do CBEnf 2024.
-              </p>
-            </motion.div>
-
-            {/* Benefits list */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              viewport={{ once: true }}
-              className="mt-8 space-y-4"
-            >
-              {benefits.map((benefit, index) => (
-                <div key={index} className="flex items-start gap-3">
-                  <CheckCircle className="h-5 w-5 text-brand-gold mt-0.5 flex-shrink-0" strokeWidth={2} />
-                  <span className="text-slate-700 leading-relaxed">{benefit}</span>
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+          className="relative overflow-hidden bg-white/10 backdrop-blur-md border border-white/20 rounded-3xl p-10 mb-16 shadow-xl"
+        >
+          <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent pointer-events-none"></div>
+          <div className="relative z-10 grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {diferenciais.map((item, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                viewport={{ once: true }}
+                className="text-center group"
+              >
+                <div className="text-[#D38E17] mb-6 group-hover:scale-110 transition-transform duration-300">
+                  {item.icon}
                 </div>
-              ))}
-            </motion.div>
+                <h3 className="text-xl font-bold text-gray-900 mb-3">{item.title}</h3>
+                <p className="text-gray-600 leading-relaxed">{item.description}</p>
+              </motion.div>
+            ))}
           </div>
+        </motion.div>
 
-          {/* Right stats */}
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            viewport={{ once: true }}
-            className="relative"
-          >
-            <div className="grid grid-cols-2 gap-6">
-              {stats.map((stat, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                  viewport={{ once: true }}
-                  className="text-center p-6 rounded-2xl bg-gradient-to-br from-slate-50 to-white ring-1 ring-slate-100 hover:ring-slate-200 transition-all duration-300 hover:shadow-lg"
-                >
-                  <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-brand-gold/10 ring-1 ring-brand-gold/20">
-                    <stat.icon className="h-8 w-8 text-brand-gold" strokeWidth={1.5} />
-                  </div>
-                  <div className="text-3xl font-bold text-slate-900 mb-1">{stat.number}</div>
-                  <div className="text-sm text-slate-600 leading-tight">{stat.text}</div>
-                </motion.div>
-              ))}
-            </div>
-
-            {/* Testimonial card */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-              viewport={{ once: true }}
-              className="mt-8 rounded-2xl bg-gradient-to-r from-brand-gold/10 via-brand-gold/5 to-transparent p-6 ring-1 ring-brand-gold/20"
-            >
-              <div className="flex items-center gap-1 mb-3">
-                {[...Array(5)].map((_, i) => (
-                  <div key={i} className="h-4 w-4 text-brand-gold">
-                    ⭐
-                  </div>
-                ))}
-              </div>
-              <p className="text-slate-700 italic mb-3 leading-relaxed">
-                &ldquo;A 24H organizou nossa viagem para o último congresso de cardiologia. Tudo perfeito! Desde o translado até a localização do hotel. Recomendo para qualquer evento científico.&rdquo;
-              </p>
-              <div className="text-sm">
-                <div className="font-semibold text-slate-900">Dra. Marina Silva</div>
-                <div className="text-slate-600">Enfermeira Coordenadora - Hospital das Clínicas</div>
-              </div>
-            </motion.div>
-          </motion.div>
-        </div>
       </div>
     </section>
   );

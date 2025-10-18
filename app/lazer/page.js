@@ -1,29 +1,27 @@
-import Header from '../../components/Header';
-import HeroLazer from '../../components/lazer/HeroLazer';
-import Metrics from '../../components/Metrics';
-import ServicesLazer from '../../components/lazer/ServicesLazer';
-import DestinationsLazer from '../../components/lazer/DestinationsLazer';
-import BenefitsLazer from '../../components/lazer/BenefitsLazer';
-import AboutCompany from '../../components/AboutCompany';
-import Testimonials from '../../components/Testimonials';
-import CTALazer from '../../components/lazer/CTALazer';
-import ContactLazer from '../../components/lazer/ContactLazer';
+import LandingPageHeader from '../../components/LandingPageHeader';
 import Footer from '../../components/Footer';
+import LazerPage from '../../components/lazer/LazerPage';
+import { client } from '../../utils/lib/sanity';
 
-export default function Lazer() {
+async function getLazerData() {
+  try {
+    const query = `*[_type == "lazerPage"][0]`;
+    const data = await client.fetch(query);
+    return data;
+  } catch (error) {
+    console.error('Erro ao buscar dados da página de lazer:', error);
+    return null;
+  }
+}
+
+export default async function Lazer() {
+  const lazerData = await getLazerData();
+
   return (
     <div className="min-h-screen bg-white">
-      <Header />
+      <LandingPageHeader pageType="lazer" />
       <main>
-        <HeroLazer />
-        <Metrics />
-        <ServicesLazer />
-        <DestinationsLazer />
-        <BenefitsLazer />
-        <AboutCompany />
-        <Testimonials />
-        <CTALazer />
-        <ContactLazer />
+        <LazerPage data={lazerData} />
       </main>
       <Footer />
     </div>

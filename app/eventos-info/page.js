@@ -1,19 +1,27 @@
 import Header from '../../components/Header';
-import HeroEventosInfo from '../../components/eventos-info/HeroEventosInfo';
-import AboutEventosInfo from '../../components/eventos-info/AboutEventosInfo';
-import ServicesEventosInfo from '../../components/eventos-info/ServicesEventosInfo';
-import CTAEventosInfo from '../../components/eventos-info/CTAEventosInfo';
 import Footer from '../../components/Footer';
+import EventosInfoPage from '../../components/eventos-info/EventosInfoPage';
+import { client } from '../../utils/lib/sanity';
 
-export default function EventosInfo() {
+async function getEventosInfoData() {
+  try {
+    const query = `*[_type == "eventosInfoPage"][0]`;
+    const data = await client.fetch(query);
+    return data;
+  } catch (error) {
+    console.error('Erro ao buscar dados da página eventos info:', error);
+    return null;
+  }
+}
+
+export default async function EventosInfo() {
+  const eventosInfoData = await getEventosInfoData();
+
   return (
     <div className="min-h-screen bg-white">
       <Header />
       <main>
-        <HeroEventosInfo />
-        <AboutEventosInfo />
-        <ServicesEventosInfo />
-        <CTAEventosInfo />
+        <EventosInfoPage data={eventosInfoData} />
       </main>
       <Footer />
     </div>

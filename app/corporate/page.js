@@ -1,4 +1,5 @@
-import Header from '../../components/Header';
+import LandingPageHeader from '../../components/LandingPageHeader';
+import Footer from '../../components/Footer';
 import Hero from '../../components/Hero';
 import Metrics from '../../components/Metrics';
 import About from '../../components/About';
@@ -9,13 +10,12 @@ import WhyChoose from '../../components/WhyChoose';
 import AboutCompany from '../../components/AboutCompany';
 import Testimonials from '../../components/Testimonials';
 import Contact from '../../components/Contact';
-import Footer from '../../components/Footer';
 import WhatsAppButton from '../../components/WhatsAppButton';
 
 export default function Corporate() {
   return (
     <div className="min-h-screen bg-white">
-      <Header />
+      <LandingPageHeader pageType="corporate" />
       <main>
         <Hero />
         <Metrics />

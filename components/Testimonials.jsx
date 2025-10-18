@@ -221,7 +221,7 @@ const Testimonials = () => {
             </blockquote>
             <div className="flex items-center gap-4">
               <div className="h-12 w-12 rounded-full bg-gradient-to-br from-brand-gold to-brand-red flex items-center justify-center shadow-lg">
-                <span className="text-white font-semibold text-lg">{testimonials[0].name.charAt(0)}</span>
+                <span className="text-white font-semibold text-lg">{testimonials[0]?.name?.charAt(0) || 'C'}</span>
               </div>
               <div>
                 <div className="font-semibold text-brand-dark group-hover:text-brand-red transition-colors">{testimonials[0].name}</div>
@@ -252,7 +252,7 @@ const Testimonials = () => {
             </blockquote>
             <div className="flex items-center gap-4">
               <div className="h-12 w-12 rounded-full bg-gradient-to-br from-brand-gold to-brand-red flex items-center justify-center shadow-lg">
-                <span className="text-white font-semibold text-lg">{testimonials[1].name.charAt(0)}</span>
+                <span className="text-white font-semibold text-lg">{testimonials[1]?.name?.charAt(0) || 'C'}</span>
               </div>
               <div>
                 <div className="font-semibold text-brand-dark group-hover:text-brand-red transition-colors">{testimonials[1].name}</div>

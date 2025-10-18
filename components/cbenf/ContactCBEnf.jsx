@@ -77,7 +77,7 @@ const ContactCBEnf = () => {
   }, []);
 
   return (
-    <section id="contato" className="relative py-24 sm:py-28 bg-gradient-to-b from-brand-dark via-brand-dark to-black overflow-hidden">
+    <section id="formulario-contato" className="relative py-24 sm:py-28 bg-gradient-to-b from-brand-dark via-brand-dark to-black overflow-hidden">
       {/* Ambient gradients */}
       <div className="pointer-events-none absolute inset-0 opacity-70 [mask-image:radial-gradient(circle_at_center,black,transparent_75%)] bg-[radial-gradient(circle_at_30%_25%,rgba(245,197,24,0.12),transparent_55%),radial-gradient(circle_at_75%_75%,rgba(220,38,38,0.12),transparent_55%)]" />
 

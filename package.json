@@ -6,7 +6,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "sanity:clean": "node scripts/setup-sanity-clean.js",
+    "sanity:populate-cbenf": "node scripts/populate-cbenf.js",
+    "sanity:studio": "sanity dev --port 3333"
   },
   "dependencies": {
     "@sanity/client": "^7.11.2",
