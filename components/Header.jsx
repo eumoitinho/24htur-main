@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Menu, ArrowRight, Phone, ChevronDown } from 'lucide-react';
 import { motion } from 'framer-motion';
 import Logo from './Logo';
@@ -8,6 +8,30 @@ import Logo from './Logo';
 const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [servicesDropdownOpen, setServicesDropdownOpen] = useState(false);
+  const [dropdownTimeout, setDropdownTimeout] = useState(null);
+
+  const handleMouseEnter = () => {
+    if (dropdownTimeout) {
+      clearTimeout(dropdownTimeout);
+      setDropdownTimeout(null);
+    }
+    setServicesDropdownOpen(true);
+  };
+
+  const handleMouseLeave = () => {
+    const timeout = setTimeout(() => {
+      setServicesDropdownOpen(false);
+    }, 150);
+    setDropdownTimeout(timeout);
+  };
+
+  useEffect(() => {
+    return () => {
+      if (dropdownTimeout) {
+        clearTimeout(dropdownTimeout);
+      }
+    };
+  }, [dropdownTimeout]);
 
   const menuItems = [
     { href: '/', label: 'Início' },
@@ -45,8 +69,8 @@ const Header = () => {
                 {item.hasDropdown ? (
                   <div
                     className="relative"
-                    onMouseEnter={() => setServicesDropdownOpen(true)}
-                    onMouseLeave={() => setServicesDropdownOpen(false)}
+                    onMouseEnter={handleMouseEnter}
+                    onMouseLeave={handleMouseLeave}
                   >
                     <motion.button
                       className="flex items-center space-x-1 text-[13px] font-semibold uppercase tracking-[0.08em] text-brand-dark hover:text-brand-gold transition-colors py-2"
@@ -66,12 +90,15 @@ const Header = () => {
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -10 }}
                         transition={{ duration: 0.2 }}
+                        onMouseEnter={handleMouseEnter}
+                        onMouseLeave={handleMouseLeave}
                       >
                         {item.dropdownItems?.map((dropdownItem, dropdownIndex) => (
                           <a
                             key={dropdownItem.href}
                             href={dropdownItem.href}
-                            className="block px-4 py-3 text-sm text-brand-dark hover:bg-brand-beige hover:text-brand-gold transition-colors"
+                            className="block px-4 py-3 text-sm text-brand-dark hover:bg-brand-beige hover:text-brand-gold transition-colors cursor-pointer"
+                            onClick={() => setServicesDropdownOpen(false)}
                           >
                             {dropdownItem.label}
                           </a>
