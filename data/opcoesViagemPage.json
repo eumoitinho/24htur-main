@@ -1,0 +1,37 @@
+{
+  "_id": "opcoesViagemPage-1",
+  "_type": "opcoesViagemPage",
+  "title": "OPÇÕES DE VIAGEM",
+  "subtitle": "Descubra o mundo com a 24H Escritório de Viagens",
+  "intro": "Explore nossas categorias e encontre a aventura perfeita para você:",
+  "travelOptions": [
+    {
+      "name": "24H ÚNICO",
+      "description": "Para clientes que buscam o extraordinário, o programa 24H Único cria roteiros de viagem sob medida, com experiências verdadeiramente exclusivas. Mergulhe em roteiros personalizados, onde cada detalhe é pensado para superar suas expectativas e proporcionar momentos de luxo, privacidade e exclusividade."
+    },
+    {
+      "name": "VIVA 24H",
+      "description": "Desconecte-se da rotina e reconecte-se com o essencial. O Viva 24H é ideal para quem busca escapadinhas revigorantes, finais de semana inesquecíveis ou a flexibilidade de um home office outdoor. Privilegiamos pequenas hospedagens regionais, charmosas e acolhedoras, que oferecem uma imersão autêntica na cultura local e na beleza natural."
+    },
+    {
+      "name": "VIAGENS DE INCENTIVO",
+      "description": "Nossas Viagens de Incentivo são programas de recompensa corporativos, desenhados para motivar e engajar colaboradores, equipes ou parceiros de negócios. Criamos grupos sob medida, alinhados ao budget da sua empresa e aos objetivos da premiação, garantindo que a experiência de viagem seja um poderoso estímulo para o alcance de metas e a fidelização."
+    },
+    {
+      "name": "VIAGENS CORPORATIVAS",
+      "description": "Para o mundo corporativo, oferecemos soluções completas que garantem a eficiência e a produtividade de cada deslocamento. Seja para produtos individuais – como passagens aéreas, reservas de hotéis, locação de carros ou transporte rodoviário – ou para pacotes de serviços integrados, nosso foco é proporcionar o melhor atendimento para sua viagem de negócios."
+    },
+    {
+      "name": "VIAJEIRAS",
+      "description": "Explore o mundo com a liberdade e a segurança de um grupo feminino. As Viajeiras são viagens criadas para mulheres que buscam experiências personalizadas, em pequenos grupos, com roteiros que refletem seus interesses e paixões."
+    },
+    {
+      "name": "VIAGENS DE LAZER",
+      "description": "Seja para roteiros personalizados, criados exclusivamente para você, ou para produtos de prateleira, como circuitos de viagens e roteiros econômicos, somos especialistas em moldar as oportunidades existentes aos seus desejos, expectativas e possibilidades."
+    },
+    {
+      "name": "VIAGENS SEGMENTADAS",
+      "description": "Nossas Viagens Segmentadas são criadas conforme a preferência do grupo de viajantes, unindo interesses específicos – como práticas esportivas, gastronomia, cultura ou aventura. Montamos pacotes que incluem visitas culturais, experiências gastronômicas e atividades que enriquecem sua jornada, tornando-a verdadeiramente única."
+    }
+  ]
+}

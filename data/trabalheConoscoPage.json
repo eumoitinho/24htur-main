@@ -1,0 +1,41 @@
+{
+  "_id": "trabalheConoscoPage-1",
+  "_type": "trabalheConoscoPage",
+  "title": "TRABALHE CONOSCO",
+  "subtitle": "Conecte-se com a 24H Escritório de Viagens",
+  "intro": "Se você busca uma oportunidade de fazer parte de uma equipe experiente e dedicada, que transforma sonhos em realidade e oferece soluções inovadoras no mercado de turismo, você encontrou o lugar certo.\n\nSe você é apaixonado (a) por desafios, tem experiência no setor de turismo e deseja crescer profissionalmente em um ambiente dinâmico e colaborativo, queremos te conhecer!\n\nPreencha o formulário abaixo e anexe seu currículo. Sua próxima jornada profissional pode começar aqui.",
+  "contact": {
+    "title": "CONTATO",
+    "companyName": "24H Escritório de Viagens",
+    "addresses": [
+      {
+        "address": "Avenida Carlos Gomes 1672, 7º andar",
+        "city": "Porto Alegre, RS"
+      },
+      {
+        "address": "Alameda Rio Negro 503, 6º andar",
+        "city": "Alphaville, SP"
+      },
+      {
+        "address": "Avenida Luiz Boiteaux Piazza, 1302",
+        "city": "Florianópolis, SC"
+      }
+    ],
+    "phone": "(51) 3516-0098",
+    "email": "contato@24h.tur.br",
+    "socialMedia": [
+      {
+        "platform": "instagram",
+        "url": "https://www.instagram.com/24hescritoriodeviagens"
+      },
+      {
+        "platform": "facebook",
+        "url": "http://www.facebook.com/24HEscritoriodeViagens"
+      },
+      {
+        "platform": "linkedin",
+        "url": "https://www.linkedin.com/company/24hescritoriodeviagens"
+      }
+    ]
+  }
+}

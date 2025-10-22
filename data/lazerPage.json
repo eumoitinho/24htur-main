@@ -1,0 +1,253 @@
+{
+  "_id": "lazerPage-1",
+  "_type": "lazerPage",
+  "hero": {
+    "title": "Sua próxima aventura inesquecível começa aqui!",
+    "subtitle": "Deixe a 24H Escritório de Viagens transformar seus sonhos em realidade, com roteiros personalizados e experiências que ficarão para sempre na sua memória.",
+    "ctaText": "FALE AGORA COM UM ESPECIALISTA!"
+  },
+  "metrics": [
+    {
+      "value": "+20 anos de experiência no mercado"
+    },
+    {
+      "value": "24/7 suporte operacional"
+    },
+    {
+      "value": "100% gestão personalizada"
+    },
+    {
+      "value": "+1000 operações executadas com sucesso"
+    }
+  ],
+  "arguments": {
+    "title": "Mais segurança para sua viagem dos sonhos",
+    "items": [
+      {
+        "question": "Roteiros genéricos?",
+        "answer": "Criamos roteiros personalizados que se encaixam no seu perfil e refletem seus interesses, ritmo e estilo."
+      },
+      {
+        "question": "Preocupação com o orçamento?",
+        "answer": "Planejamos sua viagem para caber dentro do seu orçamento, buscando as melhores tarifas e prevenindo gastos inesperados."
+      },
+      {
+        "question": "Excesso de opções?",
+        "answer": "Facilitamos sua decisão, filtrando o excesso de informações e encontrando o que combina com seu perfil."
+      },
+      {
+        "question": "Falta de tempo para planejar?",
+        "answer": "Cuidamos de todo o planejamento para que você só precise se preocupar em fazer as malas."
+      },
+      {
+        "question": "Medo de imprevistos?",
+        "answer": "Nosso suporte acompanha você durante toda a viagem, solucionando problemas e garantindo que tudo saia como planejado."
+      },
+      {
+        "question": "Burocracia e documentação?",
+        "answer": "Vistos, seguros, vacinas… Orientamos e cuidamos de cada detalhe para que sua documentação esteja em dia."
+      }
+    ]
+  },
+  "experiences": {
+    "title": "Especialistas em proporcionar experiências memoráveis…",
+    "description": "Cada viagem é uma oportunidade única de criar memórias e explorar novos horizontes. A 24H Escritório de Viagens oferece um serviço de agenciamento completo para sua viagem de lazer, cuidando de cada detalhe para que você desfrute ao máximo de seus momentos de descanso e diversão.\n\nCom uma equipe de profissionais com mais de 20 anos de expertise e uma rede extensa de fornecedores, operamos serviços personalizados no Brasil ou no exterior. Nossa missão é proporcionar uma experiência de viagem perfeita, sem preocupações, desde o momento em que você sonha com o destino até o momento em que retorna para casa com o coração cheio de boas lembranças.",
+    "ctaText": "FALE AGORA COM UM ESPECIALISTA!"
+  },
+  "travelTypes": {
+    "title": "Seu roteiro do seu jeito",
+    "types": [
+      {
+        "name": "Viagens de aventura",
+        "icon": "adventure"
+      },
+      {
+        "name": "Viagens românticas",
+        "icon": "romantic"
+      },
+      {
+        "name": "Viagens gastronômica",
+        "icon": "food"
+      },
+      {
+        "name": "Viagens culturais",
+        "icon": "culture"
+      },
+      {
+        "name": "Viagens para eventos",
+        "icon": "events"
+      },
+      {
+        "name": "Viagens de compras",
+        "icon": "shopping"
+      },
+      {
+        "name": "Viagens de verão",
+        "icon": "summer"
+      },
+      {
+        "name": "Viagens de inverno",
+        "icon": "winter"
+      }
+    ]
+  },
+  "services": {
+    "title": "Serviços completos para sua viagem de lazer",
+    "ctaText": "PERSONALIZE DO SEU JEITO!",
+    "items": [
+      {
+        "service": "Bilhetes aéreos",
+        "description": "Negociação de tarifas diferenciadas e busca pelas melhores opções para seu destino de sonho."
+      },
+      {
+        "service": "Hospedagem",
+        "description": "Auxílio especializado na escolha de hotéis, resorts ou pousadas que melhor se adequam ao seu estilo e orçamento."
+      },
+      {
+        "service": "Câmbio",
+        "description": "Facilidade para suas transações financeiras internacionais."
+      },
+      {
+        "service": "Cartão de débito e chip internacional",
+        "description": "Soluções financeiras e de conectividade para suas viagens ao exterior."
+      },
+      {
+        "service": "Sala VIP",
+        "description": "Conforto e exclusividade em aeroportos."
+      },
+      {
+        "service": "Encaminhamento de visto",
+        "description": "Agilidade nos processos burocráticos para que nada impeça sua viagem."
+      },
+      {
+        "service": "Locação de veículos",
+        "description": "Opções variadas para sua mobilidade no destino."
+      },
+      {
+        "service": "Traslados privativos",
+        "description": "Planejamento e execução de serviços de traslado Aeroporto/Hotel/Aeroporto."
+      },
+      {
+        "service": "Transporte rodoviário",
+        "description": "Soluções para deslocamentos terrestres intermunicipais e interestaduais."
+      },
+      {
+        "service": "Ingressos",
+        "description": "Acesso facilitado a eventos, shows, parques e atrações turísticas."
+      },
+      {
+        "service": "Cruzeiros marítimos e fluviais",
+        "description": "Opções diferenciadas para uma experiência de viagem única."
+      },
+      {
+        "service": "Tickets de trem",
+        "description": "Mobilidade eficiente e paisagens deslumbrantes em diversas regiões."
+      },
+      {
+        "service": "Guias e tradutores",
+        "description": "Suporte linguístico e cultural para enriquecer sua experiência."
+      },
+      {
+        "service": "Opções de passeios",
+        "description": "Sugestões e organização de roteiros personalizados, de acordo com seus interesses."
+      },
+      {
+        "service": "Wine experiences",
+        "description": "Roteiros exclusivos para amantes de vinho, explorando as melhores vinícolas."
+      }
+    ]
+  },
+  "whyChoose": {
+    "title": "Por que escolher a 24H?",
+    "items": [
+      {
+        "title": "Disponibilidade 24H",
+        "description": "Suporte técnico permanente com atendimento especializado da própria equipe."
+      },
+      {
+        "title": "Negociação de tarifas",
+        "description": "Condições comerciais diferenciadas através de nossa rede de fornecedores."
+      },
+      {
+        "title": "Expertise técnica",
+        "description": "Equipe com formação superior e +20 anos de experiência no setor."
+      },
+      {
+        "title": "Gestão personalizada",
+        "description": "Atendimento dedicado com profissional especializado no seu perfil."
+      },
+      {
+        "title": "Rede consolidada",
+        "description": "Parcerias estratégicas com ampla rede de fornecedores nacionais e internacionais."
+      },
+      {
+        "title": "Controle financeiro",
+        "description": "Sistema de relatórios gerenciais parametrizados por centros de custos."
+      }
+    ]
+  },
+  "aboutCompany": {
+    "title": "SOBRE A 24H",
+    "subtitle": "Mais de duas décadas especializados em gestão de viagens",
+    "description": "A 24H Escritório de Viagens é uma agência especializada em viagens corporativas, de lazer, turismo de incentivo e eventos. Com mais de 20 anos de experiência no mercado, nossa equipe atua com excelência na gestão de viagens nacionais e internacionais, oferecendo soluções completas e personalizadas para empresas, famílias e clientes individuais.\n\nCuidamos de todas as etapas da viagem, desde a cotação até a emissão de passagens, reservas de hotéis, traslados, câmbio, seguros, vistos, locação de veículos, roteiros turísticos e ingressos. Trabalhamos com uma ampla rede de fornecedores e parceiros nos setores aéreo, hoteleiro e de turismo, garantindo agilidade, economia e segurança em cada atendimento.\n\nNosso compromisso é oferecer uma experiência de viagem tranquila, eficiente e sem imprevistos, com suporte disponível 24 horas por dia, 7 dias por semana.",
+    "ctaText": "FALE AGORA COM UM ESPECIALISTA!"
+  },
+  "testimonials": {
+    "title": "DEPOIMENTOS",
+    "subtitle": "O que nossos clientes dizem sobre nós",
+    "items": [
+      {
+        "text": "Escritório sempre atento às necessidades dos clientes, e muito proativo nas resoluções de toda e qualquer situação.",
+        "author": "Christian Bittencourt",
+        "rating": 5
+      },
+      {
+        "text": "Já fiz várias viagens com a 24H. Sempre excelentes no atendimento, realizaram nossos sonhos de viagens e passeios com conforto e tranquilidade.",
+        "author": "Renato Saffi",
+        "rating": 5
+      },
+      {
+        "text": "Os pacotes foram de excelente custo-benefício. Ficamos em ótimos hotéis e os passeios propostos foram excelentes pedidas.",
+        "author": "Gabriela Vaz",
+        "rating": 5
+      }
+    ]
+  },
+  "contactForm": {
+    "title": "Deixe a 24H cuidar de tudo",
+    "subtitle": "Preencha o formulário abaixo e nossa equipe de especialistas em lazer entrará em contato para criar um roteiro personalizado e inesquecível para você."
+  },
+  "footer": {
+    "companyName": "24H Escritório de Viagens",
+    "addresses": [
+      {
+        "address": "Avenida Carlos Gomes 1672, 7º andar",
+        "city": "Porto Alegre, RS"
+      },
+      {
+        "address": "Alameda Rio Negro 503, 6º andar",
+        "city": "Alphaville, SP"
+      },
+      {
+        "address": "Avenida Luiz Boiteaux Piazza, 1302",
+        "city": "Florianópolis, SC"
+      }
+    ],
+    "phone": "(51) 3516-0098",
+    "email": "contato@24h.tur.br",
+    "socialMedia": [
+      {
+        "platform": "instagram",
+        "url": "https://www.instagram.com/24hescritoriodeviagens"
+      },
+      {
+        "platform": "facebook",
+        "url": "http://www.facebook.com/24HEscritoriodeViagens"
+      },
+      {
+        "platform": "linkedin",
+        "url": "https://www.linkedin.com/company/24hescritoriodeviagens"
+      }
+    ]
+  }
+}
