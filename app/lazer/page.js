@@ -1,13 +1,15 @@
 import Header from '../../components/Header';
-import HeroLazer from '../../components/lazer/HeroLazer';
-import Metrics from '../../components/Metrics';
-import ServicesLazer from '../../components/lazer/ServicesLazer';
-import DestinationsLazer from '../../components/lazer/DestinationsLazer';
-import BenefitsLazer from '../../components/lazer/BenefitsLazer';
-import AboutCompany from '../../components/AboutCompany';
-import Testimonials from '../../components/Testimonials';
-import CTALazer from '../../components/lazer/CTALazer';
-import ContactLazer from '../../components/lazer/ContactLazer';
+import HeroHome from '../../components/homepage/HeroHome';
+import MetricsHome from '../../components/homepage/MetricsHome';
+import ProblemsSection from '../../components/homepage/ProblemsSection';
+import Experience24H from '../../components/homepage/Experience24H';
+import ClientsHome from '../../components/homepage/ClientsHome';
+import ServicesHome from '../../components/homepage/ServicesHome';
+import WhyChooseHome from '../../components/homepage/WhyChooseHome';
+import AboutHome from '../../components/homepage/AboutHome';
+import TeamSection from '../../components/homepage/TeamSection';
+import TestimonialsHome from '../../components/homepage/TestimonialsHome';
+import ContactHome from '../../components/homepage/ContactHome';
 import Footer from '../../components/Footer';
 
 export default function Lazer() {
@@ -15,15 +17,17 @@ export default function Lazer() {
     <div className="min-h-screen bg-white">
       <Header />
       <main>
-        <HeroLazer />
-        <Metrics />
-        <ServicesLazer />
-        <DestinationsLazer />
-        <BenefitsLazer />
-        <AboutCompany />
-        <Testimonials />
-        <CTALazer />
-        <ContactLazer />
+        <HeroHome />
+        <MetricsHome />
+        <ProblemsSection />
+        <Experience24H />
+        <ClientsHome />
+        <ServicesHome />
+        <WhyChooseHome />
+        <AboutHome />
+        <TeamSection />
+        <TestimonialsHome />
+        <ContactHome />
       </main>
       <Footer />
     </div>
