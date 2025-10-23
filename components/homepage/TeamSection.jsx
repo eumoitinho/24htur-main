@@ -4,9 +4,13 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import Link from 'next/link';
+import { useHomepage } from '../../utils/hooks/useSanityData';
 
 const TeamSection = () => {
-  const team = [
+  const { data: homepageData, loading, error } = useHomepage();
+  
+  // Fallback para dados estáticos caso não carregue do Sanity
+  const teamData = homepageData?.team || [
     {
       name: 'Betinna Pavim',
       role: 'CEO|COO',
@@ -31,7 +35,7 @@ const TeamSection = () => {
         </div>
 
         <div className="grid gap-8 lg:grid-cols-2 mb-12">
-          {team.map((member, index) => (
+          {teamData.map((member, index) => (
             <motion.div
               key={index}
               initial={{ opacity: 0, y: 30 }}
