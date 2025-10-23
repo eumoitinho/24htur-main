@@ -1,7 +1,7 @@
 'use client'
 
 /**
- * This configuration is used to for the Sanity Studio that’s mounted on the `/app/studio/[[...tool]]/page.tsx` route
+ * This configuration is used to for the Sanity Studio that's mounted on the `/app/studio/[[...tool]]/page.tsx` route
  */
 
 import {visionTool} from '@sanity/vision'
@@ -25,4 +25,15 @@ export default defineConfig({
     // https://www.sanity.io/docs/the-vision-plugin
     visionTool({defaultApiVersion: apiVersion}),
   ],
+  // Configurações para resolver problemas de CORS
+  api: {
+    projectId,
+    dataset,
+    apiVersion,
+    // Configurações de CORS para permitir requisições do domínio de produção
+    cors: {
+      origin: ['https://www.24h.tur.br', 'https://24h.tur.br', 'http://localhost:3000'],
+      credentials: true,
+    },
+  },
 })
