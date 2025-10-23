@@ -47,7 +47,6 @@ const Header = () => {
     },
     { href: '/sobre', label: 'Sobre' },
     { href: '/equipe', label: 'Equipe' },
-    { href: '/eventos-info', label: 'Eventos' },
     { href: '/opcoes-viagem', label: 'Opções de Viagem' },
     { href: '/trabalhe-conosco', label: 'Trabalhe Conosco' },
   ];
