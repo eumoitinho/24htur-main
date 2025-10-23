@@ -13,6 +13,52 @@ import {
   TrabalheConoscoPage
 } from '../types/sanity';
 
+// Função utilitária para criar hooks com fallback para dados estáticos
+const createPageHook = <T>(
+  type: string,
+  staticDataPath: string,
+  errorMessage: string
+) => {
+  return () => {
+    const [data, setData] = useState<T | null>(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
+
+    useEffect(() => {
+      const fetchData = async () => {
+        try {
+          setLoading(true);
+          setError(null);
+          const result = await getDocuments(type);
+          setData(result);
+        } catch (err) {
+          const errorMsg = err instanceof Error ? err.message : errorMessage;
+          setError(errorMsg);
+          console.error(`Erro ao carregar ${type}:`, err);
+          
+          // Tenta carregar dados estáticos como último recurso
+          try {
+            const staticData = await import(staticDataPath);
+            if (staticData.default || staticData) {
+              console.log(`Usando dados estáticos para ${type}`);
+              setData(staticData.default || staticData);
+              setError(null); // Limpa o erro se conseguiu carregar dados estáticos
+            }
+          } catch (staticError) {
+            console.error(`Erro ao carregar dados estáticos para ${type}:`, staticError);
+          }
+        } finally {
+          setLoading(false);
+        }
+      };
+
+      fetchData();
+    }, []);
+
+    return { data, loading, error };
+  };
+};
+
 export const useCompletePage = (slug?: string) => {
   const [data, setData] = useState<CompletePage | null>(null);
   const [loading, setLoading] = useState(true);
@@ -138,55 +184,17 @@ export const useThankYouPage = () => {
   return { data, loading, error };
 };
 
-export const useSobrePage = () => {
-  const [data, setData] = useState<SobrePage | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+export const useSobrePage = createPageHook<SobrePage>(
+  'sobrePage',
+  '../../data/sobrePage.json',
+  'Erro ao carregar página sobre'
+);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-        const result = await getDocuments('sobrePage');
-        setData(result);
-      } catch (err) {
-        setError(err instanceof Error ? err.message : 'Erro ao carregar página sobre');
-        console.error('Erro ao carregar página sobre:', err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, []);
-
-  return { data, loading, error };
-};
-
-export const useEquipePage = () => {
-  const [data, setData] = useState<EquipePage | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-        const result = await getDocuments('equipePage');
-        setData(result);
-      } catch (err) {
-        setError(err instanceof Error ? err.message : 'Erro ao carregar página equipe');
-        console.error('Erro ao carregar página equipe:', err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, []);
-
-  return { data, loading, error };
-};
+export const useEquipePage = createPageHook<EquipePage>(
+  'equipePage',
+  '../../data/equipePage.json',
+  'Erro ao carregar página equipe'
+);
 
 export const useEventosInfoPage = () => {
   const [data, setData] = useState<EventosInfoPage | null>(null);
@@ -197,10 +205,12 @@ export const useEventosInfoPage = () => {
     const fetchData = async () => {
       try {
         setLoading(true);
+        setError(null);
         const result = await getDocuments('eventosInfoPage');
         setData(result);
       } catch (err) {
-        setError(err instanceof Error ? err.message : 'Erro ao carregar página eventos-info');
+        const errorMessage = err instanceof Error ? err.message : 'Erro ao carregar página eventos-info';
+        setError(errorMessage);
         console.error('Erro ao carregar página eventos-info:', err);
       } finally {
         setLoading(false);
@@ -213,52 +223,26 @@ export const useEventosInfoPage = () => {
   return { data, loading, error };
 };
 
-export const useOpcoesViagemPage = () => {
-  const [data, setData] = useState<OpcoesViagemPage | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+export const useEventosPage = createPageHook<EventosPage>(
+  'eventosPage',
+  '../../data/eventosPage.json',
+  'Erro ao carregar página de eventos'
+);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-        const result = await getDocuments('opcoesViagemPage');
-        setData(result);
-      } catch (err) {
-        setError(err instanceof Error ? err.message : 'Erro ao carregar página opções de viagem');
-        console.error('Erro ao carregar página opções de viagem:', err);
-      } finally {
-        setLoading(false);
-      }
-    };
+export const useLazerPage = createPageHook<LazerPage>(
+  'lazerPage',
+  '../../data/lazerPage.json',
+  'Erro ao carregar página de lazer'
+);
 
-    fetchData();
-  }, []);
+export const useOpcoesViagemPage = createPageHook<OpcoesViagemPage>(
+  'opcoesViagemPage',
+  '../../data/opcoesViagemPage.json',
+  'Erro ao carregar página opções de viagem'
+);
 
-  return { data, loading, error };
-};
-
-export const useTrabalheConoscoPage = () => {
-  const [data, setData] = useState<TrabalheConoscoPage | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-        const result = await getDocuments('trabalheConoscoPage');
-        setData(result);
-      } catch (err) {
-        setError(err instanceof Error ? err.message : 'Erro ao carregar página trabalhe conosco');
-        console.error('Erro ao carregar página trabalhe conosco:', err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, []);
-
-  return { data, loading, error };
-};
+export const useTrabalheConoscoPage = createPageHook<TrabalheConoscoPage>(
+  'trabalheConoscoPage',
+  '../../data/trabalheConoscoPage.json',
+  'Erro ao carregar página trabalhe conosco'
+);
