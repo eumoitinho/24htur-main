@@ -4,8 +4,9 @@ const client = createClient({
   projectId: 'kyx4ncqy',
   dataset: 'production',
   useCdn: false,
-  token: process.env.SANITY_API_TOKEN || ''
+  token: 'skh0fXGfGbFzV6JobCH6RB35eblxm2wbRbpgeMMgLG3flirT713Z4GnA54R5Qv6ZO7iqSeHU9vj4pfhg2W4KSdGm806ucyK73SP5WtUsreffIvMH6R4gXTMsKlX5OmYFtvmIPpnh7mTV2TXkxJsZUieAGwiSJnFuV250Gddol5FN9iXa2Qnq'
 });
+
 
 async function populateSanity() {
   console.log('🚀 Iniciando população do Sanity...');
