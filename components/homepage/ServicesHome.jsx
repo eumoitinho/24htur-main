@@ -4,9 +4,13 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight, Briefcase, Plane, Calendar } from 'lucide-react';
 import Link from 'next/link';
+import { useHomepage } from '../../utils/hooks/useSanityData';
 
 const ServicesHome = () => {
-  const services = [
+  const { data: homepageData, loading, error } = useHomepage();
+  
+  // Fallback para dados estáticos caso não carregue do Sanity
+  const servicesData = homepageData?.services || [
     {
       icon: Briefcase,
       title: 'Viagens corporativas',
@@ -40,7 +44,7 @@ const ServicesHome = () => {
         </div>
 
         <div className="grid gap-8 lg:grid-cols-3">
-          {services.map((service, index) => {
+          {servicesData.map((service, index) => {
             const Icon = service.icon;
             return (
               <motion.div

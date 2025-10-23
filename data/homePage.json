@@ -1,0 +1,160 @@
+{
+  "_id": "homePage-1",
+  "_type": "homePage",
+  "hero": {
+    "title": "Gestão completa de viagens de negócios e lazer",
+    "subtitle": "Soluções estratégicas com atendimento 24/7 e mais de 20 anos de experiência no mercado",
+    "ctaText": "FALE COM UM ESPECIALISTA!"
+  },
+  "metrics": [
+    {
+      "value": "20+",
+      "label": "Anos de experiência"
+    },
+    {
+      "value": "500+",
+      "label": "Empresas atendidas"
+    },
+    {
+      "value": "24/7",
+      "label": "Suporte disponível"
+    },
+    {
+      "value": "100%",
+      "label": "Satisfação garantida"
+    }
+  ],
+  "problems": [
+    {
+      "title": "Gestão de viagens complexa",
+      "description": "Dificuldade para coordenar múltiplas viagens, fornecedores e políticas corporativas."
+    },
+    {
+      "title": "Falta de visibilidade",
+      "description": "Ausência de relatórios detalhados e controle de custos em tempo real."
+    },
+    {
+      "title": "Suporte limitado",
+      "description": "Atendimento restrito a horário comercial, sem suporte em emergências."
+    }
+  ],
+  "experience": {
+    "title": "A EXPERIÊNCIA 24H",
+    "subtitle": "Mais de 20 anos transformando viagens em experiências únicas",
+    "description": "Nossa trajetória é marcada pela excelência no atendimento e pela capacidade de antecipar as necessidades dos nossos clientes. Combinamos tecnologia avançada com o toque humano que faz toda a diferença.",
+    "features": [
+      {
+        "title": "Atendimento Personalizado",
+        "description": "Cada cliente recebe atenção dedicada e soluções sob medida."
+      },
+      {
+        "title": "Tecnologia Avançada",
+        "description": "Plataformas modernas para gestão eficiente de viagens."
+      },
+      {
+        "title": "Rede de Parceiros",
+        "description": "Acesso privilegiado aos melhores fornecedores do mercado."
+      }
+    ]
+  },
+  "clients": [
+    {
+      "name": "Empresa A",
+      "logo": "/client-1.png"
+    },
+    {
+      "name": "Empresa B", 
+      "logo": "/client-2.png"
+    },
+    {
+      "name": "Empresa C",
+      "logo": "/client-3.png"
+    }
+  ],
+  "services": [
+    {
+      "title": "Viagens corporativas",
+      "description": "Otimize sua gestão de viagens empresariais com nossa gestão de passagens, hospedagens, traslados executivos e relatórios detalhados por centro de custos. Atendemos desde viagens individuais até grandes grupos e programas de incentivo, garantindo economia, agilidade e total conformidade com as políticas da sua empresa.",
+      "link": "/corporate",
+      "ctaText": "SAIBA MAIS!"
+    },
+    {
+      "title": "Viagens de lazer",
+      "description": "Transforme suas férias em experiências únicas com nosso planejamento especializado. Cuidamos de passagens, hospedagens, câmbio, roteiros turísticos e até passeios exclusivos. Nossa equipe resolve todos os detalhes operacionais para que você se preocupe apenas em aproveitar cada momento da sua viagem.",
+      "link": "/lazer",
+      "ctaText": "SAIBA MAIS!"
+    },
+    {
+      "title": "Viagens para eventos",
+      "description": "Cuidamos de toda a logística de viagens para feiras, congressos, convenções e encontros corporativos, atendendo empresas, palestrantes e participantes. Fornecemos assessoria personalizada e gerimos passagens aéreas e rodoviárias, reservas, transfers e passeios pré e pós-evento.",
+      "link": "/eventos",
+      "ctaText": "SAIBA MAIS!"
+    }
+  ],
+  "whyChoose": {
+    "title": "POR QUE ESCOLHER A 24H?",
+    "subtitle": "Vantagens que fazem a diferença na sua experiência de viagem",
+    "benefits": [
+      {
+        "title": "Suporte 24/7",
+        "description": "Atendimento disponível a qualquer hora, em qualquer lugar do mundo."
+      },
+      {
+        "title": "Economia Garantida",
+        "description": "Negociações exclusivas que resultam em preços mais competitivos."
+      },
+      {
+        "title": "Experiência Comprovada",
+        "description": "Mais de duas décadas no mercado com milhares de clientes satisfeitos."
+      },
+      {
+        "title": "Tecnologia Avançada",
+        "description": "Plataformas modernas para gestão eficiente e transparente."
+      }
+    ]
+  },
+  "about": {
+    "title": "SOBRE A 24H",
+    "subtitle": "Transformando viagens em experiências memoráveis desde 2003",
+    "description": "A 24H Escritório de Viagens nasceu da paixão por conectar pessoas e culturas através de viagens inesquecíveis. Com mais de 20 anos de experiência, nos tornamos referência em gestão de viagens corporativas e de lazer, sempre priorizando a excelência no atendimento e a satisfação total dos nossos clientes."
+  },
+  "team": [
+    {
+      "name": "Betinna Pavim",
+      "role": "CEO|COO",
+      "education": "Bacharel em Turismo com ênfase em Hotelaria",
+      "experience": "20 anos de experiência com agenciamento de viagens"
+    },
+    {
+      "name": "Liciane Rossetto",
+      "role": "CEO|CFO", 
+      "education": "Doutora em Turismo",
+      "experience": "30 anos de experiência no setor turístico"
+    }
+  ],
+  "testimonials": [
+    {
+      "name": "Maria Silva",
+      "company": "Empresa ABC",
+      "text": "Excelente atendimento! A 24H sempre supera nossas expectativas.",
+      "rating": 5
+    },
+    {
+      "name": "João Santos",
+      "company": "Corporação XYZ",
+      "text": "Profissionais competentes e muito atenciosos. Recomendo!",
+      "rating": 5
+    },
+    {
+      "name": "Ana Costa",
+      "company": "Grupo DEF",
+      "text": "Suporte 24/7 que realmente funciona. Parceria de confiança.",
+      "rating": 5
+    }
+  ],
+  "contact": {
+    "title": "PRONTO PARA TRANSFORMAR SUAS VIAGENS?",
+    "subtitle": "Entre em contato conosco e descubra como podemos ajudar sua empresa",
+    "ctaText": "FALE COM UM ESPECIALISTA!"
+  }
+}

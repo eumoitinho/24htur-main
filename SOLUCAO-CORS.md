@@ -12,6 +12,12 @@ Após resolver o CORS, apareceu erro de rede:
 Failed to load resource: net::ERR_FAILED
 ```
 
+## Problema Terciário
+Após implementar o fallback, apareceu erro de JavaScript:
+```
+Uncaught TypeError: u.map is not a function
+```
+
 ## Soluções Implementadas
 
 ### 1. Configuração do Cliente Sanity (`utils/lib/sanity.ts`)
@@ -20,6 +26,7 @@ Failed to load resource: net::ERR_FAILED
 - Desabilitado `stega` para evitar problemas de renderização
 - **NOVO**: Implementado sistema de fallback para dados estáticos
 - **NOVO**: Função `loadStaticData()` que carrega dados JSON locais quando Sanity falha
+- **NOVO**: Função `normalizeStaticData()` que normaliza estruturas de dados estáticos para compatibilidade com Sanity
 
 ### 2. Configuração do Sanity Studio (`sanity.config.ts`)
 - Adicionadas configurações de CORS no objeto `api`
@@ -41,8 +48,19 @@ Failed to load resource: net::ERR_FAILED
 
 1. **Primeira tentativa**: Busca dados do Sanity
 2. **Se Sanity falhar**: Automaticamente carrega dados estáticos do arquivo JSON local
-3. **Se dados estáticos também falharem**: Exibe erro para o usuário
-4. **Logs detalhados**: Console mostra qual fonte de dados está sendo usada
+3. **Normalização**: Dados estáticos são normalizados para ter a mesma estrutura dos dados do Sanity
+4. **Se dados estáticos também falharem**: Exibe erro para o usuário
+5. **Logs detalhados**: Console mostra qual fonte de dados está sendo usada
+
+## Normalização de Dados Estáticos
+
+A função `normalizeStaticData()` resolve incompatibilidades de estrutura entre dados do Sanity e dados estáticos:
+
+- **sobrePage**: Converte `values.items` em `values` (array direto)
+- **eventosPage**: Converte `services.items` em `services` (array direto)
+- **lazerPage**: Converte `services.items` em `services` (array direto)
+- **opcoesViagemPage**: Converte `options.items` em `options` (array direto)
+- **trabalheConoscoPage**: Converte `positions.items` em `positions` (array direto)
 
 ## Arquivos de Dados Estáticos Disponíveis
 - `data/sobrePage.json`

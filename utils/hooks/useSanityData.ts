@@ -84,30 +84,11 @@ export const useCompletePage = (slug?: string) => {
   return { data, loading, error };
 };
 
-export const useHomepage = () => {
-  const [data, setData] = useState<Homepage | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-        const result = await getDocuments('homepage');
-        setData(result);
-      } catch (err) {
-        setError(err instanceof Error ? err.message : 'Erro ao carregar página inicial');
-        console.error('Erro ao carregar página inicial:', err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, []);
-
-  return { data, loading, error };
-};
+export const useHomepage = createPageHook<Homepage>(
+  'homepage',
+  '../../data/homePage.json',
+  'Erro ao carregar página inicial'
+);
 
 export const useThankYouPage = () => {
   const [data, setData] = useState<ThankYouPage | null>(null);
