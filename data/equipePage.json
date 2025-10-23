@@ -3,7 +3,62 @@
   "_type": "equipePage",
   "hero": {
     "title": "NOSSA EQUIPE",
-    "subtitle": "Por trás de cada viagem bem-sucedida e de cada cliente satisfeito, existe uma equipe de profissionais altamente qualificados e apaixonados pelo que fazem. São eles que transformam seus planos em realidade, oferecendo um atendimento personalizado e a excelência que nos diferencia no mercado."
+    "subtitle": "Por trás de cada viagem bem-sucedida e de cada cliente satisfeito, existe uma equipe de profissionais altamente qualificados e apaixonados pelo que fazem. São eles que transformam seus planos em realidade, oferecendo um atendimento personalizado e a excelência que nos diferencia no mercado.",
+    "ctaText": "CONHEÇA NOSSA EQUIPE!"
+  },
+  "metrics": [
+    {
+      "value": "15+",
+      "label": "Profissionais especializados"
+    },
+    {
+      "value": "50+",
+      "label": "Anos de experiência combinada"
+    },
+    {
+      "value": "24/7",
+      "label": "Suporte da equipe"
+    },
+    {
+      "value": "100%",
+      "label": "Dedicação ao cliente"
+    }
+  ],
+  "problems": {
+    "title": "Conheça quem faz a diferença na sua viagem",
+    "items": [
+      {
+        "title": "Falta de especialização",
+        "description": "Equipes sem conhecimento específico em turismo corporativo e lazer."
+      },
+      {
+        "title": "Atendimento impessoal",
+        "description": "Falta de relacionamento próximo e atendimento personalizado."
+      },
+      {
+        "title": "Conhecimento limitado",
+        "description": "Ausência de expertise em destinos e fornecedores especializados."
+      }
+    ]
+  },
+  "experience": {
+    "title": "A EXPERIÊNCIA DA NOSSA EQUIPE",
+    "subtitle": "Profissionais apaixonados por viagens e dedicados à excelência",
+    "description": "Nossa equipe é composta por especialistas em turismo com vasta experiência no mercado. Cada membro traz conhecimento único e paixão pelo que faz, garantindo que cada viagem seja planejada e executada com a máxima qualidade.",
+    "features": [
+      {
+        "title": "Especialização",
+        "description": "Conhecimento profundo em diferentes segmentos do turismo."
+      },
+      {
+        "title": "Paixão",
+        "description": "Amor genuíno por viagens e atendimento ao cliente."
+      },
+      {
+        "title": "Experiência",
+        "description": "Anos de prática no mercado turístico nacional e internacional."
+      }
+    ]
   },
   "team": [
     {

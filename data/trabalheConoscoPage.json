@@ -3,9 +3,63 @@
   "_type": "trabalheConoscoPage",
   "hero": {
     "title": "TRABALHE CONOSCO",
-    "subtitle": "Conecte-se com a 24H Escritório de Viagens"
+    "subtitle": "Conecte-se com a 24H Escritório de Viagens",
+    "ctaText": "ENVIE SEU CURRÍCULO!"
   },
-  "intro": "Se você busca uma oportunidade de fazer parte de uma equipe experiente e dedicada, que transforma sonhos em realidade e oferece soluções inovadoras no mercado de turismo, você encontrou o lugar certo.\n\nSe você é apaixonado (a) por desafios, tem experiência no setor de turismo e deseja crescer profissionalmente em um ambiente dinâmico e colaborativo, queremos te conhecer!\n\nPreencha o formulário abaixo e anexe seu currículo. Sua próxima jornada profissional pode começar aqui.",
+  "metrics": [
+    {
+      "value": "15+",
+      "label": "Vagas abertas"
+    },
+    {
+      "value": "3",
+      "label": "Escritórios"
+    },
+    {
+      "value": "24/7",
+      "label": "Suporte da equipe"
+    },
+    {
+      "value": "100%",
+      "label": "Crescimento profissional"
+    }
+  ],
+  "problems": {
+    "title": "Faça parte de uma equipe que transforma sonhos em realidade",
+    "items": [
+      {
+        "title": "Oportunidades limitadas",
+        "description": "Falta de vagas em empresas do setor turístico."
+      },
+      {
+        "title": "Crescimento estagnado",
+        "description": "Ausência de oportunidades de desenvolvimento profissional."
+      },
+      {
+        "title": "Ambiente desmotivador",
+        "description": "Falta de cultura organizacional positiva e colaborativa."
+      }
+    ]
+  },
+  "experience": {
+    "title": "A EXPERIÊNCIA DE TRABALHAR NA 24H",
+    "subtitle": "Um ambiente acolhedor onde talentos florescem",
+    "description": "Na 24H, valorizamos cada membro da nossa equipe. Oferecemos um ambiente de trabalho colaborativo, oportunidades de crescimento e a chance de fazer parte de uma empresa que realmente faz a diferença na vida das pessoas através das viagens.",
+    "features": [
+      {
+        "title": "Crescimento",
+        "description": "Oportunidades reais de desenvolvimento e progressão na carreira."
+      },
+      {
+        "title": "Colaboração",
+        "description": "Ambiente de trabalho baseado no respeito e trabalho em equipe."
+      },
+      {
+        "title": "Propósito",
+        "description": "Trabalhe em algo que realmente impacta a vida das pessoas."
+      }
+    ]
+  },
   "benefits": [
     {
       "title": "Ambiente Acolhedor",
