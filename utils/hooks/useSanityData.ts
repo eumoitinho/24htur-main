@@ -109,56 +109,6 @@ export const useHomepage = () => {
   return { data, loading, error };
 };
 
-export const useEventosPage = () => {
-  const [data, setData] = useState<EventosPage | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-        const result = await getDocuments('eventosPage');
-        setData(result);
-      } catch (err) {
-        setError(err instanceof Error ? err.message : 'Erro ao carregar página de eventos');
-        console.error('Erro ao carregar página de eventos:', err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, []);
-
-  return { data, loading, error };
-};
-
-export const useLazerPage = () => {
-  const [data, setData] = useState<LazerPage | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-        const result = await getDocuments('lazerPage');
-        setData(result);
-      } catch (err) {
-        setError(err instanceof Error ? err.message : 'Erro ao carregar página de lazer');
-        console.error('Erro ao carregar página de lazer:', err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, []);
-
-  return { data, loading, error };
-};
-
 export const useThankYouPage = () => {
   const [data, setData] = useState<ThankYouPage | null>(null);
   const [loading, setLoading] = useState(true);
@@ -183,18 +133,6 @@ export const useThankYouPage = () => {
 
   return { data, loading, error };
 };
-
-export const useSobrePage = createPageHook<SobrePage>(
-  'sobrePage',
-  '../../data/sobrePage.json',
-  'Erro ao carregar página sobre'
-);
-
-export const useEquipePage = createPageHook<EquipePage>(
-  'equipePage',
-  '../../data/equipePage.json',
-  'Erro ao carregar página equipe'
-);
 
 export const useEventosInfoPage = () => {
   const [data, setData] = useState<EventosInfoPage | null>(null);
@@ -222,6 +160,18 @@ export const useEventosInfoPage = () => {
 
   return { data, loading, error };
 };
+
+export const useSobrePage = createPageHook<SobrePage>(
+  'sobrePage',
+  '../../data/sobrePage.json',
+  'Erro ao carregar página sobre'
+);
+
+export const useEquipePage = createPageHook<EquipePage>(
+  'equipePage',
+  '../../data/equipePage.json',
+  'Erro ao carregar página equipe'
+);
 
 export const useEventosPage = createPageHook<EventosPage>(
   'eventosPage',
