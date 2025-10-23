@@ -1,4 +1,5 @@
 'use client'
+
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Heart, Shield, Star, Users } from 'lucide-react';
@@ -6,34 +7,33 @@ import { useSobrePage } from '../../utils/hooks/useSanityData';
 
 const ValuesSobre = () => {
   const { data: sobreData, loading, error } = useSobrePage();
-
-  const defaultValues = [
+  
+  // Fallback para dados estáticos caso não carregue do Sanity
+  const valuesData = sobreData?.values || [
     {
-      icon: Heart,
-      title: "Paixão",
-      description: "Amamos o que fazemos e isso se reflete em cada viagem que organizamos."
+      name: "Personalização",
+      description: "Acreditamos que cada viagem é única. Por isso, adaptamos nossos serviços para atender às necessidades e desejos individuais de cada cliente, criando experiências sob medida."
     },
     {
-      icon: Shield,
-      title: "Confiança",
-      description: "Transparência e honestidade em todas as nossas relações comerciais."
+      name: "Disponibilidade",
+      description: "Estamos sempre presentes para nossos clientes. Nosso suporte 24/7 e a acessibilidade da nossa equipe garantem que você nunca esteja sozinho, independentemente do fuso horário ou da situação."
     },
     {
-      icon: Star,
-      title: "Excelência",
-      description: "Buscamos sempre superar expectativas e entregar o melhor serviço."
+      name: "Comprometimento",
+      description: "Nos dedicamos integralmente a cada projeto e a cada cliente, garantindo que todos os detalhes sejam cuidadosamente planejados e executados com a máxima precisão."
     },
     {
-      icon: Users,
-      title: "Relacionamento",
-      description: "Construímos parcerias duradouras baseadas no respeito mútuo."
+      name: "Ética profissional",
+      description: "Atuamos com transparência, integridade e responsabilidade em todas as nossas relações, construindo confiança e credibilidade no mercado."
     }
   ];
 
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error loading content</div>;
-
-  const values = sobreData?.values || defaultValues;
+  const iconMap = {
+    "Personalização": Heart,
+    "Disponibilidade": Shield,
+    "Comprometimento": Star,
+    "Ética profissional": Users
+  };
 
   return (
     <section className="py-20 bg-brand-beige">
@@ -55,8 +55,8 @@ const ValuesSobre = () => {
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {values.map((value, index) => {
-            const IconComponent = value.icon || Heart;
+          {valuesData.map((value, index) => {
+            const IconComponent = iconMap[value.name] || Heart;
             return (
               <motion.div
                 key={index}
@@ -71,7 +71,7 @@ const ValuesSobre = () => {
                   <IconComponent className="w-8 h-8 text-brand-gold" />
                 </div>
                 <h3 className="text-xl font-bold text-brand-dark mb-4">
-                  {value.title}
+                  {value.name}
                 </h3>
                 <p className="text-gray-600 leading-relaxed">
                   {value.description}

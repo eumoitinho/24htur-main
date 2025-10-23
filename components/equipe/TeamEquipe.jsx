@@ -1,140 +1,69 @@
 'use client'
+
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Mail, Phone, Linkedin } from 'lucide-react';
 import { useEquipePage } from '../../utils/hooks/useSanityData';
 
 const TeamEquipe = () => {
   const { data: equipeData, loading, error } = useEquipePage();
-
-  const defaultTeam = [
+  
+  // Fallback para dados estáticos caso não carregue do Sanity
+  const teamData = equipeData?.team || [
     {
-      name: "Ana Silva",
-      position: "Diretora Geral",
-      bio: "15 anos de experiência em turismo corporativo e gestão de equipes.",
-      email: "ana@24hturismo.com.br",
-      phone: "(11) 99999-9999",
-      linkedin: "#",
-      image: "/images/team/ana.jpg"
+      name: "Betinna Pavim",
+      position: "CEO|COO",
+      education: "Bacharel em Turismo com ênfase em Hotelaria",
+      experience: "20 anos de experiência com agenciamento de viagens"
     },
     {
-      name: "Carlos Santos",
-      position: "Gerente Comercial",
-      bio: "Especialista em relacionamento com clientes e desenvolvimento de negócios.",
-      email: "carlos@24hturismo.com.br",
-      phone: "(11) 99999-9998",
-      linkedin: "#",
-      image: "/images/team/carlos.jpg"
-    },
-    {
-      name: "Marina Costa",
-      position: "Coordenadora de Eventos",
-      bio: "Expert em organização de eventos corporativos e viagens de incentivo.",
-      email: "marina@24hturismo.com.br",
-      phone: "(11) 99999-9997",
-      linkedin: "#",
-      image: "/images/team/marina.jpg"
-    },
-    {
-      name: "Roberto Lima",
-      position: "Consultor de Viagens",
-      bio: "Apaixonado por destinos nacionais e internacionais, sempre com as melhores dicas.",
-      email: "roberto@24hturismo.com.br",
-      phone: "(11) 99999-9996",
-      linkedin: "#",
-      image: "/images/team/roberto.jpg"
+      name: "Liciane Rossetto",
+      position: "CEO|CFO",
+      education: "Doutora em Turismo",
+      experience: "30 anos de experiência no setor turístico"
     }
   ];
 
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error loading content</div>;
-
-  const team = equipeData?.team || defaultTeam;
-
   return (
-    <section className="py-20 bg-white">
-      <div className="container mx-auto px-4">
-        <motion.div
-          className="text-center mb-16"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
-        >
-          <h2 className="text-4xl md:text-5xl font-bold text-brand-dark mb-8">
-            Conheça Nossa Equipe
+    <section className="py-14 sm:py-16 lg:py-18">
+      <div className="mx-auto max-w-7xl px-6 lg:px-8">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight text-slate-900 mb-4">
+            NOSSA EQUIPE
           </h2>
-          <div className="w-24 h-1 bg-brand-gold mx-auto mb-8" />
-          <p className="text-xl text-gray-700 max-w-3xl mx-auto">
-            Profissionais dedicados e experientes, prontos para tornar sua viagem inesquecível
-          </p>
-        </motion.div>
+        </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {team.map((member, index) => (
+        <div className="grid gap-8 lg:grid-cols-2 mb-12">
+          {teamData.map((member, index) => (
             <motion.div
               key={index}
-              className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: index * 0.1 }}
+              transition={{ duration: 0.6, delay: index * 0.1 }}
               viewport={{ once: true }}
-              whileHover={{ y: -5 }}
+              className="bg-white rounded-3xl shadow-lg overflow-hidden border border-slate-200/50"
             >
-              <div className="aspect-square bg-gradient-to-br from-brand-gold/20 to-brand-dark/10 flex items-center justify-center">
-                {member.image ? (
-                  <img
-                    src={member.image}
-                    alt={member.name}
-                    className="w-full h-full object-cover"
-                  />
-                ) : (
-                  <div className="w-24 h-24 bg-brand-gold/20 rounded-full flex items-center justify-center">
+              <div className="p-8">
+                <div className="flex items-start gap-6">
+                  <div className="w-24 h-24 rounded-full bg-gradient-to-br from-brand-gold/20 to-brand-gold/10 flex items-center justify-center flex-shrink-0">
                     <span className="text-2xl font-bold text-brand-dark">
                       {member.name.split(' ').map(n => n[0]).join('')}
                     </span>
                   </div>
-                )}
-              </div>
 
-              <div className="p-6">
-                <h3 className="text-xl font-bold text-brand-dark mb-2">
-                  {member.name}
-                </h3>
-                <p className="text-brand-gold font-semibold mb-3">
-                  {member.position}
-                </p>
-                <p className="text-gray-600 text-sm mb-4 leading-relaxed">
-                  {member.bio}
-                </p>
-
-                <div className="flex space-x-3">
-                  {member.email && (
-                    <a
-                      href={`mailto:${member.email}`}
-                      className="w-8 h-8 bg-brand-gold/10 rounded-full flex items-center justify-center hover:bg-brand-gold/20 transition-colors"
-                    >
-                      <Mail className="w-4 h-4 text-brand-gold" />
-                    </a>
-                  )}
-                  {member.phone && (
-                    <a
-                      href={`tel:${member.phone}`}
-                      className="w-8 h-8 bg-brand-gold/10 rounded-full flex items-center justify-center hover:bg-brand-gold/20 transition-colors"
-                    >
-                      <Phone className="w-4 h-4 text-brand-gold" />
-                    </a>
-                  )}
-                  {member.linkedin && (
-                    <a
-                      href={member.linkedin}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="w-8 h-8 bg-brand-gold/10 rounded-full flex items-center justify-center hover:bg-brand-gold/20 transition-colors"
-                    >
-                      <Linkedin className="w-4 h-4 text-brand-gold" />
-                    </a>
-                  )}
+                  <div className="flex-1">
+                    <h3 className="text-xl font-bold text-brand-dark mb-2">
+                      {member.name}
+                    </h3>
+                    <p className="text-brand-gold font-semibold mb-3">
+                      {member.position}
+                    </p>
+                    <p className="text-sm text-gray-600 mb-2">
+                      <strong>Formação:</strong> {member.education}
+                    </p>
+                    <p className="text-sm text-gray-600">
+                      <strong>Experiência:</strong> {member.experience}
+                    </p>
+                  </div>
                 </div>
               </div>
             </motion.div>

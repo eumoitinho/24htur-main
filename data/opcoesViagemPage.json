@@ -1,10 +1,12 @@
 {
   "_id": "opcoesViagemPage-1",
   "_type": "opcoesViagemPage",
-  "title": "OPÇÕES DE VIAGEM",
-  "subtitle": "Descubra o mundo com a 24H Escritório de Viagens",
+  "hero": {
+    "title": "OPÇÕES DE VIAGEM",
+    "subtitle": "Descubra o mundo com a 24H Escritório de Viagens"
+  },
   "intro": "Explore nossas categorias e encontre a aventura perfeita para você:",
-  "travelOptions": [
+  "options": [
     {
       "name": "24H ÚNICO",
       "description": "Para clientes que buscam o extraordinário, o programa 24H Único cria roteiros de viagem sob medida, com experiências verdadeiramente exclusivas. Mergulhe em roteiros personalizados, onde cada detalhe é pensado para superar suas expectativas e proporcionar momentos de luxo, privacidade e exclusividade."

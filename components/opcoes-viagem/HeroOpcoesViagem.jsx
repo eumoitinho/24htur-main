@@ -1,49 +1,93 @@
 'use client'
+
 import React from 'react';
+import { ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useOpcoesViagemPage } from '../../utils/hooks/useSanityData';
 
 const HeroOpcoesViagem = () => {
-  const { data: opcoesViagemData, loading, error } = useOpcoesViagemPage();
-
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error loading content</div>;
+  const { data: opcoesData, loading, error } = useOpcoesViagemPage();
+  
+  // Fallback para dados estáticos caso não carregue do Sanity
+  const heroData = opcoesData?.hero || {
+    title: "OPÇÕES DE VIAGEM",
+    subtitle: "Descubra o mundo com a 24H Escritório de Viagens",
+    ctaText: "EXPLORE NOSSAS OPÇÕES!"
+  };
 
   return (
-    <section className="relative min-h-screen pt-20 pb-16 overflow-hidden flex flex-col justify-center">
-      <div className="absolute inset-0 bg-gradient-to-br from-brand-dark via-brand-dark/95 to-brand-gold/20" />
+    <section id="inicio" className="relative py-10 sm:py-12 lg:py-14">
+      <div className="mx-auto max-w-7xl px-6 lg:px-8">
+        <div
+          className="relative overflow-hidden rounded-[40px] sm:rounded-[44px] lg:rounded-[50px] px-6 sm:px-10 md:px-12 lg:px-16 py-12 sm:py-16 md:py-20 lg:py-24 bg-brand-dark bg-center bg-cover bg-no-repeat"
+          style={{ backgroundImage: `url(/hero-home.jpg)` }}
+        >
+          <div className="absolute inset-0" aria-hidden="true">
+            <div className="absolute inset-0 bg-[#06060a]/35" />
+            <div className="absolute inset-0 bg-gradient-to-r from-[#06060a]/90 via-[#06060a]/60 to-[#06060a]/10" />
+          </div>
 
-      <div className="relative z-10 container mx-auto px-4">
-        <div className="max-w-4xl mx-auto text-center">
-          <motion.h1
-            className="text-5xl md:text-7xl font-bold text-white mb-6"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-          >
-            {opcoesViagemData?.hero?.title || "Opções de Viagem"}
-          </motion.h1>
+          <div className="pointer-events-none absolute inset-0 z-[1] mix-blend-screen">
+            <div className="absolute -left-16 -top-20 h-64 w-64 rounded-full opacity-25 blur-2xl bg-brand-gold"></div>
+            <div className="absolute -right-24 -bottom-24 h-80 w-80 rounded-full opacity-15 blur-3xl bg-brand-gold"></div>
+            <div className="absolute right-6 top-6 hidden md:block">
+              <img
+                src="/logo.png"
+                alt="24H Escritório de Viagens"
+                width={180}
+                height={180}
+                className="w-[180px] h-[180px] object-contain opacity-90"
+              />
+            </div>
+          </div>
 
-          <motion.p
-            className="text-xl md:text-2xl text-white/90 mb-8 leading-relaxed"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-          >
-            {opcoesViagemData?.hero?.subtitle || "Descubra as melhores opções para sua próxima viagem"}
-          </motion.p>
+          <div className="relative z-[2] max-w-3xl">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
+              className="mb-6"
+            >
+              
+            </motion.div>
+
+            <motion.h1
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
+              className="text-white text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold tracking-tight leading-[1.1]"
+            >
+              {heroData.title}
+            </motion.h1>
+
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+              className="mt-6 text-white/90 text-[18px] leading-7"
+            >
+              {heroData.subtitle}
+            </motion.p>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
+              className="mt-8 flex flex-col sm:flex-row items-start sm:items-center gap-6"
+            >
+              <motion.a
+                href="#opcoes"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="inline-flex items-center rounded-2xl bg-gradient-to-r from-brand-gold to-[#F59E0B] px-8 py-4 text-[15px] font-semibold text-brand-dark shadow-sm hover:shadow-xl transition-all duration-300"
+              >
+                {heroData.ctaText}
+                <ArrowRight className="ml-2 h-5 w-5" strokeWidth={2} />
+              </motion.a>
+            </motion.div>
+          </div>
         </div>
       </div>
-
-      <motion.div
-        className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
-        animate={{ y: [0, 10, 0] }}
-        transition={{ duration: 2, repeat: Infinity }}
-      >
-        <div className="w-6 h-10 border-2 border-white/50 rounded-full flex justify-center">
-          <div className="w-1 h-3 bg-white/50 rounded-full mt-2" />
-        </div>
-      </motion.div>
     </section>
   );
 };

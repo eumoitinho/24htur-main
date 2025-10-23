@@ -1,10 +1,11 @@
 {
   "_id": "equipePage-1",
   "_type": "equipePage",
-  "title": "NOSSA EQUIPE",
-  "intro": "Por trás de cada viagem bem-sucedida e de cada cliente satisfeito, existe uma equipe de profissionais altamente qualificados e apaixonados pelo que fazem. São eles que transformam seus planos em realidade, oferecendo um atendimento personalizado e a excelência que nos diferencia no mercado.",
-  "subtitle": "Conheça os membros da nossa equipe:",
-  "teamMembers": [
+  "hero": {
+    "title": "NOSSA EQUIPE",
+    "subtitle": "Por trás de cada viagem bem-sucedida e de cada cliente satisfeito, existe uma equipe de profissionais altamente qualificados e apaixonados pelo que fazem. São eles que transformam seus planos em realidade, oferecendo um atendimento personalizado e a excelência que nos diferencia no mercado."
+  },
+  "team": [
     {
       "name": "Betinna Pavim",
       "position": "CEO|COO",
