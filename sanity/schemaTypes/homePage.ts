@@ -1,11 +1,10 @@
 import { defineField, defineType } from 'sanity'
 
 export default defineType({
-  name: 'equipePage',
-  title: 'Página Equipe',
+  name: 'homePage',
+  title: 'Página Home',
   type: 'document',
   fields: [
-    // Hero Section
     defineField({
       name: 'hero',
       title: 'Seção Hero',
@@ -15,14 +14,14 @@ export default defineType({
           name: 'title',
           title: 'Título Principal',
           type: 'string',
-          initialValue: 'NOSSA EQUIPE',
+          initialValue: 'Gestão completa de viagens de negócios e lazer',
           validation: Rule => Rule.required()
         }),
         defineField({
           name: 'subtitle',
           title: 'Subtítulo',
           type: 'text',
-          initialValue: 'Por trás de cada viagem bem-sucedida e de cada cliente satisfeito, existe uma equipe de profissionais altamente qualificados e apaixonados pelo que fazem.',
+          initialValue: 'Soluções estratégicas com atendimento 24/7 e mais de 20 anos de experiência no mercado',
           validation: Rule => Rule.required()
         }),
         defineField({
@@ -34,8 +33,6 @@ export default defineType({
         })
       ]
     }),
-    
-    // Metrics Section
     defineField({
       name: 'metrics',
       title: 'Métricas',
@@ -66,8 +63,6 @@ export default defineType({
         { value: '+1000', label: 'operações executadas com sucesso' }
       ]
     }),
-
-    // Problems Section
     defineField({
       name: 'problems',
       title: 'Seção de Problemas',
@@ -132,8 +127,6 @@ export default defineType({
         })
       ]
     }),
-
-    // Experience Section
     defineField({
       name: 'experience',
       title: 'Seção Experiência 24H',
@@ -181,8 +174,6 @@ export default defineType({
         })
       ]
     }),
-
-    // Clients Section
     defineField({
       name: 'clients',
       title: 'Seção Clientes',
@@ -203,8 +194,6 @@ export default defineType({
         })
       ]
     }),
-
-    // Services Section
     defineField({
       name: 'services',
       title: 'Seção Serviços',
@@ -275,8 +264,6 @@ export default defineType({
         })
       ]
     }),
-
-    // Why Choose Section
     defineField({
       name: 'whyChoose',
       title: 'Seção Por que Escolher',
@@ -341,8 +328,6 @@ export default defineType({
         })
       ]
     }),
-
-    // About Section
     defineField({
       name: 'about',
       title: 'Seção Sobre',
@@ -435,8 +420,6 @@ export default defineType({
         })
       ]
     }),
-
-    // Team Section
     defineField({
       name: 'team',
       title: 'Seção Equipe',
@@ -447,20 +430,6 @@ export default defineType({
           title: 'Título',
           type: 'string',
           initialValue: 'NOSSA EQUIPE',
-          validation: Rule => Rule.required()
-        }),
-        defineField({
-          name: 'intro',
-          title: 'Introdução',
-          type: 'text',
-          initialValue: 'Por trás de cada viagem bem-sucedida e de cada cliente satisfeito, existe uma equipe de profissionais altamente qualificados e apaixonados pelo que fazem. São eles que transformam seus planos em realidade, oferecendo um atendimento personalizado e a excelência que nos diferencia no mercado.',
-          validation: Rule => Rule.required()
-        }),
-        defineField({
-          name: 'subtitle',
-          title: 'Subtítulo',
-          type: 'string',
-          initialValue: 'Conheça os membros da nossa equipe:',
           validation: Rule => Rule.required()
         }),
         defineField({
@@ -478,7 +447,7 @@ export default defineType({
                   validation: Rule => Rule.required()
                 }),
                 defineField({
-                  name: 'position',
+                  name: 'role',
                   title: 'Cargo',
                   type: 'string',
                   validation: Rule => Rule.required()
@@ -486,13 +455,13 @@ export default defineType({
                 defineField({
                   name: 'education',
                   title: 'Formação',
-                  type: 'text',
+                  type: 'string',
                   validation: Rule => Rule.required()
                 }),
                 defineField({
                   name: 'experience',
                   title: 'Experiência',
-                  type: 'text',
+                  type: 'string',
                   validation: Rule => Rule.required()
                 })
               ]
@@ -501,70 +470,34 @@ export default defineType({
           initialValue: [
             {
               name: 'Betinna Pavim',
-              position: 'CEO|COO',
-              education: 'Bacharel em Turismo com ênfase em Hotelaria pelo Centro Universitário Medotista IPA',
-              experience: '20 anos de experiência no turismo, dentro de agenciamento de viagens'
+              role: 'CEO|COO',
+              education: 'Bacharel em Turismo com ênfase em Hotelaria',
+              experience: '20 anos de experiência com agenciamento de viagens'
             },
             {
               name: 'Liciane Rossetto',
-              position: 'CEO|CFO',
-              education: 'Bacharel em Turismo pela PUCRS; Especialista pela UDESC; Mestre pela UFSC; Doutora pela PUCRS EPATUR',
-              experience: 'Alitália; Anita Pires e Associados; Multieventos Promoção e Organização de Eventos; BRK Consultores Associados; Soluções Integradas Consulting – 30 anos de experiência no Turismo'
-            },
-            {
-              name: 'Letícia Wonsovicz Bastos',
-              position: 'Diretora SAO',
-              education: 'Bacharel em Nutrição',
-              experience: 'Empresária Mon Bureau Coworking em Alphaville'
-            },
-            {
-              name: 'Marta Dal Molin',
-              position: 'Diretora FLN',
-              education: 'Tecnóloga em Gestão, Pós-Graduada em Administração e Marketing',
-              experience: 'Empresária com 20 anos de experiência em Redes Hoteleiras'
-            },
-            {
-              name: 'Renata Barbiani',
-              position: 'Corporativo e Eventos',
-              education: 'Bacharel em Turismo pela PUCRS',
-              experience: 'Queensberry (2 anos); Secretaria Municipal de Turismo (2 anos); Ouro e Prata (12 anos); Sinal Viagens'
-            },
-            {
-              name: 'Karine Vigil',
-              position: 'Corporativo e Eventos',
-              education: 'Bacharel em Turismo ênfase em Hotelaria pelo Centro Universitário Medotista IPA',
-              experience: 'Oritur (1 ano); Plus Eventos (2 anos); Fellini Eventos (1 ano); Innovare Viagens (proprietária 15 anos)'
-            },
-            {
-              name: 'Débora Galo',
-              position: 'Corporativo',
-              education: 'Bacharelado em Turismo pela FARGS',
-              experience: 'GalFer\'s Viagens e Turismo (22 anos)'
-            },
-            {
-              name: 'Fernanda Medeiros',
-              position: 'Travel Designer',
-              education: 'Bacharel Jornalismo e Comunicação Social (UNISINOS)',
-              experience: 'Travel Plan Viagens (6 anos); Montrel Viagens & Turismo (1 ano); CVC Operadora (7 anos)'
-            },
-            {
-              name: 'Jorge Gabriel',
-              position: 'Roteiros Especiais',
-              education: 'Licenciado em Geografia, Tecnólogo em Gestão Ambiental e pós-graduado',
-              experience: 'Gol Linhas Aéreas (4 anos); FluTour PUCRS (5 anos); Gerente CVC (2 anos)'
-            },
-            {
-              name: 'Elci Tem Pass',
-              position: 'Financeiro',
-              education: '',
-              experience: 'Mercatur Operadora (4 anos); Skyteam Consolidadora (2 anos); Oritur (4 anos); Wagons Lits (14 anos)'
+              role: 'CEO|CFO',
+              education: 'Doutora em Turismo',
+              experience: '30 anos de experiência no setor turístico'
             }
           ]
+        }),
+        defineField({
+          name: 'ctaText',
+          title: 'Texto do CTA',
+          type: 'string',
+          initialValue: 'CONHEÇA NOSSA EQUIPE COMPLETA',
+          validation: Rule => Rule.required()
+        }),
+        defineField({
+          name: 'ctaLink',
+          title: 'Link do CTA',
+          type: 'string',
+          initialValue: '/equipe',
+          validation: Rule => Rule.required()
         })
       ]
     }),
-
-    // Testimonials Section
     defineField({
       name: 'testimonials',
       title: 'Seção Depoimentos',
@@ -633,8 +566,6 @@ export default defineType({
         })
       ]
     }),
-
-    // Contact Section
     defineField({
       name: 'contact',
       title: 'Seção Contato',
@@ -669,4 +600,3 @@ export default defineType({
     }
   }
 })
-
