@@ -3,62 +3,8 @@
   "_type": "sobrePage",
   "hero": {
     "title": "SOBRE A 24H",
-    "subtitle": "Com mais de 20 anos de expertise, a 24H Escritório de Viagens se consolidou como uma agência especializada e líder na gestão de viagens de lazer, negócios e eventos, nacionais e internacionais.",
+    "subtitle": "Com mais de 20 anos de expertise, a 24H Escritório de Viagens se consolidou como uma agência especializada e líder na gestão de viagens de lazer, negócios e eventos, nacionais e internacionais. Oferecemos soluções completas e personalizadas, atendendo às necessidades de empresas, famílias, grupos e clientes individuais com a máxima dedicação e profissionalismo.",
     "ctaText": "CONHEÇA NOSSA HISTÓRIA!"
-  },
-  "metrics": [
-    {
-      "value": "20+",
-      "label": "Anos de experiência"
-    },
-    {
-      "value": "500+",
-      "label": "Empresas atendidas"
-    },
-    {
-      "value": "24/7",
-      "label": "Suporte disponível"
-    },
-    {
-      "value": "100%",
-      "label": "Satisfação garantida"
-    }
-  ],
-  "problems": {
-    "title": "Descomplique sua rotina de viagens com quem entende do assunto",
-    "items": [
-      {
-        "title": "Gestão de viagens complexa",
-        "description": "Dificuldade para coordenar múltiplas viagens, fornecedores e políticas corporativas."
-      },
-      {
-        "title": "Falta de visibilidade",
-        "description": "Ausência de relatórios detalhados e controle de custos em tempo real."
-      },
-      {
-        "title": "Suporte limitado",
-        "description": "Atendimento restrito a horário comercial, sem suporte em emergências."
-      }
-    ]
-  },
-  "experience": {
-    "title": "A EXPERIÊNCIA 24H",
-    "subtitle": "Mais de 20 anos transformando viagens em experiências únicas",
-    "description": "Nossa trajetória é marcada pela excelência no atendimento e pela capacidade de antecipar as necessidades dos nossos clientes. Combinamos tecnologia avançada com o toque humano que faz toda a diferença.",
-    "features": [
-      {
-        "title": "Atendimento Personalizado",
-        "description": "Cada cliente recebe atenção dedicada e soluções sob medida."
-      },
-      {
-        "title": "Tecnologia Avançada",
-        "description": "Plataformas modernas para gestão eficiente de viagens."
-      },
-      {
-        "title": "Rede de Parceiros",
-        "description": "Acesso privilegiado aos melhores fornecedores do mercado."
-      }
-    ]
   },
   "about": {
     "title": "Nossa História",

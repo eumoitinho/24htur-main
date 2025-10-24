@@ -65,23 +65,28 @@ export const getDocuments = async (type: string, slug?: string) => {
       ? `*[_type == "${type}" && slug.current == "${slug}"][0]`
       : `*[_type == "${type}"]`;
     
+    console.log(`Buscando dados do Sanity para ${type}...`);
     const data = await client.fetch(query);
     
-    // Se não há dados do Sanity, tenta usar dados estáticos
-    if (!data || (Array.isArray(data) && data.length === 0)) {
-      console.warn(`Nenhum dado encontrado no Sanity para ${type}, usando dados estáticos`);
-      return await loadStaticData(type);
+    console.log(`Dados encontrados no Sanity para ${type}:`, data);
+    
+    // Se há dados do Sanity, retorna eles
+    if (data && (!Array.isArray(data) || data.length > 0)) {
+      console.log(`Usando dados do Sanity para ${type}`);
+      return data;
     }
     
-    return data;
+    // Se não há dados no Sanity, retorna null para que o componente possa decidir
+    console.warn(`Nenhum dado encontrado no Sanity para ${type}`);
+    return null;
+    
   } catch (error) {
     console.error(`Erro ao buscar dados do Sanity para ${type}:`, error);
-    console.log(`Tentando usar dados estáticos para ${type}`);
     
-    // Em caso de erro, usa dados estáticos como fallback
+    // Em caso de erro real (não apenas dados vazios), usa dados estáticos como fallback
     const staticData = await loadStaticData(type);
     if (staticData) {
-      console.log(`Usando dados estáticos para ${type}`);
+      console.log(`Usando dados estáticos como fallback para ${type}`);
       return staticData;
     }
     

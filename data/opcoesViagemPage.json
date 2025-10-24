@@ -6,60 +6,7 @@
     "subtitle": "Descubra o mundo com a 24H Escritório de Viagens",
     "ctaText": "EXPLORE NOSSAS OPÇÕES!"
   },
-  "metrics": [
-    {
-      "value": "7",
-      "label": "Categorias de viagem"
-    },
-    {
-      "value": "50+",
-      "label": "Destinos disponíveis"
-    },
-    {
-      "value": "24/7",
-      "label": "Suporte especializado"
-    },
-    {
-      "value": "100%",
-      "label": "Personalização garantida"
-    }
-  ],
-  "problems": {
-    "title": "Encontre a viagem perfeita para você",
-    "items": [
-      {
-        "title": "Opções limitadas",
-        "description": "Falta de variedade em tipos de viagem e experiências."
-      },
-      {
-        "title": "Falta de personalização",
-        "description": "Pacotes padronizados que não atendem necessidades específicas."
-      },
-      {
-        "title": "Informações confusas",
-        "description": "Dificuldade para entender as diferenças entre opções disponíveis."
-      }
-    ]
-  },
-  "experience": {
-    "title": "A EXPERIÊNCIA 24H EM VIAGENS",
-    "subtitle": "Diversidade de opções para todos os perfis de viajante",
-    "description": "Oferecemos uma ampla gama de opções de viagem, desde experiências únicas e exclusivas até pacotes econômicos e práticos. Cada categoria é pensada para atender diferentes necessidades e orçamentos.",
-    "features": [
-      {
-        "title": "Variedade",
-        "description": "Múltiplas opções para diferentes perfis e necessidades."
-      },
-      {
-        "title": "Qualidade",
-        "description": "Padrão elevado em todas as nossas categorias de viagem."
-      },
-      {
-        "title": "Flexibilidade",
-        "description": "Adaptação às suas preferências e orçamento."
-      }
-    ]
-  },
+  "intro": "Explore nossas categorias e encontre a aventura perfeita para você:",
   "options": [
     {
       "name": "24H ÚNICO",
