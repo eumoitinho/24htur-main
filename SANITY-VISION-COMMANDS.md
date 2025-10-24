@@ -240,3 +240,83 @@ client.create(trabalheConoscoPageData).then(result => {
 }).catch(error => {
   console.error('❌ Erro:', error.message);
 });
+
+// 5. LAZER PAGE
+const lazerPageData = {
+  _type: 'lazerPage',
+  hero: {
+    title: "VIAGENS DE LAZER",
+    subtitle: "Transforme suas férias em experiências únicas com nosso planejamento especializado",
+    ctaText: "PLANEJE SUA VIAGEM!"
+  },
+  intro: "Cuidamos de passagens, hospedagens, câmbio, roteiros turísticos e até passeios exclusivos. Nossa equipe resolve todos os detalhes operacionais para que você se preocupe apenas em aproveitar cada momento da sua viagem.",
+  services: [
+    {
+      title: "Roteiros Personalizados",
+      description: "Criamos roteiros únicos baseados nos seus interesses e preferências.",
+      icon: "MapPin"
+    },
+    {
+      title: "Hospedagem Selecionada",
+      description: "Hotéis e pousadas cuidadosamente escolhidos para sua comodidade.",
+      icon: "Home"
+    },
+    {
+      title: "Passeios Exclusivos",
+      description: "Experiências únicas que você não encontrará em outros lugares.",
+      icon: "Camera"
+    },
+    {
+      title: "Suporte 24/7",
+      description: "Assistência completa durante toda sua viagem de lazer.",
+      icon: "Phone"
+    }
+  ],
+  destinations: [
+    {
+      name: "Europa",
+      description: "Descubra a rica história e cultura do continente europeu.",
+      image: "/destinations/europa.jpg"
+    },
+    {
+      name: "América do Norte",
+      description: "Explore as grandes cidades e paisagens naturais.",
+      image: "/destinations/america-norte.jpg"
+    },
+    {
+      name: "Ásia",
+      description: "Imersão em culturas milenares e paisagens exóticas.",
+      image: "/destinations/asia.jpg"
+    },
+    {
+      name: "América do Sul",
+      description: "Aventuras e experiências únicas no continente sul-americano.",
+      image: "/destinations/america-sul.jpg"
+    }
+  ],
+  benefits: [
+    {
+      title: "Sem Preocupações",
+      description: "Deixe todos os detalhes conosco e aproveite sua viagem."
+    },
+    {
+      title: "Preços Competitivos",
+      description: "Melhores tarifas através da nossa rede de parceiros."
+    },
+    {
+      title: "Experiências Únicas",
+      description: "Acesso a passeios e atividades exclusivas."
+    },
+    {
+      title: "Flexibilidade Total",
+      description: "Roteiros adaptáveis às suas necessidades e preferências."
+    }
+  ]
+};
+
+// Execute este comando para criar a página lazer:
+client.create(lazerPageData).then(result => {
+  console.log('✅ lazerPage criada:', result._id);
+}).catch(error => {
+  console.error('❌ Erro:', error.message);
+});

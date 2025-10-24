@@ -3,8 +3,18 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
+import { useLazerPage } from '../../utils/hooks/useSanityData';
 
 const HeroLazer = () => {
+  const { data: lazerData, loading, error } = useLazerPage();
+  
+  // Fallback para dados estáticos caso não carregue do Sanity
+  const heroData = lazerData?.hero || {
+    title: "VIAGENS DE LAZER",
+    subtitle: "Transforme suas férias em experiências únicas com nosso planejamento especializado",
+    ctaText: "PLANEJE SUA VIAGEM!"
+  };
+
   return (
     <section id="inicio" className="relative py-10 sm:py-12 lg:py-14">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
@@ -38,7 +48,7 @@ const HeroLazer = () => {
               transition={{ duration: 0.8, ease: "easeOut" }}
               className="text-white text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold tracking-tight leading-[1.1]"
             >
-              Transforme suas <br className="hidden md:block" /><span className='text-brand-gold'>férias dos sonhos</span><br className="hidden md:block" />em realidade
+              {heroData.title}
             </motion.h1>
 
             <motion.p
@@ -47,9 +57,7 @@ const HeroLazer = () => {
               transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
               className="mt-6 text-white/90 text-[18px] leading-7"
             >
-              Planejamento completo e personalizado para suas viagens de lazer.
-              Da escolha do destino aos melhores roteiros, cuidamos de cada detalhe
-              para você viver experiências inesquecíveis.
+              {heroData.subtitle}
             </motion.p>
 
             <motion.div
@@ -64,7 +72,7 @@ const HeroLazer = () => {
                 whileTap={{ scale: 0.95 }}
                 className="inline-flex items-center rounded-2xl bg-gradient-to-r from-brand-gold to-[#F59E0B] px-8 py-4 text-[15px] font-semibold text-brand-dark shadow-sm hover:shadow-xl transition-all duration-300"
               >
-                PLANEJE SUA VIAGEM
+                {heroData.ctaText}
                 <ArrowRight className="ml-2 h-5 w-5" strokeWidth={2} />
               </motion.a>
             </motion.div>
