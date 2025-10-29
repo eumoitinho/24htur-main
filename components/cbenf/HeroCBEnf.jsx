@@ -1,10 +1,16 @@
 'use client'
 
 import React from 'react';
+import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { ArrowRight, Calendar, MapPin, Users } from 'lucide-react';
+import Logo from '../Logo';
+import { useHomepage } from '../../utils/hooks/useSanityData';
+import { resolveImage } from '../../utils/lib/sanity';
 
 const HeroCBEnf = () => {
+  const { data: homepageData } = useHomepage();
+
   const handleCTAClick = () => {
     const formSection = document.getElementById('contato');
     formSection?.scrollIntoView({ behavior: 'smooth' });
@@ -15,10 +21,12 @@ const HeroCBEnf = () => {
       <div className="absolute inset-0 bg-gradient-to-br from-red-900/30 via-red-800/20 to-red-900/30 z-0"></div>
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-red-500/50 to-transparent"></div>
       <div className="absolute inset-0 z-0">
-        <img
-          src="/image.jpeg"
+        <Image
+          src={resolveImage(homepageData?.hero?.backgroundImage, '/image.jpeg')}
           alt="75º CBEn"
-          className="w-full h-full object-cover opacity-40"
+          fill
+          className="object-cover opacity-40"
+          sizes="100vw"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-[#D38E17] from-10% via-[#D38E17]/80 via-50% to-transparent"></div>
       </div>
@@ -31,11 +39,7 @@ const HeroCBEnf = () => {
           className="max-w-4xl"
         >
           <div className="flex items-center gap-4 mb-6">
-            <img
-              src="/selo-vermelho.png"
-              alt="24H Escritório de Viagens"
-              className="w-20 h-20 md:w-28 md:h-28 object-contain drop-shadow-[0_2px_8px_rgba(0,0,0,0.3)]"
-            />
+            <Logo className="w-20 h-20 md:w-28 md:h-28" />
             <div className="inline-flex items-center gap-2 bg-white/15 backdrop-blur-md border border-white/30 rounded-full py-2 px-4 shadow-lg">
               <span className="flex h-2 w-2 rounded-full bg-[#D38E17] shadow-lg"></span>
               <span className="text-xs md:text-sm font-bold text-white drop-shadow-lg">75º Congresso Brasileiro de Enfermagem</span>

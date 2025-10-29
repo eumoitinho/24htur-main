@@ -1,9 +1,12 @@
 'use client'
 
 import React from 'react';
+import Image from 'next/image';
 import { Building2, Users, Globe, Shield } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useSectionView } from '../utils/tracking/engagement';
+import { useHomepage } from '../utils/hooks/useSanityData';
+import { resolveImage } from '../utils/lib/sanity';
 
 const highlights = [
   { icon: Building2, title: 'Especialização Corporativa', description: 'Foco exclusivo em viagens de negócios e incentivo' },
@@ -15,6 +18,8 @@ const highlights = [
 const AboutCompany = () => {
   // Corrige uso do hook (não dentro de useEffect) para registrar section_view
   useSectionView('sec-about-company', { threshold: 0.5 });
+
+  const { data: homepageData } = useHomepage();
 
   return (
     <section id="sec-about-company" className="relative bg-gradient-to-br from-brand-dark via-brand-dark to-slate-900 pt-24 pb-24 sm:py-32 overflow-hidden">
@@ -40,7 +45,7 @@ const AboutCompany = () => {
                 transition={{ duration: 0.6, delay: 0.15 }}
                 viewport={{ once: true }}
               >
-                Mais de duas décadas especializados em <span className="text-brand-gold">gestão de viagens</span>
+                {homepageData?.aboutCompany?.title || 'Mais de duas décadas especializados em '}<span className="text-brand-gold">{homepageData?.aboutCompany?.subtitle || 'gestão de viagens'}</span>
               </motion.h2>
               <motion.div 
                 className="space-y-6 text-lg text-white/85 leading-relaxed"
@@ -49,12 +54,20 @@ const AboutCompany = () => {
                 transition={{ duration: 0.6, delay: 0.25 }}
                 viewport={{ once: true }}
               >
-                <p>
-                  A 24H Escritório de Viagens é uma agência especializada em viagens corporativas, de lazer, turismo de incentivo e eventos. Nossa trajetória madura nos permite desenhar soluções sob medida e atuar com excelência na gestão de viagens nacionais e internacionais, oferecendo programas completos e personalizados para empresas, famílias e clientes individuais.
-                </p>
-                <p>
-                  Cuidamos de todas as etapas da viagem, desde a cotação até a emissão de passagens, reservas de hotéis, traslados, câmbio, seguros, vistos, locação de veículos, roteiros turísticos e ingressos. Trabalhamos com uma ampla rede de fornecedores e parceiros nos setores aéreo, hoteleiro e de turismo, garantindo agilidade, economia e segurança em cada atendimento.
-                </p>
+                {homepageData?.aboutCompany?.description ? (
+                  homepageData.aboutCompany.description.map((p, i) => (
+                    <p key={i}>{p}</p>
+                  ))
+                ) : (
+                  <>
+                    <p>
+                      A 24H Escritório de Viagens é uma agência especializada em viagens corporativas, de lazer, turismo de incentivo e eventos. Nossa trajetória madura nos permite desenhar soluções sob medida e atuar com excelência na gestão de viagens nacionais e internacionais, oferecendo programas completos e personalizados para empresas, famílias e clientes individuais.
+                    </p>
+                    <p>
+                      Cuidamos de todas as etapas da viagem, desde a cotação até a emissão de passagens, reservas de hotéis, traslados, câmbio, seguros, vistos, locação de veículos, roteiros turísticos e ingressos. Trabalhamos com uma ampla rede de fornecedores e parceiros nos setores aéreo, hoteleiro e de turismo, garantindo agilidade, economia e segurança em cada atendimento.
+                    </p>
+                  </>
+                )}
               </motion.div>
             </div>
           </div>
@@ -63,13 +76,16 @@ const AboutCompany = () => {
           <div className="divide-y divide-white/10 relative">
             <div className="p-8 lg:p-12 space-y-10">
               <div className="relative rounded-2xl overflow-hidden ring-1 ring-white/10">
-                <img 
-                  src="/images/equipe.jpg"
-                  alt="Equipe 24H Escritório de Viagens"
-                  className="w-full h-96 lg:h-[570px] object-cover"
-                  style={{ filter: 'sepia(10%) saturate(120%) brightness(95%) contrast(110%)' }}
-                  loading="lazy"
-                />
+                <div className="w-full h-96 lg:h-[570px] relative">
+                  <Image
+                    src={resolveImage(homepageData?.about?.image, '/images/equipe.jpg')}
+                    alt="Equipe 24H Escritório de Viagens"
+                    fill
+                    className="object-cover"
+                    style={{ filter: 'sepia(10%) saturate(120%) brightness(95%) contrast(110%)' }}
+                    sizes="(min-width: 1024px) 570px, 384px"
+                  />
+                </div>
                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent" />
               </div>
 

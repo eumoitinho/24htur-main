@@ -1,6 +1,8 @@
 'use client'
 
 import React, { useMemo } from 'react';
+import Image from 'next/image';
+import { useHomepage } from '../utils/hooks/useSanityData';
 import { motion } from 'framer-motion';
 import { useSectionView } from '../utils/tracking/engagement';
 
@@ -28,6 +30,7 @@ function fileNameToAlt(name) {
 
 const ClientsSection = () => {
   useSectionView('sec-clientes', { threshold: 0.4 });
+  const { data: homepageData } = useHomepage();
 
   // Duplicar logos para efeito de marquee infinito
   const logos = useMemo(() => [...rawLogos, ...rawLogos], []);
@@ -37,13 +40,26 @@ const ClientsSection = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-3xl text-center">
           <span className="inline-flex items-center gap-2 rounded-full border border-brand-gold/40 bg-brand-gold/20 px-4 py-2 text-xs font-semibold tracking-wide text-brand-dark">
-            Nossa Rede de Confiança
+            {homepageData?.clients?.badge || 'Nossa Rede de Confiança'}
           </span>
           <h2 className="mt-6 text-3xl sm:text-4xl lg:text-5xl font-semibold tracking-tight text-brand-dark leading-tight">
-            Empresas que <span className="text-brand-red">confiam</span> na 24H
+            {homepageData?.clients?.title ? (
+              // try to preserve `confiam` highlight if the string contains that word
+              homepageData.clients.title.includes('confiam') ? (
+                <>
+                  {homepageData.clients.title.split('confiam')[0]}
+                  <span className="text-brand-red">confiam</span>
+                  {homepageData.clients.title.split('confiam')[1]}
+                </>
+              ) : (
+                homepageData.clients.title
+              )
+            ) : (
+              <>Empresas que <span className="text-brand-red">confiam</span> na 24H</>
+            )}
           </h2>
           <p className="mt-4 text-sm sm:text-base font-medium text-brand-dark/70 max-w-xl mx-auto">
-            Parcerias que reforçam nossa credibilidade e resultados consistentes em gestão de viagens corporativas.
+            {homepageData?.clients?.subtitle || 'Parcerias que reforçam nossa credibilidade e resultados consistentes em gestão de viagens corporativas.'}
           </p>
         </div>
 
@@ -71,12 +87,14 @@ const ClientsSection = () => {
                     className="flex items-center justify-center rounded-xl bg-white shadow-sm border border-slate-200/70 h-24 w-40 p-4 hover:shadow-md hover:border-brand-gold/60 transition-colors"
                     whileHover={{ scale: 1.05 }}
                   >
-                    <img
-                      src={`/clientes/${logo}`}
-                      alt={fileNameToAlt(logo)}
-                      className="max-h-full max-w-full object-contain opacity-80 hover:opacity-100 transition-opacity"
-                      loading="lazy"
-                    />
+                      <Image
+                        src={`/clientes/${logo}`}
+                        alt={fileNameToAlt(logo)}
+                        width={160}
+                        height={96}
+                        className="max-h-full max-w-full object-contain opacity-80 hover:opacity-100 transition-opacity"
+                        loading="lazy"
+                      />
                   </motion.div>
                 ))}
               </div>

@@ -1,7 +1,10 @@
 'use client'
 
 import React from 'react';
+import Image from 'next/image';
 import { Timer, FileText, Wallet, Focus, Phone, ArrowRight } from 'lucide-react';
+import { useHomepage } from '../utils/hooks/useSanityData';
+import { resolveImage, portableTextToPlain } from '../utils/lib/sanity';
 import { motion } from 'framer-motion';
 import { useSectionView, registerInteraction } from '../utils/tracking/engagement';
 import { trackSolicitarProposta } from '../utils/gtm';
@@ -33,6 +36,8 @@ const About = () => {
   // dispara section_view quando 50% visível
   useSectionView('sec-about', { threshold: 0.5 });
 
+  const { data: homepageData } = useHomepage();
+
   return (
     <section id="sobre" className="py-16 lg:py-24 relative bg-white">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
@@ -43,9 +48,9 @@ const About = () => {
             <div className="lg:max-w-2xl">
               
               <h1 className="text-[40px] sm:text-[54px] md:text-[64px] lg:text-[68px] font-semibold tracking-tight leading-[0.95] text-slate-900">
-                <span className="block">Gestão Completa</span>
-                <span className="block text-brand-dark">de Viagens</span>
-                <span className="block">Corporativas</span>
+                <span className="block">{homepageData?.about?.title || 'Gestão Completa'}</span>
+                <span className="block text-brand-dark">{homepageData?.about?.subtitle || 'de Viagens'}</span>
+                <span className="block">{homepageData?.about?.tagline || 'Corporativas'}</span>
               </h1>
             </div>
             {/* Right: Status / Experiência */}
@@ -65,12 +70,16 @@ const About = () => {
               transition={{ duration: 0.8 }}
               viewport={{ once: true }}
             >
-              <img
-                src="/images/mala.jpg"
-                alt="Equipe 24H Escritório de Viagens"
-                className="w-full h-[420px] lg:h-[550px] object-cover"
-                style={{ filter: 'sepia(15%) saturate(110%) brightness(90%) contrast(105%)' }}
-              />
+              <div className="relative w-full h-[420px] lg:h-[550px]">
+                <Image
+                  src={resolveImage(homepageData?.about?.image, '/images/mala.jpg')}
+                  alt="Equipe 24H Escritório de Viagens"
+                  fill
+                  className="object-cover"
+                  style={{ filter: 'sepia(15%) saturate(110%) brightness(90%) contrast(105%)' }}
+                  sizes="(min-width: 1024px) 550px, 420px"
+                />
+              </div>
               {/* Badge flutuante preservado (adaptado) */}
               <motion.div
                 className="absolute top-6 left-6 w-[230px] rounded-xl p-4 text-white bg-brand-red shadow-2xl"
@@ -100,15 +109,23 @@ const About = () => {
           {/* Coluna Conteúdo */}
           <div className="lg:col-span-7 flex flex-col h-full">
             <div className="flex flex-col gap-6 text-slate-600">
-              <p className="text-base leading-relaxed max-w-2xl">
-                Você já calculou quantas horas por mês sua equipe gasta organizando viagens? Enquanto pesquisa passagens, reserva hotéis, negocia tarifas e resolve imprevistos, o core business fica em segundo plano.
-              </p>
-              <p className="text-base leading-relaxed max-w-2xl">
-                Nós assumimos 100% da gestão de suas viagens corporativas: destino, voos, acomodações, atividades e transporte. Com rede extensa de parceiros, geramos economia, segurança e personalização.
-              </p>
-              <p className="text-base leading-relaxed max-w-2xl">
-                Atuamos em viagens individuais, grupos e programas de incentivo para equipes e parceiros comerciais.
-              </p>
+              {homepageData?.about?.description && Array.isArray(homepageData.about.description) ? (
+                homepageData.about.description.map((block, i) => (
+                  <p key={i} className="text-base leading-relaxed max-w-2xl">{portableTextToPlain(block)}</p>
+                ))
+              ) : (
+                <>
+                  <p className="text-base leading-relaxed max-w-2xl">
+                    Você já calculou quantas horas por mês sua equipe gasta organizando viagens? Enquanto pesquisa passagens, reserva hotéis, negocia tarifas e resolve imprevistos, o core business fica em segundo plano.
+                  </p>
+                  <p className="text-base leading-relaxed max-w-2xl">
+                    Nós assumimos 100% da gestão de suas viagens corporativas: destino, voos, acomodações, atividades e transporte. Com rede extensa de parceiros, geramos economia, segurança e personalização.
+                  </p>
+                  <p className="text-base leading-relaxed max-w-2xl">
+                    Atuamos em viagens individuais, grupos e programas de incentivo para equipes e parceiros comerciais.
+                  </p>
+                </>
+              )}
 
               {/* Pain Points em grade moderna */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-2">

@@ -1,19 +1,31 @@
 'use client'
 
 import React from 'react';
+import Image from 'next/image';
+import { resolveImage } from '../utils/lib/sanity';
 import { ArrowRight, Play } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { registerInteraction } from '../utils/tracking/engagement';
 import { trackSolicitarProposta } from '../utils/gtm';
+import { useHomepage } from '../utils/hooks/useSanityData';
+import Logo from './Logo';
+import { portableTextToPlain } from '../utils/lib/sanity';
 
 const Hero = () => {
+  const { data: homepageData } = useHomepage();
   return (
     <section id="inicio" className="relative py-10 sm:py-12 lg:py-14">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        <div
-          className="relative overflow-hidden rounded-[40px] sm:rounded-[44px] lg:rounded-[50px] px-6 sm:px-10 md:px-12 lg:px-16 py-12 sm:py-16 md:py-20 lg:py-24 bg-brand-dark bg-center bg-cover bg-no-repeat"
-          style={{ backgroundImage: `url(/hero.jpg)` }}
-        >
+        <div className="relative overflow-hidden rounded-[40px] sm:rounded-[44px] lg:rounded-[50px] px-6 sm:px-10 md:px-12 lg:px-16 py-12 sm:py-16 md:py-20 lg:py-24 bg-brand-dark bg-center bg-cover bg-no-repeat">
+          <div className="absolute inset-0 z-0">
+            <Image
+              src={resolveImage(homepageData?.hero?.backgroundImage, '/hero.jpg')}
+              alt={homepageData?.hero?.title || 'Hero background'}
+              fill
+              className="object-cover"
+              sizes="100vw"
+            />
+          </div>
           {/* Layered overlay for readability while showing more of the photo */}
           <div className="absolute inset-0" aria-hidden="true">
             <div className="absolute inset-0 bg-[#06060a]/35" />
@@ -25,13 +37,7 @@ const Hero = () => {
                 <div className="absolute -right-24 -bottom-24 h-80 w-80 rounded-full opacity-15 blur-3xl bg-brand-gold"></div>
                 {/* Top-right large logo replacing decorative strokes */}
                 <div className="absolute right-6 top-6 hidden md:block">
-                  <img
-                    src="/logo.png"
-                    alt="24H Escritório de Viagens"
-                    width={220}
-                    height={220}
-                    className="w-[220px] h-[220px] object-contain opacity-90"
-                  />
+                  <Logo className="w-[220px] h-[220px]" />
                 </div>
                 
                 </div>
@@ -44,7 +50,9 @@ const Hero = () => {
               transition={{ duration: 0.8, ease: "easeOut" }}
               className="text-white text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold tracking-tight leading-[1.1]"
             >
-              Você cuida do <br className="hidden md:block" /><span className='text-brand-gold'>seu negócio</span><br className="hidden md:block" />e nós das <span className='text-brand-gold'><br className="hidden md:block" />suas viagens</span>
+              {portableTextToPlain(homepageData?.hero?.title) || (
+                <>Você cuida do <br className="hidden md:block" /><span className='text-brand-gold'>seu negócio</span><br className="hidden md:block" />e nós das <span className='text-brand-gold'><br className="hidden md:block" />suas viagens</span></>
+              )}
             </motion.h1>
 
             <motion.p 
@@ -53,7 +61,7 @@ const Hero = () => {
               transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
               className="mt-6 text-white/90 text-[18px] leading-7"
             >
-              Com um atendimento próximo e soluções personalizadas, nossa gestão completa de viagens corporativas ajuda sua empresa a economizar tempo, reduzir custos e aumentar a eficiência.
+              {homepageData?.hero?.subtitle || 'Com um atendimento próximo e soluções personalizadas, nossa gestão completa de viagens corporativas ajuda sua empresa a economizar tempo, reduzir custos e aumentar a eficiência.'}
             </motion.p>
 
             <motion.div 

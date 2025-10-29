@@ -1,10 +1,15 @@
 'use client'
 
 import React from 'react';
+import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { Calendar, MapPin, Users, Clock, Award, ArrowRight } from 'lucide-react';
+import { useEventosPage } from '../../utils/hooks/useSanityData';
+import { resolveImage, portableTextToPlain } from '../../utils/lib/sanity';
 
 const AboutCBEnf = () => {
+  const { data: eventosData } = useEventosPage();
+
   return (
     <section className="py-20 relative bg-white">
       <div className="container mx-auto px-8 lg:px-16">
@@ -16,16 +21,15 @@ const AboutCBEnf = () => {
           className="text-center mb-16"
         >
           <div className="inline-flex items-center gap-2 bg-amber-100 backdrop-blur-sm border border-amber-200 rounded-full py-2 px-4 mb-4">
-            <span className="text-sm font-medium text-amber-700">SOBRE O EVENTO</span>
+            <span className="text-sm font-medium text-amber-700">{eventosData?.hero?.badgeText || 'SOBRE O EVENTO'}</span>
           </div>
           <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-900">
-            75º Congresso Brasileiro de{' '}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#D38E17] to-[#F59E0B]">
-              Enfermagem
-            </span>
+            {portableTextToPlain(eventosData?.hero?.title) || (
+              <>75º Congresso Brasileiro de <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#D38E17] to-[#F59E0B]">Enfermagem</span></>
+            )}
           </h2>
           <p className="text-gray-600 max-w-3xl mx-auto">
-            O maior evento da enfermagem brasileira está chegando a Porto Alegre
+            {eventosData?.hero?.subtitle || 'O maior evento da enfermagem brasileira está chegando a Porto Alegre'}
           </p>
         </motion.div>
 
@@ -71,11 +75,13 @@ const AboutCBEnf = () => {
             className="relative order-1 lg:order-2"
           >
             <div className="relative max-w-md mx-auto">
-              <img
-                src="/cben.webp"
-                alt="Congresso de Enfermagem"
-                className="rounded-2xl shadow-lg w-full h-auto"
-              />
+                <Image
+                  src={resolveImage(eventosData?.hero?.image, '/cben.webp')}
+                  alt="Congresso de Enfermagem"
+                  width={1200}
+                  height={700}
+                  className="rounded-2xl shadow-lg w-full h-auto object-cover"
+                />
               <div className="absolute -bottom-4 -right-4 bg-gradient-to-r from-[#D38E17] to-[#F59E0B] text-white p-4 rounded-xl shadow-lg">
                 <div className="text-sm font-bold">Eventos paralelos:</div>
                 <div className="text-xs mt-1">7º CLAHEN • 8º SENABS</div>

@@ -3,8 +3,12 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
+import Image from 'next/image';
+import { useHomepage } from '../../utils/hooks/useSanityData';
+import { resolveImage } from '../../utils/lib/sanity';
 
 const Experience24H = () => {
+  const { data: homepageData } = useHomepage();
   return (
     <section className="py-14 sm:py-16 lg:py-18 bg-gradient-to-br from-brand-beige to-white">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
@@ -17,21 +21,16 @@ const Experience24H = () => {
             className="order-2 lg:order-1"
           >
             <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight text-slate-900 mb-6">
-              Viva a experiência 24H
+              {homepageData?.experience?.title || 'Viva a experiência 24H'}
             </h2>
 
             <div className="space-y-4 text-slate-600">
               <p className="leading-relaxed">
-                Na 24H, transformamos cada viagem em uma experiência única e sem preocupações.
-                Seja a trabalho, lazer ou para um evento especial, somos sua consultoria
-                estratégica completa em gestão de viagens.
+                {homepageData?.experience?.description || 'Na 24H, transformamos cada viagem em uma experiência única e sem preocupações. Seja a trabalho, lazer ou para um evento especial, somos sua consultoria estratégica completa em gestão de viagens.'}
               </p>
 
               <p className="leading-relaxed">
-                Conte com a nossa ampla rede de fornecedores e a expertise da nossa equipe
-                especializada para garantir excelência em cada etapa da sua viagem. Da seleção
-                de destinos e passagens aéreas à hospedagem, traslados, atividades e roteiros,
-                coordenamos cada detalhe com precisão para você.
+                {homepageData?.experience?.subtitle || 'Conte com a nossa ampla rede de fornecedores e a expertise da nossa equipe especializada para garantir excelência em cada etapa da sua viagem.'}
               </p>
             </div>
 
@@ -56,10 +55,12 @@ const Experience24H = () => {
             <div className="relative">
               <div className="absolute inset-0 bg-gradient-to-r from-brand-gold/20 to-brand-gold/10 rounded-3xl blur-3xl"></div>
               <div className="relative rounded-3xl overflow-hidden shadow-2xl">
-                <img
-                  src="/experience-24h.jpg"
+                <Image
+                  src={resolveImage(homepageData?.experience?.image, '/experience-24h.jpg')}
                   alt="Experiência 24H"
-                  className="w-full h-full object-cover"
+                  fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  style={{ objectFit: 'cover' }}
                 />
               </div>
             </div>

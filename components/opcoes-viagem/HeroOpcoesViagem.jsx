@@ -1,9 +1,12 @@
 'use client'
 
 import React from 'react';
+import Image from 'next/image';
+import { resolveImage } from '../../utils/lib/sanity';
 import { ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useOpcoesViagemPage } from '../../utils/hooks/useSanityData';
+import Logo from '../Logo';
 
 const HeroOpcoesViagem = () => {
   const { data: opcoesData, loading, error } = useOpcoesViagemPage();
@@ -18,10 +21,16 @@ const HeroOpcoesViagem = () => {
   return (
     <section id="inicio" className="relative py-10 sm:py-12 lg:py-14">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        <div
-          className="relative overflow-hidden rounded-[40px] sm:rounded-[44px] lg:rounded-[50px] px-6 sm:px-10 md:px-12 lg:px-16 py-12 sm:py-16 md:py-20 lg:py-24 bg-brand-dark bg-center bg-cover bg-no-repeat"
-          style={{ backgroundImage: `url(/hero-home.jpg)` }}
-        >
+        <div className="relative overflow-hidden rounded-[40px] sm:rounded-[44px] lg:rounded-[50px] px-6 sm:px-10 md:px-12 lg:px-16 py-12 sm:py-16 md:py-20 lg:py-24 bg-brand-dark bg-center bg-cover bg-no-repeat">
+          <div className="absolute inset-0 z-0">
+            <Image
+              src={resolveImage(opcoesData?.hero?.backgroundImage, '/hero-opcoes.jpg')}
+              alt={opcoesData?.hero?.title || 'Hero background'}
+              fill
+              className="object-cover"
+              sizes="100vw"
+            />
+          </div>
           <div className="absolute inset-0" aria-hidden="true">
             <div className="absolute inset-0 bg-[#06060a]/35" />
             <div className="absolute inset-0 bg-gradient-to-r from-[#06060a]/90 via-[#06060a]/60 to-[#06060a]/10" />
@@ -31,13 +40,7 @@ const HeroOpcoesViagem = () => {
             <div className="absolute -left-16 -top-20 h-64 w-64 rounded-full opacity-25 blur-2xl bg-brand-gold"></div>
             <div className="absolute -right-24 -bottom-24 h-80 w-80 rounded-full opacity-15 blur-3xl bg-brand-gold"></div>
             <div className="absolute right-6 top-6 hidden md:block">
-              <img
-                src="/logo.png"
-                alt="24H Escritório de Viagens"
-                width={180}
-                height={180}
-                className="w-[180px] h-[180px] object-contain opacity-90"
-              />
+              <Logo className="w-[180px] h-[180px]" />
             </div>
           </div>
 
@@ -57,7 +60,7 @@ const HeroOpcoesViagem = () => {
               transition={{ duration: 0.8, ease: "easeOut" }}
               className="text-white text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold tracking-tight leading-[1.1]"
             >
-              {heroData.title}
+              {opcoesData?.hero?.title ? opcoesData.hero.title.map(b => b.children?.map(c=>c.text).join('')).join(' ') : heroData.title}
             </motion.h1>
 
             <motion.p
@@ -66,7 +69,7 @@ const HeroOpcoesViagem = () => {
               transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
               className="mt-6 text-white/90 text-[18px] leading-7"
             >
-              {heroData.subtitle}
+              {opcoesData?.hero?.subtitle || heroData.subtitle}
             </motion.p>
 
             <motion.div
