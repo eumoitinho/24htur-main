@@ -4,6 +4,7 @@ import React, { useMemo } from 'react';
 import Image from 'next/image';
 import { useHomepage } from '../utils/hooks/useSanityData';
 import { motion } from 'framer-motion';
+import { portableTextToPlain } from '../utils/lib/sanity';
 import { useSectionView } from '../utils/tracking/engagement';
 
 // Local logos (nome do arquivo -> alt amigável)
@@ -59,7 +60,7 @@ const ClientsSection = () => {
             )}
           </h2>
           <p className="mt-4 text-sm sm:text-base font-medium text-brand-dark/70 max-w-xl mx-auto">
-            {homepageData?.clients?.subtitle || 'Parcerias que reforçam nossa credibilidade e resultados consistentes em gestão de viagens corporativas.'}
+            {portableTextToPlain(homepageData?.clients?.subtitle) || 'Parcerias que reforçam nossa credibilidade e resultados consistentes em gestão de viagens corporativas.'}
           </p>
         </div>
 

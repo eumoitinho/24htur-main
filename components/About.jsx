@@ -55,7 +55,7 @@ const About = () => {
             </div>
             {/* Right: Status / Experiência */}
             <div className="lg:mt-8">
-             <p className="text-sm font-semibold uppercase tracking-[0.09em] text-brand-dark/80 mb-4">Descomplique sua viagem corporativa</p>
+             <p className="text-sm font-semibold uppercase tracking-[0.09em] text-brand-dark/80 mb-4">{homepageData?.about?.badge || 'Descomplique sua viagem corporativa'}</p>
             </div>
           </div>
         </div>

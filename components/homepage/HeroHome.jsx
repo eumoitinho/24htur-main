@@ -3,6 +3,7 @@
 import React from 'react';
 import Image from 'next/image';
 import { resolveImage } from '../../utils/lib/sanity';
+import { portableTextToPlain } from '../../utils/lib/sanity';
 import { ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useHomepage } from '../../utils/hooks/useSanityData';
@@ -59,7 +60,7 @@ const HeroHome = () => {
               transition={{ duration: 0.8, ease: "easeOut" }}
               className="text-white text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold tracking-tight leading-[1.1]"
             >
-              {homepageData?.hero?.title ? homepageData.hero.title.map(b => b.children?.map(c=>c.text).join('')).join(' ') : heroData.title}
+              {portableTextToPlain(homepageData?.hero?.title) || heroData.title}
             </motion.h1>
 
             <motion.p
@@ -68,7 +69,7 @@ const HeroHome = () => {
               transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
               className="mt-6 text-white/90 text-[18px] leading-7"
             >
-              {homepageData?.hero?.subtitle || heroData.subtitle}
+              {portableTextToPlain(homepageData?.hero?.subtitle) || heroData.subtitle}
             </motion.p>
 
             <motion.div
@@ -83,7 +84,7 @@ const HeroHome = () => {
                 whileTap={{ scale: 0.95 }}
                 className="inline-flex items-center rounded-2xl bg-gradient-to-r from-brand-gold to-[#F59E0B] px-8 py-4 text-[15px] font-semibold text-brand-dark shadow-sm hover:shadow-xl transition-all duration-300"
               >
-                {heroData.ctaText}
+                {portableTextToPlain(homepageData?.hero?.ctaText) || heroData.ctaText}
                 <ArrowRight className="ml-2 h-5 w-5" strokeWidth={2} />
               </motion.a>
             </motion.div>

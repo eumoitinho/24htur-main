@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Image from 'next/image';
-import { resolveImage } from '../../utils/lib/sanity';
+import { resolveImage, portableTextToPlain } from '../../utils/lib/sanity';
 import { ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useTrabalheConoscoPage } from '../../utils/hooks/useSanityData';
@@ -60,7 +60,7 @@ const HeroTrabalheConosco = () => {
               transition={{ duration: 0.8, ease: "easeOut" }}
               className="text-white text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold tracking-tight leading-[1.1]"
             >
-              {trabalheData?.hero?.title || heroData.title}
+              {portableTextToPlain(trabalheData?.hero?.title) || heroData.title}
             </motion.h1>
 
             <motion.p
@@ -69,7 +69,7 @@ const HeroTrabalheConosco = () => {
               transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
               className="mt-6 text-white/90 text-[18px] leading-7"
             >
-              {trabalheData?.hero?.subtitle || heroData.subtitle}
+              {portableTextToPlain(trabalheData?.hero?.subtitle) || heroData.subtitle}
             </motion.p>
 
             <motion.div
@@ -84,7 +84,7 @@ const HeroTrabalheConosco = () => {
                 whileTap={{ scale: 0.95 }}
                 className="inline-flex items-center rounded-2xl bg-gradient-to-r from-brand-gold to-[#F59E0B] px-8 py-4 text-[15px] font-semibold text-brand-dark shadow-sm hover:shadow-xl transition-all duration-300"
               >
-                {heroData.ctaText}
+                {portableTextToPlain(trabalheData?.hero?.ctaText) || heroData.ctaText}
                 <ArrowRight className="ml-2 h-5 w-5" strokeWidth={2} />
               </motion.a>
             </motion.div>

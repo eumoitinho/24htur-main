@@ -61,7 +61,7 @@ const Hero = () => {
               transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
               className="mt-6 text-white/90 text-[18px] leading-7"
             >
-              {homepageData?.hero?.subtitle || 'Com um atendimento próximo e soluções personalizadas, nossa gestão completa de viagens corporativas ajuda sua empresa a economizar tempo, reduzir custos e aumentar a eficiência.'}
+              {portableTextToPlain(homepageData?.hero?.subtitle) || 'Com um atendimento próximo e soluções personalizadas, nossa gestão completa de viagens corporativas ajuda sua empresa a economizar tempo, reduzir custos e aumentar a eficiência.'}
             </motion.p>
 
             <motion.div 
@@ -78,7 +78,7 @@ const Hero = () => {
                 onClick={() => { trackSolicitarProposta('hero_cta', { page_section: 'hero'}); registerInteraction('solicitar_proposta'); }}
                 className="inline-flex items-center gap-2 rounded-full px-6 py-3 text-white transition-all hover:bg-white/10 outline outline-1 outline-white/90 focus-visible:outline-2 focus-visible:outline-offset-2 hover:shadow-lg hover:shadow-white/20"
               >
-                <span className="text-sm font-semibold">SOLICITE UMA PROPOSTA PERSONALIZADA!</span>
+                <span className="text-sm font-semibold">{portableTextToPlain(homepageData?.hero?.ctaText) || 'SOLICITE UMA PROPOSTA PERSONALIZADA!'}</span>
                 <ArrowRight className="h-4 w-4" strokeWidth={1.5} />
               </motion.a>
 
