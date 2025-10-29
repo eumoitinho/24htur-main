@@ -1,11 +1,14 @@
+require('dotenv').config();
 const { createClient } = require('@sanity/client');
 
 const client = createClient({
-  projectId: 'kyx4ncqy',
-  dataset: 'production',
+  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || 'kyx4ncqy',
+  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || 'production',
   useCdn: false,
-  token: 'skh0fXGfGbFzV6JobCH6RB35eblxm2wbRbpgeMMgLG3flirT713Z4GnA54R5Qv6ZO7iqSeHU9vj4pfhg2W4KSdGm806ucyK73SP5WtUsreffIvMH6R4gXTMsKlX5OmYFtvmIPpnh7mTV2TXkxJsZUieAGwiSJnFuV250Gddol5FN9iXa2Qnq'
+  token: process.env.SANITY_API_TOKEN || process.env.SANITY_TOKEN
 });
+
+const DRY_RUN = !!process.env.DRY_RUN;
 
 
 async function populateSanity() {
@@ -234,11 +237,17 @@ async function populateSanity() {
     }
   };
 
-  try {
-    const result = await client.createOrReplace(homeData);
-    console.log('✅ Página Home criada:', result._id);
-  } catch (error) {
-    console.error('❌ Erro na página Home:', error.message);
+  // collect docs to allow DRY_RUN printing
+  const docs = [];
+  docs.push(homeData);
+
+  if (!DRY_RUN) {
+    try {
+      const result = await client.createOrReplace(homeData);
+      console.log('✅ Página Home criada:', result._id);
+    } catch (error) {
+      console.error('❌ Erro na página Home:', error.message);
+    }
   }
 
   // Página Sobre
@@ -288,11 +297,14 @@ async function populateSanity() {
     }
   };
 
-  try {
-    const result = await client.createOrReplace(sobreData);
-    console.log('✅ Página Sobre criada:', result._id);
-  } catch (error) {
-    console.error('❌ Erro na página Sobre:', error.message);
+  docs.push(sobreData);
+  if (!DRY_RUN) {
+    try {
+      const result = await client.createOrReplace(sobreData);
+      console.log('✅ Página Sobre criada:', result._id);
+    } catch (error) {
+      console.error('❌ Erro na página Sobre:', error.message);
+    }
   }
 
   // Página Equipe
@@ -366,14 +378,24 @@ async function populateSanity() {
     ]
   };
 
-  try {
-    const result = await client.createOrReplace(equipeData);
-    console.log('✅ Página Equipe criada:', result._id);
-  } catch (error) {
-    console.error('❌ Erro na página Equipe:', error.message);
+  docs.push(equipeData);
+
+  if (!DRY_RUN) {
+    try {
+      const result = await client.createOrReplace(equipeData);
+      console.log('✅ Página Equipe criada:', result._id);
+    } catch (error) {
+      console.error('❌ Erro na página Equipe:', error.message);
+    }
+  }
+
+  if (DRY_RUN) {
+    // Print array of docs for comparison (no writes)
+    console.log(JSON.stringify(docs, null, 2));
+    return;
   }
 
   console.log('🎉 População concluída!');
 }
 
-populateSanity().catch(console.error);
+if (require.main === module) populateSanity().catch(console.error);
