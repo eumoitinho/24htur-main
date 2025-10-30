@@ -4,6 +4,8 @@ import React, { useState, useEffect } from 'react';
 import { Mail, Phone, MapPin, Building2, User, AtSign, Send, CheckCircle2, RotateCw, Calendar } from 'lucide-react';
 import { trackFormSubmit, trackPhoneClick, trackEmailClick } from '../../utils/gtm';
 import { initFormTracking, registerInteraction } from '../../utils/tracking/engagement';
+import { useEventosPage } from '../../utils/hooks/useSanityData';
+import { portableTextToPlain } from '../../utils/lib/sanity';
 
 const ContactEventos = () => {
   const [formData, setFormData] = useState({
@@ -77,6 +79,26 @@ const ContactEventos = () => {
     initFormTracking('#form-contato-eventos');
   }, []);
 
+  const { data: eventosData } = useEventosPage();
+
+  const contact = eventosData?.contact || {
+    badge: 'Contato',
+    title: 'Planejamento completo para Eventos Corporativos',
+    paragraph: 'Organizamos viagens para congressos, conferências, treinamentos e eventos corporativos. Cuidamos de cada detalhe para que sua equipe aproveite ao máximo.',
+    features: ["Hospedagem próxima aos locais de evento", "Gestão completa de grupos", "Transfer e logística personalizada", "Suporte local durante o evento", "Relatórios detalhados de custos"],
+    phone: '(51) 3516-0098',
+    email: 'eventos@24h.tur.br',
+    offices: ['Porto Alegre, RS – Av. Carlos Gomes 1672', 'Alphaville, SP – Alameda Rio Negro 503', 'Florianópolis, SC – Av. Luiz Boiteaux Piazza 1302']
+  };
+
+  const badgeText = portableTextToPlain(contact.badge) || contact.badge;
+  const titleText = portableTextToPlain(contact.title) || contact.title;
+  const paragraphText = portableTextToPlain(contact.paragraph) || contact.paragraph;
+  const features = Array.isArray(contact.features) ? contact.features : [];
+  const phoneNumber = eventosData?.contact?.phone || contact.phone;
+  const emailAddress = eventosData?.contact?.email || contact.email;
+  const offices = Array.isArray(contact.offices) ? contact.offices : contact.offices ? [contact.offices] : [];
+
   return (
     <section id="contato" className="relative py-24 sm:py-28 bg-gradient-to-b from-brand-dark via-brand-dark to-black overflow-hidden">
       {/* Ambient gradients */}
@@ -86,13 +108,13 @@ const ContactEventos = () => {
         <div className="mb-14 text-center max-w-3xl mx-auto">
           <div className="inline-flex items-center gap-2 rounded-full bg-brand-gold/15 px-5 py-2 ring-1 ring-inset ring-brand-gold/30">
             <Mail className="h-4 w-4 text-brand-gold" strokeWidth={1.5} />
-            <span className="text-xs font-semibold tracking-[0.15em] text-brand-gold uppercase">Contato</span>
+            <span className="text-xs font-semibold tracking-[0.15em] text-brand-gold uppercase">{badgeText}</span>
           </div>
           <h2 className="mt-6 text-4xl sm:text-5xl font-semibold tracking-tight text-white leading-tight">
-            Planejamento completo para <span className="text-brand-gold">Eventos Corporativos</span>
+            {titleText.split(' ').slice(0, -2).join(' ')} <span className="text-brand-gold">{titleText.split(' ').slice(-2).join(' ')}</span>
           </h2>
           <p className="mt-4 text-lg text-white/70 leading-relaxed">
-            Organizamos viagens para congressos, conferências, treinamentos e eventos corporativos. Cuidamos de cada detalhe para que sua equipe aproveite ao máximo.
+            {paragraphText}
           </p>
         </div>
 
@@ -108,10 +130,10 @@ const ContactEventos = () => {
                 Mais de 15 anos organizando viagens para eventos corporativos, congressos e conferências. Garantimos que sua equipe chegue descansada e pronta para o evento.
               </p>
               <ul className="mt-8 space-y-3 text-[15px]">
-                {["Hospedagem próxima aos locais de evento", "Gestão completa de grupos", "Transfer e logística personalizada", "Suporte local durante o evento", "Relatórios detalhados de custos"].map(item => (
-                  <li key={item} className="flex items-center gap-3 text-white/85">
+                {features.map((item, idx) => (
+                  <li key={idx} className="flex items-center gap-3 text-white/85">
                     <span className="h-1.5 w-1.5 rounded-full bg-brand-gold shadow-[0_0_0_3px_rgba(245,197,24,0.25)]" />
-                    <span>{item}</span>
+                    <span>{portableTextToPlain(item) || item}</span>
                   </li>
                 ))}
               </ul>
@@ -124,9 +146,7 @@ const ContactEventos = () => {
                   </span>
                   <div>
                     <div className="text-xs uppercase tracking-wide text-white/50">Telefone</div>
-                    <span className="text-[15px] font-semibold text-white/90">
-                      (51) 3516-0098
-                    </span>
+                    <span className="text-[15px] font-semibold text-white/90">{phoneNumber}</span>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
@@ -135,9 +155,7 @@ const ContactEventos = () => {
                   </span>
                   <div>
                     <div className="text-xs uppercase tracking-wide text-white/50">E-mail</div>
-                    <span className="text-[15px] font-semibold text-white/90">
-                      eventos@24h.tur.br
-                    </span>
+                    <span className="text-[15px] font-semibold text-white/90">{emailAddress}</span>
                   </div>
                 </div>
               </div>
@@ -145,9 +163,9 @@ const ContactEventos = () => {
               <div className="mt-10">
                 <div className="text-xs uppercase tracking-wide text-white/50 mb-2">Escritórios</div>
                 <div className="space-y-2 text-[13px] font-medium text-white/80">
-                  <p>Porto Alegre, RS – Av. Carlos Gomes 1672</p>
-                  <p>Alphaville, SP – Alameda Rio Negro 503</p>
-                  <p>Florianópolis, SC – Av. Luiz Boiteaux Piazza 1302</p>
+                  {offices.map((o, i) => (
+                    <p key={i}>{portableTextToPlain(o) || o}</p>
+                  ))}
                 </div>
               </div>
             </div>

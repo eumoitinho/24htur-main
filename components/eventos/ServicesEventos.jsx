@@ -3,9 +3,13 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Users, Plane, Building, Car, MapPin, Coffee } from 'lucide-react';
+import { useEventosPage } from '../../utils/hooks/useSanityData';
+import { portableTextToPlain } from '../../utils/lib/sanity';
 
 const ServicesEventos = () => {
-  const servicos = [
+  const { data: eventosData } = useEventosPage();
+
+  const defaultServicos = [
     {
       icon: Users,
       titulo: 'Atendimento a palestrantes e congressistas',
@@ -37,6 +41,8 @@ const ServicesEventos = () => {
       descricao: 'Gerenciamos a parte gastronômica do seu evento, desde coffee breaks a jantares de gala, com opções que se encaixam no seu perfil e orçamento.'
     }
   ];
+
+  const servicos = eventosData?.services && Array.isArray(eventosData.services) ? eventosData.services : defaultServicos;
 
   return (
     <section className="py-20">
@@ -71,8 +77,8 @@ const ServicesEventos = () => {
                 <div className="bg-gradient-to-br from-[#D38E17] to-[#F59E0B] w-16 h-16 rounded-full flex items-center justify-center mb-4 text-white">
                   <Icon className="w-8 h-8" />
                 </div>
-                <h3 className="text-xl font-bold mb-3 text-gray-900">{servico.titulo}</h3>
-                <p className="text-gray-600 leading-relaxed">{servico.descricao}</p>
+                <h3 className="text-xl font-bold mb-3 text-gray-900">{portableTextToPlain(servico.titulo) || servico.titulo}</h3>
+                <p className="text-gray-600 leading-relaxed">{portableTextToPlain(servico.descricao) || servico.descricao}</p>
               </motion.div>
             );
           })}

@@ -4,9 +4,14 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import Logo from '../Logo';
 import { useEventosPage } from '../../utils/hooks/useSanityData';
+import { portableTextToPlain } from '../../utils/lib/sanity';
 
 const HeroEventos = () => {
   const { data: eventosData } = useEventosPage();
+
+  const titleText = portableTextToPlain(eventosData?.title) || 'VIAGENS PARA';
+  const subtitleText = portableTextToPlain(eventosData?.subtitle) || 'EVENTOS';
+  const introText = portableTextToPlain(eventosData?.intro) || 'Somos especialistas em transformar a complexidade da organização de viagens para eventos em uma experiência fluida e tranquila.';
   return (
     <section className="relative py-20 bg-gradient-to-br from-gray-900 to-gray-800 text-white">
       <div className="absolute inset-0 bg-gradient-to-br from-[#D38E17]/10 via-transparent to-[#D38E17]/10 z-0"></div>
@@ -23,14 +28,14 @@ const HeroEventos = () => {
           </div>
 
           <h1 className="text-4xl md:text-6xl font-bold mb-6">
-            {eventosData?.title || 'VIAGENS PARA'}{' '}
+            {titleText}{' '}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#D38E17] to-[#F59E0B]">
-              {eventosData?.subtitle || 'EVENTOS'}
+              {subtitleText}
             </span>
           </h1>
 
           <p className="text-lg text-gray-200 leading-relaxed">
-            {eventosData?.intro || 'Somos especialistas em transformar a complexidade da organização de viagens para eventos em uma experiência fluida e tranquila.'}
+            {introText}
           </p>
         </motion.div>
       </div>
