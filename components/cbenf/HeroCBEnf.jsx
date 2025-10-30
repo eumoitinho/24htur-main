@@ -81,10 +81,10 @@ const HeroCBEnf = () => {
           >
             <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
             <Calendar className="w-14 h-14 text-white mb-4 mx-auto drop-shadow-lg group-hover:scale-110 transition-transform duration-300" />
-            <h3 className="font-black mb-2 text-white drop-shadow-lg">Datas do Evento</h3>
+            <h3 className="font-black mb-2 text-white drop-shadow-lg">{portableTextToPlain(homepageData?.hero?.datesTitle) || 'Datas do Evento'}</h3>
             <p className="text-sm text-white/90 leading-relaxed drop-shadow-md font-semibold">
-              <strong>Pré-congresso:</strong> 22-23 Nov<br />
-              <strong>Evento:</strong> 23-26 Nov 2025
+              <strong>{portableTextToPlain(homepageData?.hero?.preCongressLabel) || 'Pré-congresso:'}</strong> {homepageData?.hero?.preCongressDates || '22-23 Nov'}<br />
+              <strong>{portableTextToPlain(homepageData?.hero?.eventLabel) || 'Evento:'}</strong> {homepageData?.hero?.eventDates || '23-26 Nov 2025'}
             </p>
             <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-[#ae2724] to-[#DC2626] opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
           </motion.div>
@@ -96,10 +96,10 @@ const HeroCBEnf = () => {
           >
             <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
             <MapPin className="w-14 h-14 text-white mb-4 mx-auto drop-shadow-lg group-hover:scale-110 transition-transform duration-300" />
-            <h3 className="font-black mb-2 text-white drop-shadow-lg">Local</h3>
+            <h3 className="font-black mb-2 text-white drop-shadow-lg">{portableTextToPlain(homepageData?.hero?.locationTitle) || 'Local'}</h3>
             <p className="text-sm text-white/90 leading-relaxed drop-shadow-md font-semibold">
-              <strong>Campus da PUCRS</strong><br />
-              Porto Alegre - RS
+              <strong>{homepageData?.hero?.locationName || 'Campus da PUCRS'}</strong><br />
+              {homepageData?.hero?.locationCity || 'Porto Alegre - RS'}
             </p>
             <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-[#ae2724] to-[#DC2626] opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
           </motion.div>
@@ -111,10 +111,10 @@ const HeroCBEnf = () => {
           >
             <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
             <Users className="w-14 h-14 text-white mb-4 mx-auto drop-shadow-lg group-hover:scale-110 transition-transform duration-300" />
-            <h3 className="font-black mb-2 text-white drop-shadow-lg">Participantes</h3>
+            <h3 className="font-black mb-2 text-white drop-shadow-lg">{portableTextToPlain(homepageData?.hero?.participantsTitle) || 'Participantes'}</h3>
             <p className="text-sm text-white/90 leading-relaxed drop-shadow-md font-semibold">
-              <strong>Profissionais e estudantes</strong><br />
-              de todo o Brasil
+              <strong>{homepageData?.hero?.participantsMain || 'Profissionais e estudantes'}</strong><br />
+              {homepageData?.hero?.participantsSub || 'de todo o Brasil'}
             </p>
             <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-[#ae2724] to-[#DC2626] opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
           </motion.div>

@@ -46,11 +46,11 @@ const BenefitsOpcoesViagem = () => {
           viewport={{ once: true }}
         >
           <h2 className="text-4xl md:text-5xl font-bold text-brand-dark mb-8">
-            Por que Escolher a 24H?
+            {opcoesViagemData?.intro?.title || 'Por que Escolher a 24H?'}
           </h2>
           <div className="w-24 h-1 bg-brand-gold mx-auto mb-8" />
           <p className="text-xl text-gray-700 max-w-3xl mx-auto">
-            Mais de 20 anos de experiência garantindo viagens perfeitas
+            {opcoesViagemData?.intro?.description || 'Mais de 20 anos de experiência garantindo viagens perfeitas'}
           </p>
         </motion.div>
 

@@ -3,9 +3,13 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Star } from 'lucide-react';
+import { useHomepage } from '../../utils/hooks/useSanityData';
+import { portableTextToPlain } from '../../utils/lib/sanity';
 
 const TestimonialsHome = () => {
-  const testimonials = [
+  const { data: homepageData } = useHomepage();
+
+  const defaultTestimonials = [
     {
       name: 'Christian Bittencourt',
       text: 'Escritório sempre atento às necessidades dos clientes, e muito proativo nas resoluções de toda e qualquer situação.',
@@ -23,15 +27,17 @@ const TestimonialsHome = () => {
     }
   ];
 
+  const testimonials = homepageData?.testimonials || defaultTestimonials;
+
   return (
     <section className="py-14 sm:py-16 lg:py-18 bg-gradient-to-br from-slate-50 to-white">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="text-center mb-12">
           <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight text-slate-900 mb-4">
-            DEPOIMENTOS
+            {portableTextToPlain(homepageData?.testimonials?.title) || 'DEPOIMENTOS'}
           </h2>
           <p className="text-lg text-slate-600">
-            O que nossos clientes dizem sobre nós
+            {portableTextToPlain(homepageData?.testimonials?.subtitle) || 'O que nossos clientes dizem sobre nós'}
           </p>
         </div>
 
@@ -54,8 +60,8 @@ const TestimonialsHome = () => {
                 ))}
               </div>
 
-              <p className="text-slate-600 mb-6 leading-relaxed italic">
-                &ldquo;{testimonial.text}&rdquo;
+                <p className="text-slate-600 mb-6 leading-relaxed italic">
+                &ldquo;{portableTextToPlain(testimonial.text)}&rdquo;
               </p>
 
               <div className="flex items-center gap-3">

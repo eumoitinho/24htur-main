@@ -3,9 +3,13 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { HeadphonesIcon, TrendingDown, Users, User, Globe, ChartBar } from 'lucide-react';
+import { useHomepage } from '../../utils/hooks/useSanityData';
+import { portableTextToPlain } from '../../utils/lib/sanity';
 
 const WhyChooseHome = () => {
-  const reasons = [
+  const { data: homepageData } = useHomepage();
+
+  const defaultReasons = [
     {
       icon: HeadphonesIcon,
       title: 'Disponibilidade 24/7',
@@ -38,12 +42,14 @@ const WhyChooseHome = () => {
     }
   ];
 
+  const reasons = homepageData?.whyChoose?.reasons || defaultReasons;
+
   return (
     <section className="py-14 sm:py-16 lg:py-18">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="text-center mb-12">
           <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight text-slate-900 mb-4">
-            Por que escolher a 24H?
+            {portableTextToPlain(homepageData?.whyChoose?.title) || 'Por que escolher a 24H?'}
           </h2>
         </div>
 
@@ -64,11 +70,11 @@ const WhyChooseHome = () => {
                 </div>
 
                 <h3 className="text-lg font-semibold text-slate-900 mb-2">
-                  {reason.title}
+                  {portableTextToPlain(reason.title)}
                 </h3>
 
                 <p className="text-sm text-slate-600 leading-relaxed">
-                  {reason.description}
+                  {portableTextToPlain(reason.description)}
                 </p>
               </motion.div>
             );

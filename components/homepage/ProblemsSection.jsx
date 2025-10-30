@@ -3,9 +3,13 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Clock, TrendingDown, AlertCircle, FileText, Map, Globe } from 'lucide-react';
+import { useHomepage } from '../../utils/hooks/useSanityData';
+
 
 const ProblemsSection = () => {
-  const problems = [
+  const { data: homepageData } = useHomepage();
+
+  const defaultProblems = [
     {
       icon: Clock,
       title: 'Sem tempo para planejar?',
@@ -38,12 +42,14 @@ const ProblemsSection = () => {
     }
   ];
 
+  const problems = homepageData?.problems || defaultProblems;
+
   return (
     <section className="py-14 sm:py-16 lg:py-18">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="max-w-3xl">
           <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight text-slate-900">
-            Descomplique sua rotina de viagens com quem entende do assunto
+            {homepageData?.problems?.title || 'Descomplique sua rotina de viagens com quem entende do assunto'}
           </h2>
         </div>
 

@@ -3,9 +3,13 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Clock, HeadphonesIcon, CheckCircle, TrendingUp } from 'lucide-react';
+import { useHomepage } from '../../utils/hooks/useSanityData';
+import { portableTextToPlain } from '../../utils/lib/sanity';
 
 const MetricsHome = () => {
-  const metrics = [
+  const { data: homepageData } = useHomepage();
+
+  const defaultMetrics = [
     {
       icon: Clock,
       value: '+20',
@@ -27,6 +31,8 @@ const MetricsHome = () => {
       label: 'operações executadas com sucesso',
     },
   ];
+
+  const metrics = homepageData?.metrics || defaultMetrics;
 
   return (
     <section className="py-14 sm:py-16 lg:py-18 bg-gradient-to-br from-slate-50 to-white">
@@ -50,7 +56,7 @@ const MetricsHome = () => {
                   {metric.value}
                 </div>
                 <div className="text-sm lg:text-base text-slate-600">
-                  {metric.label}
+                  {portableTextToPlain(metric.label)}
                 </div>
               </motion.div>
             );

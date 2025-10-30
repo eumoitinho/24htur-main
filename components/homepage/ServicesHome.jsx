@@ -39,7 +39,7 @@ const ServicesHome = () => {
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="text-center mb-12">
           <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight text-slate-900 mb-4">
-            NOSSOS SERVIÇOS
+            {homepageData?.servicesTitle || 'NOSSOS SERVIÇOS'}
           </h2>
         </div>
 

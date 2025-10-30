@@ -40,7 +40,7 @@ const CTAOpcoesViagem = () => {
             href="/corporate"
             className="inline-flex items-center space-x-2 bg-brand-gold hover:bg-brand-gold/90 text-white px-8 py-4 rounded-full text-lg font-semibold transition-colors duration-300"
           >
-            <span>Viagens Corporativas</span>
+            <span>{opcoesViagemData?.cta?.corporateLabel || 'Viagens Corporativas'}</span>
             <ArrowRight className="w-5 h-5" />
           </a>
 
@@ -48,7 +48,7 @@ const CTAOpcoesViagem = () => {
             href="/lazer"
             className="inline-flex items-center space-x-2 border-2 border-white hover:bg-white hover:text-brand-dark text-white px-8 py-4 rounded-full text-lg font-semibold transition-colors duration-300"
           >
-            <span>Viagens de Lazer</span>
+            <span>{opcoesViagemData?.cta?.leisureLabel || 'Viagens de Lazer'}</span>
             <ArrowRight className="w-5 h-5" />
           </a>
         </motion.div>
@@ -60,15 +60,15 @@ const CTAOpcoesViagem = () => {
           transition={{ duration: 0.8, delay: 0.4 }}
           viewport={{ once: true }}
         >
-          <p className="text-white/90 mb-4">Ou fale diretamente conosco:</p>
+          <p className="text-white/90 mb-4">{opcoesViagemData?.cta?.contactLabel || 'Ou fale diretamente conosco:'}</p>
           <div className="flex flex-col md:flex-row justify-center items-center space-y-2 md:space-y-0 md:space-x-8">
-            <a href="tel:(51) 3516-0098" className="flex items-center space-x-2 text-brand-gold hover:text-brand-gold/80">
+            <a href={`tel:${opcoesViagemData?.contact?.phone || '(51) 3516-0098'}`} className="flex items-center space-x-2 text-brand-gold hover:text-brand-gold/80">
               <Phone className="w-5 h-5" />
-              <span>(51) 3516-0098</span>
+              <span>{opcoesViagemData?.contact?.phone || '(51) 3516-0098'}</span>
             </a>
-            <a href="mailto:contato@24h.tur.br" className="flex items-center space-x-2 text-brand-gold hover:text-brand-gold/80">
+            <a href={`mailto:${opcoesViagemData?.contact?.email || 'contato@24h.tur.br'}`} className="flex items-center space-x-2 text-brand-gold hover:text-brand-gold/80">
               <Mail className="w-5 h-5" />
-              <span>contato@24h.tur.br</span>
+              <span>{opcoesViagemData?.contact?.email || 'contato@24h.tur.br'}</span>
             </a>
           </div>
         </motion.div>
