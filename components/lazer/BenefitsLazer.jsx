@@ -1,11 +1,15 @@
 'use client'
 
 import React from 'react';
+import { useLazerPage } from '../../utils/hooks/useSanityData';
+import { portableTextToPlain } from '../../utils/lib/sanity';
 import { motion } from 'framer-motion';
 import { CheckCircle } from 'lucide-react';
 
 const BenefitsLazer = () => {
-  const benefits = [
+  const { data: lazerData } = useLazerPage();
+
+  const defaultBenefits = [
     {
       title: 'Planejamento Personalizado',
       description: 'Cada viagem é única, criada especialmente para atender seus desejos e necessidades.'
@@ -32,6 +36,8 @@ const BenefitsLazer = () => {
     }
   ];
 
+  const benefits = lazerData?.benefits && Array.isArray(lazerData.benefits) ? lazerData.benefits : defaultBenefits;
+
   return (
     <section className="py-14 sm:py-16 lg:py-18">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
@@ -55,11 +61,11 @@ const BenefitsLazer = () => {
                 <CheckCircle className="w-6 h-6 text-brand-gold mt-1" />
               </div>
               <div>
-                <h3 className="text-lg font-semibold text-slate-900 mb-2">
-                  {benefit.title}
+                  <h3 className="text-lg font-semibold text-slate-900 mb-2">
+                  {portableTextToPlain(benefit.title) || benefit.title}
                 </h3>
                 <p className="text-sm text-slate-600 leading-relaxed">
-                  {benefit.description}
+                  {portableTextToPlain(benefit.description) || benefit.description}
                 </p>
               </div>
             </motion.div>
