@@ -3,6 +3,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { MapPin, Clock, Users, Briefcase } from 'lucide-react';
 import { useTrabalheConoscoPage } from '../../utils/hooks/useSanityData';
+import { portableTextToPlain } from '../../utils/lib/sanity';
 
 const OpenPositionsTrabalheConosco = () => {
   const { data: trabalheConoscoData, loading, error } = useTrabalheConoscoPage();
@@ -51,22 +52,25 @@ const OpenPositionsTrabalheConosco = () => {
 
   const positions = trabalheConoscoData?.positions || defaultPositions;
 
+  const titleText = portableTextToPlain(trabalheConoscoData?.positionsTitle) || 'Vagas Disponíveis';
+  const leadText = portableTextToPlain(trabalheConoscoData?.positionsLead) || 'Confira as oportunidades abertas e candidate-se à vaga que mais combina com seu perfil';
+
   return (
     <section id="vagas" className="py-20 bg-brand-beige">
       <div className="container mx-auto px-4">
-        <motion.div
-          className="text-center mb-16"
+          <motion.div
+            className="text-center mb-16"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
         >
           <h2 className="text-4xl md:text-5xl font-bold text-brand-dark mb-8">
-            Vagas Disponíveis
+            {titleText}
           </h2>
           <div className="w-24 h-1 bg-brand-gold mx-auto mb-8" />
           <p className="text-xl text-gray-700 max-w-3xl mx-auto">
-            Confira as oportunidades abertas e candidate-se à vaga que mais combina com seu perfil
+            {leadText}
           </p>
         </motion.div>
 
@@ -82,21 +86,21 @@ const OpenPositionsTrabalheConosco = () => {
             >
               <div className="mb-6">
                 <h3 className="text-2xl font-bold text-brand-dark mb-3">
-                  {position.title}
+                  {portableTextToPlain(position.title) || position.title}
                 </h3>
 
                 <div className="flex flex-wrap gap-4 text-sm text-gray-600 mb-4">
                   <div className="flex items-center space-x-2">
                     <MapPin className="w-4 h-4 text-brand-gold" />
-                    <span>{position.location}</span>
+                    <span>{portableTextToPlain(position.location) || position.location}</span>
                   </div>
                   <div className="flex items-center space-x-2">
                     <Clock className="w-4 h-4 text-brand-gold" />
-                    <span>{position.type}</span>
+                    <span>{portableTextToPlain(position.type) || position.type}</span>
                   </div>
                   <div className="flex items-center space-x-2">
                     <Briefcase className="w-4 h-4 text-brand-gold" />
-                    <span>{position.department}</span>
+                    <span>{portableTextToPlain(position.department) || position.department}</span>
                   </div>
                 </div>
               </div>
@@ -107,7 +111,7 @@ const OpenPositionsTrabalheConosco = () => {
                   {position.requirements.map((req, reqIndex) => (
                     <li key={reqIndex} className="flex items-start text-sm text-gray-600">
                       <div className="w-2 h-2 bg-brand-gold rounded-full mr-3 mt-2 flex-shrink-0" />
-                      {req}
+                      {portableTextToPlain(req) || req}
                     </li>
                   ))}
                 </ul>

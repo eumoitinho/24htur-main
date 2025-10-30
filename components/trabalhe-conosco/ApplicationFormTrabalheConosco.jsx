@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Send, Upload, User, Mail, Phone, FileText } from 'lucide-react';
 import { useTrabalheConoscoPage } from '../../utils/hooks/useSanityData';
+import { portableTextToPlain } from '../../utils/lib/sanity';
 
 const ApplicationFormTrabalheConosco = () => {
   const { data: trabalheConoscoData, loading, error } = useTrabalheConoscoPage();
@@ -40,6 +41,10 @@ const ApplicationFormTrabalheConosco = () => {
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error loading content</div>;
 
+  const heading = portableTextToPlain(trabalheConoscoData?.applyHeading) || 'Candidate-se Agora';
+  const lead = portableTextToPlain(trabalheConoscoData?.applyLead) || 'Preencha o formulário abaixo e anexe seu currículo. Nossa equipe de RH analisará seu perfil';
+  const submitText = trabalheConoscoData?.submitText || 'Enviar Candidatura';
+
   return (
     <section id="candidatura" className="py-20 bg-white">
       <div className="container mx-auto px-4">
@@ -51,11 +56,11 @@ const ApplicationFormTrabalheConosco = () => {
           viewport={{ once: true }}
         >
           <h2 className="text-4xl md:text-5xl font-bold text-brand-dark mb-8">
-            Candidate-se Agora
+            {heading}
           </h2>
           <div className="w-24 h-1 bg-brand-gold mx-auto mb-8" />
           <p className="text-xl text-gray-700 max-w-3xl mx-auto">
-            Preencha o formulário abaixo e anexe seu currículo. Nossa equipe de RH analisará seu perfil
+            {lead}
           </p>
         </motion.div>
 
@@ -156,7 +161,7 @@ const ApplicationFormTrabalheConosco = () => {
               className="w-full bg-brand-gold hover:bg-brand-gold/90 text-white py-4 rounded-lg font-semibold transition-colors duration-300 flex items-center justify-center space-x-2"
             >
               <Send className="w-5 h-5" />
-              <span>Enviar Candidatura</span>
+              <span>{submitText}</span>
             </button>
           </form>
 

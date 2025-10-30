@@ -3,6 +3,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Heart, TrendingUp, Users, Coffee, Award, MapPin } from 'lucide-react';
 import { useTrabalheConoscoPage } from '../../utils/hooks/useSanityData';
+import { portableTextToPlain } from '../../utils/lib/sanity';
 
 const BenefitsTrabalheConosco = () => {
   const { data: trabalheConoscoData, loading, error } = useTrabalheConoscoPage();
@@ -81,10 +82,10 @@ const BenefitsTrabalheConosco = () => {
                   <IconComponent className="w-8 h-8 text-brand-gold" />
                 </div>
                 <h3 className="text-xl font-bold text-brand-dark mb-4">
-                  {benefit.title}
+                  {portableTextToPlain(benefit.title) || benefit.title}
                 </h3>
                 <p className="text-gray-600 leading-relaxed">
-                  {benefit.description}
+                  {portableTextToPlain(benefit.description) || benefit.description}
                 </p>
               </motion.div>
             );
