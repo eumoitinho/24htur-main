@@ -3,9 +3,13 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Plane, Hotel, Map, Camera, Shield, Globe } from 'lucide-react';
+import { useLazerPage } from '../../utils/hooks/useSanityData';
+import { portableTextToPlain } from '../../utils/lib/sanity';
 
 const ServicesLazer = () => {
-  const services = [
+  const { data: lazerData } = useLazerPage();
+
+  const defaultServices = [
     {
       icon: Plane,
       title: 'Passagens Aéreas',
@@ -38,6 +42,10 @@ const ServicesLazer = () => {
     }
   ];
 
+  const services = lazerData?.services && Array.isArray(lazerData.services)
+    ? lazerData.services
+    : defaultServices;
+
   return (
     <section className="py-14 sm:py-16 lg:py-18">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
@@ -67,11 +75,11 @@ const ServicesLazer = () => {
                 </div>
 
                 <h3 className="text-xl font-semibold text-slate-900 mb-3">
-                  {service.title}
+                  {portableTextToPlain(service.title) || service.title}
                 </h3>
 
                 <p className="text-sm text-slate-600 leading-relaxed">
-                  {service.description}
+                  {portableTextToPlain(service.description) || service.description}
                 </p>
               </motion.div>
             );

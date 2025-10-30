@@ -2,9 +2,13 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
+import { useLazerPage } from '../../utils/hooks/useSanityData';
+import { portableTextToPlain } from '../../utils/lib/sanity';
 
 const DestinationsLazer = () => {
-  const destinations = [
+  const { data: lazerData } = useLazerPage();
+
+  const defaultDestinations = [
     {
       name: 'Europa',
       description: 'Roteiros clássicos e experiências autênticas pelo velho continente',
@@ -37,6 +41,10 @@ const DestinationsLazer = () => {
     }
   ];
 
+  const destinations = lazerData?.destinations && Array.isArray(lazerData.destinations)
+    ? lazerData.destinations
+    : defaultDestinations;
+
   return (
     <section className="py-14 sm:py-16 lg:py-18 bg-gradient-to-br from-slate-50 to-white">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
@@ -62,8 +70,8 @@ const DestinationsLazer = () => {
               <div className="aspect-[4/3] bg-gradient-to-br from-brand-gold/20 to-brand-gold/10 relative overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent z-10"></div>
                 <div className="absolute bottom-4 left-4 right-4 z-20 text-white">
-                  <h3 className="text-2xl font-bold mb-2">{destination.name}</h3>
-                  <p className="text-sm text-white/90">{destination.description}</p>
+                  <h3 className="text-2xl font-bold mb-2">{portableTextToPlain(destination.name) || destination.name}</h3>
+                  <p className="text-sm text-white/90">{portableTextToPlain(destination.description) || destination.description}</p>
                 </div>
               </div>
             </motion.div>

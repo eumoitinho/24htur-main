@@ -4,6 +4,8 @@ import React, { useState, useEffect } from 'react';
 import { Mail, Phone, MapPin, Building2, User, AtSign, Send, CheckCircle2, RotateCw } from 'lucide-react';
 import { trackFormSubmit, trackPhoneClick, trackEmailClick } from '../../utils/gtm';
 import { initFormTracking, registerInteraction } from '../../utils/tracking/engagement';
+import { useLazerPage } from '../../utils/hooks/useSanityData';
+import { portableTextToPlain } from '../../utils/lib/sanity';
 
 const ContactLazer = () => {
   const [formData, setFormData] = useState({
@@ -76,6 +78,26 @@ const ContactLazer = () => {
     initFormTracking('#form-contato-lazer');
   }, []);
 
+  const { data: lazerData } = useLazerPage();
+
+  const contact = lazerData?.contact || {
+    badge: 'Contato',
+    title: 'Planeje sua próxima Viagem de Lazer',
+    paragraph: 'Roteiros personalizados, experiências únicas e momentos inesquecíveis. Conte com nossa expertise para criar a viagem perfeita para você e sua família.',
+    features: ["Roteiros personalizados", "Suporte 24/7 durante a viagem", "Parcerias exclusivas", "Experiências locais autênticas", "Planejamento completo"],
+    phone: '(51) 3516-0098',
+    email: 'lazer@24h.tur.br',
+    offices: ['Porto Alegre, RS – Av. Carlos Gomes 1672', 'Alphaville, SP – Alameda Rio Negro 503', 'Florianópolis, SC – Av. Luiz Boiteaux Piazza 1302']
+  };
+
+  const badgeText = portableTextToPlain(contact.badge) || contact.badge;
+  const titleText = portableTextToPlain(contact.title) || contact.title;
+  const paragraphText = portableTextToPlain(contact.paragraph) || contact.paragraph;
+  const features = Array.isArray(contact.features) ? contact.features : [];
+  const phoneNumber = lazerData?.contact?.phone || contact.phone;
+  const emailAddress = lazerData?.contact?.email || contact.email;
+  const offices = Array.isArray(contact.offices) ? contact.offices : contact.offices ? [contact.offices] : [];
+
   return (
     <section id="contato" className="relative py-24 sm:py-28 bg-gradient-to-b from-brand-dark via-brand-dark to-black overflow-hidden">
       {/* Ambient gradients */}
@@ -85,13 +107,13 @@ const ContactLazer = () => {
         <div className="mb-14 text-center max-w-3xl mx-auto">
           <div className="inline-flex items-center gap-2 rounded-full bg-brand-gold/15 px-5 py-2 ring-1 ring-inset ring-brand-gold/30">
             <Mail className="h-4 w-4 text-brand-gold" strokeWidth={1.5} />
-            <span className="text-xs font-semibold tracking-[0.15em] text-brand-gold uppercase">Contato</span>
+            <span className="text-xs font-semibold tracking-[0.15em] text-brand-gold uppercase">{badgeText}</span>
           </div>
           <h2 className="mt-6 text-4xl sm:text-5xl font-semibold tracking-tight text-white leading-tight">
-            Planeje sua próxima <span className="text-brand-gold">Viagem de Lazer</span>
+            {titleText.split(' ').slice(0, -3).join(' ')} <span className="text-brand-gold">{titleText.split(' ').slice(-3).join(' ')}</span>
           </h2>
           <p className="mt-4 text-lg text-white/70 leading-relaxed">
-            Roteiros personalizados, experiências únicas e momentos inesquecíveis. Conte com nossa expertise para criar a viagem perfeita para você e sua família.
+            {paragraphText}
           </p>
         </div>
 
@@ -101,16 +123,16 @@ const ContactLazer = () => {
           <div className="relative grid grid-cols-1 lg:grid-cols-2 divide-y lg:divide-y-0 lg:divide-x divide-white/10">
             {/* Left info column */}
             <div className="p-6 sm:p-10">
-              <p className="text-[11px] uppercase tracking-[0.18em] text-white/50">Por que escolher a 24H</p>
-              <h3 className="mt-3 text-3xl sm:text-4xl text-white tracking-tight">Viagens que marcam a vida</h3>
+              <p className="text-[11px] uppercase tracking-[0.18em] text-white/50">{portableTextToPlain(lazerData?.contact?.smallLabel) || 'Por que escolher a 24H'}</p>
+              <h3 className="mt-3 text-3xl sm:text-4xl text-white tracking-tight">{portableTextToPlain(lazerData?.contact?.eyebrow) || 'Viagens que marcam a vida'}</h3>
               <p className="mt-4 text-sm text-white/70 leading-relaxed max-w-md">
-                Criamos experiências únicas e memoráveis, cuidando de cada detalhe para que você só precise se preocupar em aproveitar cada momento.
+                {portableTextToPlain(lazerData?.contact?.leadParagraph) || 'Criamos experiências únicas e memoráveis, cuidando de cada detalhe para que você só precise se preocupar em aproveitar cada momento.'}
               </p>
               <ul className="mt-8 space-y-3 text-[15px]">
-                {["Roteiros personalizados", "Suporte 24/7 durante a viagem", "Parcerias exclusivas", "Experiências locais autênticas", "Planejamento completo"].map(item => (
-                  <li key={item} className="flex items-center gap-3 text-white/85">
+                {features.map((item, idx) => (
+                  <li key={idx} className="flex items-center gap-3 text-white/85">
                     <span className="h-1.5 w-1.5 rounded-full bg-brand-gold shadow-[0_0_0_3px_rgba(245,197,24,0.25)]" />
-                    <span>{item}</span>
+                    <span>{portableTextToPlain(item) || item}</span>
                   </li>
                 ))}
               </ul>
@@ -123,9 +145,7 @@ const ContactLazer = () => {
                   </span>
                   <div>
                     <div className="text-xs uppercase tracking-wide text-white/50">Telefone</div>
-                    <span className="text-[15px] font-semibold text-white/90">
-                      (51) 3516-0098
-                    </span>
+                    <span className="text-[15px] font-semibold text-white/90">{phoneNumber}</span>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
@@ -134,9 +154,7 @@ const ContactLazer = () => {
                   </span>
                   <div>
                     <div className="text-xs uppercase tracking-wide text-white/50">E-mail</div>
-                    <span className="text-[15px] font-semibold text-white/90">
-                      lazer@24h.tur.br
-                    </span>
+                    <span className="text-[15px] font-semibold text-white/90">{emailAddress}</span>
                   </div>
                 </div>
               </div>
@@ -144,9 +162,9 @@ const ContactLazer = () => {
               <div className="mt-10">
                 <div className="text-xs uppercase tracking-wide text-white/50 mb-2">Escritórios</div>
                 <div className="space-y-2 text-[13px] font-medium text-white/80">
-                  <p>Porto Alegre, RS – Av. Carlos Gomes 1672</p>
-                  <p>Alphaville, SP – Alameda Rio Negro 503</p>
-                  <p>Florianópolis, SC – Av. Luiz Boiteaux Piazza 1302</p>
+                  {offices.map((o, i) => (
+                    <p key={i}>{portableTextToPlain(o) || o}</p>
+                  ))}
                 </div>
               </div>
             </div>
