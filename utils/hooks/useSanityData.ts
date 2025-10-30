@@ -13,10 +13,19 @@ import {
   TrabalheConoscoPage
 } from '../types/sanity';
 
+// Static fallbacks imported directly to avoid dynamic import expressions
+import homePageStatic from '../../data/homePage.json';
+import sobrePageStatic from '../../data/sobrePage.json';
+import equipePageStatic from '../../data/equipePage.json';
+import eventosPageStatic from '../../data/eventosPage.json';
+import lazerPageStatic from '../../data/lazerPage.json';
+import opcoesViagemPageStatic from '../../data/opcoesViagemPage.json';
+import trabalheConoscoPageStatic from '../../data/trabalheConoscoPage.json';
+
 // Função utilitária para criar hooks com fallback para dados estáticos
 const createPageHook = <T>(
   type: string,
-  staticDataPath: string,
+  staticData: T | null,
   errorMessage: string
 ) => {
   return () => {
@@ -35,17 +44,12 @@ const createPageHook = <T>(
           const errorMsg = err instanceof Error ? err.message : errorMessage;
           setError(errorMsg);
           console.error(`Erro ao carregar ${type}:`, err);
-          
-          // Tenta carregar dados estáticos como último recurso
-          try {
-            const staticData = await import(staticDataPath);
-            if (staticData.default || staticData) {
-              console.log(`Usando dados estáticos para ${type}`);
-              setData(staticData.default || staticData);
-              setError(null); // Limpa o erro se conseguiu carregar dados estáticos
-            }
-          } catch (staticError) {
-            console.error(`Erro ao carregar dados estáticos para ${type}:`, staticError);
+
+          // Use provided static data as a last resort (no dynamic import)
+          if (staticData) {
+            console.log(`Usando dados estáticos para ${type}`);
+            setData(staticData as unknown as T);
+            setError(null); // clear error if static data used
           }
         } finally {
           setLoading(false);
@@ -53,7 +57,7 @@ const createPageHook = <T>(
       };
 
       fetchData();
-    }, []);
+  }, []);
 
     return { data, loading, error };
   };
@@ -86,7 +90,7 @@ export const useCompletePage = (slug?: string) => {
 
 export const useHomepage = createPageHook<Homepage>(
   'homepage',
-  '../../data/homePage.json',
+  homePageStatic as unknown as Homepage,
   'Erro ao carregar página inicial'
 );
 
@@ -144,36 +148,36 @@ export const useEventosInfoPage = () => {
 
 export const useSobrePage = createPageHook<SobrePage>(
   'sobrePage',
-  '../../data/sobrePage.json',
+  sobrePageStatic as unknown as SobrePage,
   'Erro ao carregar página sobre'
 );
 
 export const useEquipePage = createPageHook<EquipePage>(
   'equipePage',
-  '../../data/equipePage.json',
+  equipePageStatic as unknown as EquipePage,
   'Erro ao carregar página equipe'
 );
 
 export const useEventosPage = createPageHook<EventosPage>(
   'eventosPage',
-  '../../data/eventosPage.json',
+  eventosPageStatic as unknown as EventosPage,
   'Erro ao carregar página de eventos'
 );
 
 export const useLazerPage = createPageHook<LazerPage>(
   'lazerPage',
-  '../../data/lazerPage.json',
+  lazerPageStatic as unknown as LazerPage,
   'Erro ao carregar página de lazer'
 );
 
 export const useOpcoesViagemPage = createPageHook<OpcoesViagemPage>(
   'opcoesViagemPage',
-  '../../data/opcoesViagemPage.json',
+  opcoesViagemPageStatic as unknown as OpcoesViagemPage,
   'Erro ao carregar página opções de viagem'
 );
 
 export const useTrabalheConoscoPage = createPageHook<TrabalheConoscoPage>(
   'trabalheConoscoPage',
-  '../../data/trabalheConoscoPage.json',
+  trabalheConoscoPageStatic as unknown as TrabalheConoscoPage,
   'Erro ao carregar página trabalhe conosco'
 );
