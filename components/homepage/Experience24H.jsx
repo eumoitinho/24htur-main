@@ -40,7 +40,7 @@ const Experience24H = () => {
               whileTap={{ scale: 0.95 }}
               className="mt-8 inline-flex items-center rounded-2xl bg-gradient-to-r from-brand-gold to-[#F59E0B] px-8 py-4 text-[15px] font-semibold text-brand-dark shadow-sm hover:shadow-xl transition-all duration-300"
             >
-              FALE COM UM ESPECIALISTA!
+              {homepageData?.experience?.ctaText || 'FALE COM UM ESPECIALISTA!'}
               <ArrowRight className="ml-2 h-5 w-5" strokeWidth={2} />
             </motion.a>
           </motion.div>
