@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import Image from 'next/image';
 import { useHomepage } from '../../utils/hooks/useSanityData';
-import { resolveImage } from '../../utils/lib/sanity';
+import { resolveImage, portableTextToPlain } from '../../utils/lib/sanity';
 
 const Experience24H = () => {
   const { data: homepageData } = useHomepage();
@@ -21,16 +21,16 @@ const Experience24H = () => {
             className="order-2 lg:order-1"
           >
             <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight text-slate-900 mb-6">
-              {homepageData?.experience?.title || 'Viva a experiência 24H'}
+              {portableTextToPlain(homepageData?.experience?.title) || 'Viva a experiência 24H'}
             </h2>
 
             <div className="space-y-4 text-slate-600">
               <p className="leading-relaxed">
-                {homepageData?.experience?.description || 'Na 24H, transformamos cada viagem em uma experiência única e sem preocupações. Seja a trabalho, lazer ou para um evento especial, somos sua consultoria estratégica completa em gestão de viagens.'}
+                {portableTextToPlain(homepageData?.experience?.description) || 'Na 24H, transformamos cada viagem em uma experiência única e sem preocupações. Seja a trabalho, lazer ou para um evento especial, somos sua consultoria estratégica completa em gestão de viagens.'}
               </p>
 
               <p className="leading-relaxed">
-                {homepageData?.experience?.subtitle || 'Conte com a nossa ampla rede de fornecedores e a expertise da nossa equipe especializada para garantir excelência em cada etapa da sua viagem.'}
+                {portableTextToPlain(homepageData?.experience?.subtitle) || 'Conte com a nossa ampla rede de fornecedores e a expertise da nossa equipe especializada para garantir excelência em cada etapa da sua viagem.'}
               </p>
             </div>
 
@@ -40,7 +40,7 @@ const Experience24H = () => {
               whileTap={{ scale: 0.95 }}
               className="mt-8 inline-flex items-center rounded-2xl bg-gradient-to-r from-brand-gold to-[#F59E0B] px-8 py-4 text-[15px] font-semibold text-brand-dark shadow-sm hover:shadow-xl transition-all duration-300"
             >
-              {homepageData?.experience?.ctaText || 'FALE COM UM ESPECIALISTA!'}
+              {portableTextToPlain(homepageData?.experience?.ctaText) || 'FALE COM UM ESPECIALISTA!'}
               <ArrowRight className="ml-2 h-5 w-5" strokeWidth={2} />
             </motion.a>
           </motion.div>

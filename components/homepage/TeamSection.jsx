@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 import { useHomepage } from '../../utils/hooks/useSanityData';
+import { portableTextToPlain } from '../../utils/lib/sanity';
 
 const TeamSection = () => {
   const { data: homepageData, loading, error } = useHomepage();
@@ -30,7 +31,7 @@ const TeamSection = () => {
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="text-center mb-12">
           <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight text-slate-900 mb-4">
-            {homepageData?.team?.title || 'NOSSA EQUIPE'}
+            {portableTextToPlain(homepageData?.team?.title) || 'NOSSA EQUIPE'}
           </h2>
         </div>
 
@@ -79,7 +80,7 @@ const TeamSection = () => {
               whileTap={{ scale: 0.95 }}
               className="inline-flex items-center text-brand-dark font-semibold hover:text-brand-gold transition-colors duration-300"
             >
-              {homepageData?.team?.ctaText || 'CONHEÇA NOSSA EQUIPE COMPLETA'}
+              {portableTextToPlain(homepageData?.team?.ctaText) || 'CONHEÇA NOSSA EQUIPE COMPLETA'}
               <ArrowRight className="ml-2 h-5 w-5" strokeWidth={2} />
             </motion.a>
           </Link>

@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import { ArrowRight, Briefcase, Plane, Calendar } from 'lucide-react';
 import Link from 'next/link';
 import { useHomepage } from '../../utils/hooks/useSanityData';
+import { portableTextToPlain } from '../../utils/lib/sanity';
 
 const ServicesHome = () => {
   const { data: homepageData, loading, error } = useHomepage();
@@ -39,7 +40,7 @@ const ServicesHome = () => {
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="text-center mb-12">
           <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight text-slate-900 mb-4">
-            {homepageData?.servicesTitle || 'NOSSOS SERVIÇOS'}
+            {portableTextToPlain(homepageData?.servicesTitle) || 'NOSSOS SERVIÇOS'}
           </h2>
         </div>
 
@@ -63,11 +64,11 @@ const ServicesHome = () => {
                   </div>
 
                   <h3 className="text-xl font-semibold text-slate-900 mb-4">
-                    {service.title}
+                    {portableTextToPlain(service.title) || service.title}
                   </h3>
 
                   <p className="text-sm text-slate-600 leading-relaxed mb-6">
-                    {service.description}
+                    {portableTextToPlain(service.description) || service.description}
                   </p>
 
                   <Link href={service.link}>
@@ -76,7 +77,7 @@ const ServicesHome = () => {
                       whileTap={{ scale: 0.95 }}
                       className="inline-flex items-center text-brand-dark font-semibold hover:text-brand-gold transition-colors duration-300"
                     >
-                      {service.ctaText}
+                      {portableTextToPlain(service.ctaText) || service.ctaText}
                       <ArrowRight className="ml-2 h-4 w-4" strokeWidth={2} />
                     </motion.a>
                   </Link>

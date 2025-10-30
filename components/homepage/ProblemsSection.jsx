@@ -4,6 +4,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Clock, TrendingDown, AlertCircle, FileText, Map, Globe } from 'lucide-react';
 import { useHomepage } from '../../utils/hooks/useSanityData';
+import { portableTextToPlain } from '../../utils/lib/sanity';
 
 
 const ProblemsSection = () => {
@@ -49,7 +50,7 @@ const ProblemsSection = () => {
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="max-w-3xl">
           <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight text-slate-900">
-            {homepageData?.problems?.title || 'Descomplique sua rotina de viagens com quem entende do assunto'}
+            {portableTextToPlain(homepageData?.problems?.title) || 'Descomplique sua rotina de viagens com quem entende do assunto'}
           </h2>
         </div>
 
@@ -73,10 +74,10 @@ const ProblemsSection = () => {
                   </div>
                   <div className="flex-1">
                     <h3 className="text-lg font-semibold text-slate-900 mb-2">
-                      {problem.title}
+                      {portableTextToPlain(problem.title) || problem.title}
                     </h3>
                     <p className="text-sm text-slate-600 leading-relaxed">
-                      {problem.description}
+                      {portableTextToPlain(problem.description) || problem.description}
                     </p>
                   </div>
                 </div>
