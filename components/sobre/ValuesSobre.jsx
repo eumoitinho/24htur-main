@@ -4,6 +4,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Heart, Shield, Star, Users } from 'lucide-react';
 import { useSobrePage } from '../../utils/hooks/useSanityData';
+import { portableTextToPlain } from '../../utils/lib/sanity';
 
 const ValuesSobre = () => {
   const { data: sobreData, loading, error } = useSobrePage();
@@ -71,10 +72,10 @@ const ValuesSobre = () => {
                   <IconComponent className="w-8 h-8 text-brand-gold" />
                 </div>
                 <h3 className="text-xl font-bold text-brand-dark mb-4">
-                  {value.name}
+                  {portableTextToPlain(value.name) || value.name}
                 </h3>
                 <p className="text-gray-600 leading-relaxed">
-                  {value.description}
+                  {portableTextToPlain(value.description) || value.description}
                 </p>
               </motion.div>
             );

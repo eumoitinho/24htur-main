@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Image from 'next/image';
-import { resolveImage } from '../../utils/lib/sanity';
+import { resolveImage, portableTextToPlain } from '../../utils/lib/sanity';
 import { ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useSobrePage } from '../../utils/hooks/useSanityData';
@@ -17,6 +17,10 @@ const HeroSobre = () => {
     subtitle: "Com mais de 20 anos de expertise, a 24H Escritório de Viagens se consolidou como uma agência especializada e líder na gestão de viagens de lazer, negócios e eventos, nacionais e internacionais.",
     ctaText: "CONHEÇA NOSSA HISTÓRIA!"
   };
+
+  const titleText = portableTextToPlain(sobreData?.hero?.title) || heroData.title;
+  const subtitleText = portableTextToPlain(sobreData?.hero?.subtitle) || heroData.subtitle;
+  const ctaText = sobreData?.hero?.ctaText || heroData.ctaText;
 
   return (
     <section id="inicio" className="relative py-10 sm:py-12 lg:py-14">
@@ -60,7 +64,7 @@ const HeroSobre = () => {
               transition={{ duration: 0.8, ease: "easeOut" }}
               className="text-white text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold tracking-tight leading-[1.1]"
             >
-              {sobreData?.hero?.title || heroData.title}
+              {titleText}
             </motion.h1>
 
             <motion.p
@@ -69,7 +73,7 @@ const HeroSobre = () => {
               transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
               className="mt-6 text-white/90 text-[18px] leading-7"
             >
-              {sobreData?.hero?.subtitle || heroData.subtitle}
+              {subtitleText}
             </motion.p>
 
             <motion.div
@@ -84,7 +88,7 @@ const HeroSobre = () => {
                 whileTap={{ scale: 0.95 }}
                 className="inline-flex items-center rounded-2xl bg-gradient-to-r from-brand-gold to-[#F59E0B] px-8 py-4 text-[15px] font-semibold text-brand-dark shadow-sm hover:shadow-xl transition-all duration-300"
               >
-                {heroData.ctaText}
+                {ctaText}
                 <ArrowRight className="ml-2 h-5 w-5" strokeWidth={2} />
               </motion.a>
             </motion.div>
