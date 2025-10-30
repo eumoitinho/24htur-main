@@ -41,20 +41,26 @@ const ClientsSection = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-3xl text-center">
           <span className="inline-flex items-center gap-2 rounded-full border border-brand-gold/40 bg-brand-gold/20 px-4 py-2 text-xs font-semibold tracking-wide text-brand-dark">
-            {homepageData?.clients?.badge || 'Nossa Rede de Confiança'}
+            {portableTextToPlain(homepageData?.clients?.badge) || 'Nossa Rede de Confiança'}
           </span>
           <h2 className="mt-6 text-3xl sm:text-4xl lg:text-5xl font-semibold tracking-tight text-brand-dark leading-tight">
             {homepageData?.clients?.title ? (
               // try to preserve `confiam` highlight if the string contains that word
-              homepageData.clients.title.includes('confiam') ? (
-                <>
-                  {homepageData.clients.title.split('confiam')[0]}
-                  <span className="text-brand-red">confiam</span>
-                  {homepageData.clients.title.split('confiam')[1]}
-                </>
-              ) : (
-                homepageData.clients.title
-              )
+              (() => {
+                const titleStr = portableTextToPlain(homepageData.clients.title) || homepageData.clients.title || '';
+                if (!titleStr) return <>Empresas que <span className="text-brand-red">confiam</span> na 24H</>;
+                if (titleStr.includes('confiam')) {
+                  const parts = titleStr.split('confiam');
+                  return (
+                    <>
+                      {parts[0]}
+                      <span className="text-brand-red">confiam</span>
+                      {parts[1]}
+                    </>
+                  );
+                }
+                return titleStr;
+              })()
             ) : (
               <>Empresas que <span className="text-brand-red">confiam</span> na 24H</>
             )}

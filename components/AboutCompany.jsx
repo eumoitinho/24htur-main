@@ -6,7 +6,7 @@ import { Building2, Users, Globe, Shield } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useSectionView } from '../utils/tracking/engagement';
 import { useHomepage } from '../utils/hooks/useSanityData';
-import { resolveImage } from '../utils/lib/sanity';
+import { resolveImage, portableTextToPlain } from '../utils/lib/sanity';
 
 const highlights = [
   { icon: Building2, title: 'Especialização Corporativa', description: 'Foco exclusivo em viagens de negócios e incentivo' },
@@ -36,7 +36,7 @@ const AboutCompany = () => {
                 viewport={{ once: true }}
               >
                 <Building2 className="h-5 w-5 text-brand-gold" strokeWidth={1.5} />
-                <span className="text-xs font-semibold tracking-[0.08em] text-brand-gold">SOBRE A 24H</span>
+                <span className="text-xs font-semibold tracking-[0.08em] text-brand-gold">{portableTextToPlain(homepageData?.aboutCompany?.badge) || 'SOBRE A 24H'}</span>
               </motion.div>
               <motion.h2 
                 className="text-4xl sm:text-5xl font-semibold tracking-tight text-white mb-8 leading-[1.05]"
@@ -45,7 +45,7 @@ const AboutCompany = () => {
                 transition={{ duration: 0.6, delay: 0.15 }}
                 viewport={{ once: true }}
               >
-                {homepageData?.aboutCompany?.title || 'Mais de duas décadas especializados em '}<span className="text-brand-gold">{homepageData?.aboutCompany?.subtitle || 'gestão de viagens'}</span>
+                {portableTextToPlain(homepageData?.aboutCompany?.title) || 'Mais de duas décadas especializados em '}<span className="text-brand-gold">{portableTextToPlain(homepageData?.aboutCompany?.subtitle) || 'gestão de viagens'}</span>
               </motion.h2>
               <motion.div 
                 className="space-y-6 text-lg text-white/85 leading-relaxed"
@@ -56,7 +56,7 @@ const AboutCompany = () => {
               >
                 {homepageData?.aboutCompany?.description ? (
                   homepageData.aboutCompany.description.map((p, i) => (
-                    <p key={i}>{p}</p>
+                    <p key={i}>{portableTextToPlain(p)}</p>
                   ))
                 ) : (
                   <>

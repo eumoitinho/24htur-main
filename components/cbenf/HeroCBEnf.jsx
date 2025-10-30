@@ -6,7 +6,7 @@ import { motion } from 'framer-motion';
 import { ArrowRight, Calendar, MapPin, Users } from 'lucide-react';
 import Logo from '../Logo';
 import { useHomepage } from '../../utils/hooks/useSanityData';
-import { resolveImage } from '../../utils/lib/sanity';
+import { resolveImage, portableTextToPlain } from '../../utils/lib/sanity';
 
 const HeroCBEnf = () => {
   const { data: homepageData } = useHomepage();
@@ -42,7 +42,7 @@ const HeroCBEnf = () => {
             <Logo className="w-20 h-20 md:w-28 md:h-28" />
             <div className="inline-flex items-center gap-2 bg-white/15 backdrop-blur-md border border-white/30 rounded-full py-2 px-4 shadow-lg">
               <span className="flex h-2 w-2 rounded-full bg-[#D38E17] shadow-lg"></span>
-              <span className="text-xs md:text-sm font-bold text-white drop-shadow-lg">75º Congresso Brasileiro de Enfermagem</span>
+              <span className="text-xs md:text-sm font-bold text-white drop-shadow-lg">{portableTextToPlain(homepageData?.hero?.badgeText) || '75º Congresso Brasileiro de Enfermagem'}</span>
             </div>
           </div>
 
@@ -54,8 +54,7 @@ const HeroCBEnf = () => {
             <span className="text-white">sem complicações!</span>
           </h1>
           <p className="text-lg md:text-xl text-gray-200 mb-10 max-w-3xl leading-relaxed drop-shadow-[0_1px_3px_rgba(0,0,0,0.2)]">
-            Esqueça o estresse de organizar hospedagem, passagens e passeios. A 24H Escritório de Viagens cuida de tudo para você focar
-            no que realmente importa: o conhecimento e networking do maior congresso de enfermagem do Brasil.
+            {portableTextToPlain(homepageData?.hero?.subtitle) || 'Esqueça o estresse de organizar hospedagem, passagens e passeios. A 24H Escritório de Viagens cuida de tudo para você focar no que realmente importa: o conhecimento e networking do maior congresso de enfermagem do Brasil.'}
           </p>
 
           <button
@@ -63,7 +62,7 @@ const HeroCBEnf = () => {
             onClick={handleCTAClick}
           >
             <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-out"></div>
-            <span className="relative z-10">QUERO MEU PACOTE EXCLUSIVO!</span>
+            <span className="relative z-10">{portableTextToPlain(homepageData?.hero?.ctaText) || 'QUERO MEU PACOTE EXCLUSIVO!'}</span>
             <ArrowRight className="w-5 h-5 relative z-10 group-hover:translate-x-1 transition-transform" />
           </button>
         </motion.div>

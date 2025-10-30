@@ -2,10 +2,12 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
+import { useEventosPage } from '../../utils/hooks/useSanityData';
+import { portableTextToPlain } from '../../utils/lib/sanity';
 import { Plane, Hotel, Car, Camera, MapPin, Users, Clock, Shield } from 'lucide-react';
 
 const ServicesCBEnf = () => {
-  const services = [
+  const localServices = [
     {
       icon: Plane,
       title: "Passagens Aéreas",
@@ -48,6 +50,17 @@ const ServicesCBEnf = () => {
     }
   ];
 
+  const { data: eventosData } = useEventosPage();
+
+  // Prefer services from Sanity when available, otherwise use localServices
+  const services = (eventosData && Array.isArray(eventosData.services) && eventosData.services.length)
+    ? eventosData.services.map((s, i) => ({
+        icon: localServices[i]?.icon || localServices[0].icon,
+        title: portableTextToPlain(s.title) || s.title || (localServices[i] && localServices[i].title) || 'Serviço',
+        description: portableTextToPlain(s.description) || s.description || (localServices[i] && localServices[i].description) || ''
+      }))
+    : localServices;
+
   return (
     <section id="pacotes" className="py-16 sm:py-20 lg:py-24 bg-gradient-to-b from-slate-50 to-white">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
@@ -64,11 +77,13 @@ const ServicesCBEnf = () => {
             </div>
 
             <h2 className="mt-6 text-3xl sm:text-4xl lg:text-5xl font-semibold tracking-tight text-slate-900 leading-tight">
-              Tudo incluído para sua <span className="text-brand-gold">experiência completa</span>
+              {portableTextToPlain(eventosData?.services?.title) || (
+                <>Tudo incluído para sua <span className="text-brand-gold">experiência completa</span></>
+              )}
             </h2>
 
             <p className="mt-6 text-lg text-slate-600 leading-relaxed">
-              Cuidamos de cada detalhe da sua viagem ao CBEnf 2024. Desde a chegada até a partida, nossa equipe especializada garante que você aproveite ao máximo este importante evento.
+              {portableTextToPlain(eventosData?.services?.subtitle) || 'Cuidamos de cada detalhe da sua viagem ao CBEnf 2024. Desde a chegada até a partida, nossa equipe especializada garante que você aproveite ao máximo este importante evento.'}
             </p>
           </motion.div>
         </div>

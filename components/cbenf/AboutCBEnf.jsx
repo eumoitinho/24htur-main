@@ -29,7 +29,7 @@ const AboutCBEnf = () => {
             )}
           </h2>
           <p className="text-gray-600 max-w-3xl mx-auto">
-            {eventosData?.hero?.subtitle || 'O maior evento da enfermagem brasileira está chegando a Porto Alegre'}
+            {portableTextToPlain(eventosData?.hero?.subtitle) || 'O maior evento da enfermagem brasileira está chegando a Porto Alegre'}
           </p>
         </motion.div>
 
@@ -43,16 +43,25 @@ const AboutCBEnf = () => {
             className="order-2 lg:order-1"
           >
             <h3 className="text-2xl font-bold mb-4 text-gray-900">
-              O evento mais importante da enfermagem nacional
+              {portableTextToPlain(eventosData?.about?.headline) || 'O evento mais importante da enfermagem nacional'}
             </h3>
-            <p className="text-base text-gray-700 leading-relaxed mb-4">
-              A Associação Brasileira de Enfermagem (ABEn) promove este encontro fundamental
-              para profissionais, estudantes, pesquisadores e gestores de todo o país.
-            </p>
-            <p className="text-base text-gray-700 leading-relaxed mb-6">
-              Uma oportunidade única de atualização científica, networking e desenvolvimento
-              profissional em um ambiente de excelência acadêmica.
-            </p>
+
+            {eventosData?.about?.description && Array.isArray(eventosData.about.description) ? (
+              eventosData.about.description.map((block, i) => (
+                <p key={i} className="text-base text-gray-700 leading-relaxed mb-4">{portableTextToPlain(block)}</p>
+              ))
+            ) : (
+              <>
+                <p className="text-base text-gray-700 leading-relaxed mb-4">
+                  A Associação Brasileira de Enfermagem (ABEn) promove este encontro fundamental
+                  para profissionais, estudantes, pesquisadores e gestores de todo o país.
+                </p>
+                <p className="text-base text-gray-700 leading-relaxed mb-6">
+                  Uma oportunidade única de atualização científica, networking e desenvolvimento
+                  profissional em um ambiente de excelência acadêmica.
+                </p>
+              </>
+            )}
 
             {/* Cards de Destaques */}
             <div className="grid grid-cols-2 gap-4">
@@ -82,9 +91,9 @@ const AboutCBEnf = () => {
                   height={700}
                   className="rounded-2xl shadow-lg w-full h-auto object-cover"
                 />
-              <div className="absolute -bottom-4 -right-4 bg-gradient-to-r from-[#D38E17] to-[#F59E0B] text-white p-4 rounded-xl shadow-lg">
-                <div className="text-sm font-bold">Eventos paralelos:</div>
-                <div className="text-xs mt-1">7º CLAHEN • 8º SENABS</div>
+                <div className="absolute -bottom-4 -right-4 bg-gradient-to-r from-[#D38E17] to-[#F59E0B] text-white p-4 rounded-xl shadow-lg">
+                <div className="text-sm font-bold">{portableTextToPlain(eventosData?.hero?.parallelLabel) || 'Eventos paralelos:'}</div>
+                <div className="text-xs mt-1">{eventosData?.hero?.parallelEvents || '7º CLAHEN • 8º SENABS'}</div>
               </div>
             </div>
           </motion.div>
@@ -177,14 +186,14 @@ const AboutCBEnf = () => {
             className="text-center mt-12"
           >
             <p className="text-gray-600 mb-6">
-              Garanta sua participação neste evento histórico da enfermagem brasileira
+              {portableTextToPlain(eventosData?.cta?.preText) || 'Garanta sua participação neste evento histórico da enfermagem brasileira'}
             </p>
             <button
               onClick={() => document.getElementById('contato')?.scrollIntoView({ behavior: 'smooth' })}
               className="group relative overflow-hidden bg-gradient-to-r from-[#D38E17] to-[#F59E0B] text-white font-bold px-8 py-4 rounded-full transition-all duration-300 hover:scale-105 inline-flex items-center gap-2 shadow-lg hover:shadow-xl"
             >
               <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-out"></div>
-              <span className="relative z-10">QUERO PARTICIPAR</span>
+              <span className="relative z-10">{portableTextToPlain(eventosData?.cta?.text) || 'QUERO PARTICIPAR'}</span>
               <ArrowRight className="w-5 h-5 relative z-10 group-hover:translate-x-1 transition-transform" />
             </button>
           </motion.div>
