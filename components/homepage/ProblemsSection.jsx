@@ -43,7 +43,10 @@ const ProblemsSection = () => {
     }
   ];
 
-  const problems = homepageData?.problems || defaultProblems;
+  // Garante que sempre seja um array
+  const problems = Array.isArray(homepageData?.problems) 
+    ? homepageData.problems 
+    : (homepageData?.problems?.items || defaultProblems);
 
   return (
     <section className="py-14 sm:py-16 lg:py-18">

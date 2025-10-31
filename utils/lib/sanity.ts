@@ -33,26 +33,45 @@ export const resolveImage = (value: any, fallback?: string): string | undefined 
   return fallback;
 };
 
+// Remove HTML tags de uma string
+const stripHtml = (str: string): string => {
+  if (!str) return str;
+  return str.replace(/<[^>]*>/g, '').trim();
+};
+
 // Convert Portable Text (Sanity rich text) to a plain string. Works for arrays of blocks.
 export const portableTextToPlain = (value: any): string | undefined => {
   if (!value) return undefined;
-  if (typeof value === 'string') return value;
+  if (typeof value === 'string') {
+    // Remove HTML tags se houver
+    return stripHtml(value);
+  }
   if (Array.isArray(value)) {
-    return value
+    const result = value
       .map((block: any) => {
         if (!block) return '';
-        if (typeof block === 'string') return block;
-        if (Array.isArray(block)) return block.join(' ');
+        if (typeof block === 'string') return stripHtml(block);
+        if (Array.isArray(block)) return block.map(b => typeof b === 'string' ? stripHtml(b) : String(b)).join(' ');
         if (block.children && Array.isArray(block.children)) {
-          return block.children.map((c: any) => c?.text || '').join('');
+          return block.children.map((c: any) => {
+            const text = c?.text || c?.value || '';
+            return typeof text === 'string' ? stripHtml(text) : String(text);
+          }).join('');
         }
-        if (block.text) return block.text;
+        if (block.text) {
+          const text = block.text;
+          return typeof text === 'string' ? stripHtml(text) : String(text);
+        }
+        // Se for um objeto com _type, pode ser um bloco de conteúdo
+        if (block._type) return '';
         return '';
       })
       .filter(Boolean)
       .join(' ');
+    return result;
   }
-  return String(value);
+  const result = String(value);
+  return stripHtml(result);
 };
 
 // Função para normalizar dados estáticos para compatibilidade com Sanity
@@ -135,7 +154,8 @@ export const getDocuments = async (type: string, slug?: string) => {
     // Normaliza dados recebidos do Sanity:
     // - Se for array com 1 item, retorna o objeto (muitos componentes esperam um objeto único)
     // - Converte objetos de imagem do Sanity para URLs usando urlFor
-    const normalizeFetched = (value: any): any => {
+    // - Garante que campos que devem ser arrays sempre sejam arrays
+    const normalizeFetched = (value: any, key?: string): any => {
       if (value == null) return value;
 
       // Se for array, normalize cada item
@@ -154,7 +174,27 @@ export const getDocuments = async (type: string, slug?: string) => {
       if (typeof value === 'object') {
         const out: any = {};
         for (const k of Object.keys(value)) {
-          out[k] = normalizeFetched(value[k]);
+          const normalized = normalizeFetched(value[k], k);
+          
+          // Garante que campos conhecidos como arrays sempre sejam arrays
+          const arrayFields = [
+            'services', 'team', 'testimonials', 'reasons', 'problems',
+            'options', 'positions', 'items', 'members', 'destinations',
+            'benefits', 'clients', 'metrics'
+          ];
+          
+          // Se o campo deveria ser array mas não é, converte
+          if (arrayFields.includes(k) && !Array.isArray(normalized) && normalized != null) {
+            // Se for objeto com propriedade 'items', extrai o array
+            if (normalized.items && Array.isArray(normalized.items)) {
+              out[k] = normalized.items;
+            } else {
+              // Se for um objeto único, transforma em array
+              out[k] = [normalized];
+            }
+          } else {
+            out[k] = normalized;
+          }
         }
         return out;
       }

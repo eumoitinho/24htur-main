@@ -42,7 +42,10 @@ const WhyChooseHome = () => {
     }
   ];
 
-  const reasons = homepageData?.whyChoose?.reasons || defaultReasons;
+  // Garante que sempre seja um array
+  const reasons = Array.isArray(homepageData?.whyChoose?.reasons) 
+    ? homepageData.whyChoose.reasons 
+    : (homepageData?.whyChoose?.reasons?.items || defaultReasons);
 
   return (
     <section className="py-14 sm:py-16 lg:py-18">

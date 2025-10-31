@@ -11,7 +11,10 @@ const TeamSection = () => {
   const { data: homepageData, loading, error } = useHomepage();
   
   // Fallback para dados estáticos caso não carregue do Sanity
-  const teamData = homepageData?.team || [
+  // Garante que sempre seja um array
+  const teamData = Array.isArray(homepageData?.team) 
+    ? homepageData.team 
+    : (homepageData?.team?.items || homepageData?.team?.members || [
     {
       name: 'Betinna Pavim',
       role: 'CEO|COO',
@@ -24,7 +27,7 @@ const TeamSection = () => {
       education: 'Doutora em Turismo',
       experience: '30 anos de experiência no setor turístico'
     }
-  ];
+  ]);
 
   return (
     <section className="py-14 sm:py-16 lg:py-18">

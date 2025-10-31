@@ -11,7 +11,10 @@ const ServicesHome = () => {
   const { data: homepageData, loading, error } = useHomepage();
   
   // Fallback para dados estáticos caso não carregue do Sanity
-  const servicesData = homepageData?.services || [
+  // Garante que sempre seja um array
+  const servicesData = Array.isArray(homepageData?.services) 
+    ? homepageData.services 
+    : (homepageData?.services?.items || [
     {
       icon: Briefcase,
       title: 'Viagens corporativas',
@@ -33,7 +36,7 @@ const ServicesHome = () => {
       link: '/eventos',
       ctaText: 'SAIBA MAIS!'
     }
-  ];
+  ]);
 
   return (
     <section className="py-14 sm:py-16 lg:py-18 bg-gradient-to-br from-slate-50 to-white">
