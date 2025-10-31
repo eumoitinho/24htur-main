@@ -84,10 +84,22 @@ const normalizeStaticData = (data: any) => {
   return data;
 };
 
+// Mapeamento de tipos do Sanity para nomes de arquivos JSON
+const typeToFileName: Record<string, string> = {
+  'homepage': 'homePage',
+  'sobrePage': 'sobrePage',
+  'equipePage': 'equipePage',
+  'eventosPage': 'eventosPage',
+  'lazerPage': 'lazerPage',
+  'opcoesViagemPage': 'opcoesViagemPage',
+  'trabalheConoscoPage': 'trabalheConoscoPage',
+};
+
 // Função para carregar dados estáticos como fallback
 const loadStaticData = async (type: string) => {
   try {
-    const staticData = await import(`../../data/${type}.json`);
+    const fileName = typeToFileName[type] || type;
+    const staticData = await import(`../../data/${fileName}.json`);
     const data = staticData.default || staticData;
     return normalizeStaticData(data);
   } catch (error) {
@@ -97,15 +109,28 @@ const loadStaticData = async (type: string) => {
 };
 
 export const getDocuments = async (type: string, slug?: string) => {
+  // SEMPRE tenta buscar do Sanity primeiro
   try {
     const query = slug 
       ? `*[_type == "${type}" && slug.current == "${slug}"][0]`
       : `*[_type == "${type}"]`;
     
-    console.log(`Buscando dados do Sanity para ${type}...`);
-    const data = await client.fetch(query);
-
-    console.log(`Dados encontrados no Sanity para ${type}:`, data);
+    console.log(`🔄 Buscando dados do Sanity para ${type}...`);
+    
+    // Desabilita CDN temporariamente para evitar cache em desenvolvimento
+    const fetchClient = createClient({
+      projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || 'kyx4ncqy',
+      dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || 'production',
+      useCdn: false, // Desabilita CDN para sempre pegar dados atualizados
+      apiVersion: process.env.NEXT_PUBLIC_SANITY_API_VERSION || '2024-01-01',
+      token: process.env.NEXT_PUBLIC_SANITY_TOKEN,
+      perspective: 'published',
+      stega: {
+        enabled: false,
+      },
+    });
+    
+    const data = await fetchClient.fetch(query);
 
     // Normaliza dados recebidos do Sanity:
     // - Se for array com 1 item, retorna o objeto (muitos componentes esperam um objeto único)
@@ -139,29 +164,41 @@ export const getDocuments = async (type: string, slug?: string) => {
     };
 
     if (data && (!Array.isArray(data) || data.length > 0)) {
-      console.log(`Usando dados do Sanity para ${type}`);
+      console.log(`✅ Dados encontrados no Sanity para ${type}!`);
       const normalized = normalizeFetched(data);
 
       // Se o resultado for um array com 1 item, retorna o próprio objeto
-      if (Array.isArray(normalized) && normalized.length === 1) return normalized[0];
+      if (Array.isArray(normalized) && normalized.length === 1) {
+        console.log(`✅ Usando dados do Sanity para ${type} (array com 1 item)`);
+        return normalized[0];
+      }
 
+      console.log(`✅ Usando dados do Sanity para ${type}`);
       return normalized;
     }
     
-    // Se não há dados no Sanity, retorna null para que o componente possa decidir
-    console.warn(`Nenhum dado encontrado no Sanity para ${type}`);
+    // Se não há dados no Sanity, retorna null
+    console.warn(`⚠️ Nenhum dado encontrado no Sanity para ${type}`);
     return null;
     
-  } catch (error) {
-    console.error(`Erro ao buscar dados do Sanity para ${type}:`, error);
+  } catch (error: any) {
+    // Verifica se é erro de CORS ou rede
+    const isNetworkError = error?.message?.includes('CORS') || 
+                          error?.message?.includes('ERR_FAILED') ||
+                          error?.message?.includes('NetworkError') ||
+                          error?.message?.includes('Failed to fetch');
     
-    // Em caso de erro real (não apenas dados vazios), usa dados estáticos como fallback
-    const staticData = await loadStaticData(type);
-    if (staticData) {
-      console.log(`Usando dados estáticos como fallback para ${type}`);
-      return staticData;
+    if (isNetworkError) {
+      console.error(`❌ Erro de CORS/Rede ao buscar dados do Sanity para ${type}:`, error.message);
+      console.error(`💡 SOLUÇÃO: Configure CORS no painel do Sanity em:`);
+      console.error(`   https://www.sanity.io/manage/personal/project/kyx4ncqy/settings/api`);
+      console.error(`   Adicione: https://www.24h.tur.br e https://24h.tur.br`);
+    } else {
+      console.error(`❌ Erro ao buscar dados do Sanity para ${type}:`, error);
     }
     
+    // Em caso de erro, NÃO usa dados estáticos automaticamente
+    // Deixa o componente decidir ou lança o erro
     throw error;
   }
 };
