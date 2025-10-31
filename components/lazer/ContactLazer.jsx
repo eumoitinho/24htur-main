@@ -110,7 +110,11 @@ const ContactLazer = () => {
             <span className="text-xs font-semibold tracking-[0.15em] text-brand-gold uppercase">{badgeText}</span>
           </div>
           <h2 className="mt-6 text-4xl sm:text-5xl font-semibold tracking-tight text-white leading-tight">
-            {titleText.split(' ').slice(0, -3).join(' ')} <span className="text-brand-gold">{titleText.split(' ').slice(-3).join(' ')}</span>
+            {titleText ? (
+              <>
+                {titleText.split(' ').slice(0, -3).join(' ')} <span className="text-brand-gold">{titleText.split(' ').slice(-3).join(' ')}</span>
+              </>
+            ) : titleText}
           </h2>
           <p className="mt-4 text-lg text-white/70 leading-relaxed">
             {paragraphText}

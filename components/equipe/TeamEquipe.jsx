@@ -46,7 +46,7 @@ const TeamEquipe = () => {
                 <div className="flex items-start gap-6">
                   <div className="w-24 h-24 rounded-full bg-gradient-to-br from-brand-gold/20 to-brand-gold/10 flex items-center justify-center flex-shrink-0">
                     <span className="text-2xl font-bold text-brand-dark">
-                      {member.name.split(' ').map(n => n[0]).join('')}
+                      {member.name ? member.name.split(' ').map(n => n[0]).join('') : ''}
                     </span>
                   </div>
 

@@ -30,8 +30,10 @@ const CTAEventos = () => {
           className="max-w-3xl mx-auto"
         >
           <h2 className="text-3xl md:text-4xl font-bold mb-6 text-gray-900">
-            {title.includes('próximo') ? title : (
-              <>{title.split(' ').slice(0, -1).join(' ')}{' '}<span className="text-transparent bg-clip-text bg-gradient-to-r from-[#D38E17] to-[#F59E0B]">{title.split(' ').slice(-1)}</span></>
+            {title && title.includes('próximo') ? title : (
+              title ? (
+                <>{title.split(' ').slice(0, -1).join(' ')}{' '}<span className="text-transparent bg-clip-text bg-gradient-to-r from-[#D38E17] to-[#F59E0B]">{title.split(' ').slice(-1)}</span></>
+              ) : title
             )}
           </h2>
 
