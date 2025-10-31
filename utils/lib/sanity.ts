@@ -41,12 +41,15 @@ const stripHtml = (str: any): string => {
 };
 
 // Convert Portable Text (Sanity rich text) to a plain string. Works for arrays of blocks.
-export const portableTextToPlain = (value: any): string | undefined => {
-  if (!value) return undefined;
+export const portableTextToPlain = (value: any): string => {
+  if (!value) return '';
+  
   if (typeof value === 'string') {
     // Remove HTML tags se houver
-    return stripHtml(value);
+    const cleaned = stripHtml(value);
+    return cleaned;
   }
+  
   if (Array.isArray(value)) {
     const result = value
       .map((block: any) => {
@@ -71,8 +74,10 @@ export const portableTextToPlain = (value: any): string | undefined => {
       .join(' ');
     return result;
   }
+  
   const result = String(value);
-  return stripHtml(result);
+  const cleaned = stripHtml(result);
+  return cleaned;
 };
 
 // Função para normalizar dados estáticos para compatibilidade com Sanity
@@ -208,11 +213,13 @@ export const getDocuments = async (type: string, slug?: string) => {
       console.log(`✅ Dados encontrados no Sanity para ${type}!`);
       let normalized = normalizeFetched(data);
 
-      // Se o resultado for um array com 1 item, retorna o próprio objeto
-      // MAS APENAS se o query não tinha slug (ou seja, é uma query de lista)
+      // Se a query retornou um único documento (array com 1 item) e não foi por slug,
+      // retorna apenas o objeto (pois é uma query de lista que retornou 1 resultado)
+      // MAS preserva a estrutura interna de arrays
       if (Array.isArray(normalized) && normalized.length === 1 && !slug) {
         console.log(`✅ Usando dados do Sanity para ${type} (array com 1 item, convertendo para objeto)`);
-        return normalized[0];
+        const singleItem = normalized[0];
+        return singleItem;
       }
 
       console.log(`✅ Usando dados do Sanity para ${type}`);
