@@ -34,9 +34,10 @@ export const resolveImage = (value: any, fallback?: string): string | undefined 
 };
 
 // Remove HTML tags de uma string
-const stripHtml = (str: string): string => {
-  if (!str) return str;
-  return str.replace(/<[^>]*>/g, '').trim();
+const stripHtml = (str: any): string => {
+  if (!str) return '';
+  const strValue = String(str);
+  return strValue.replace(/<[^>]*>/g, '').trim();
 };
 
 // Convert Portable Text (Sanity rich text) to a plain string. Works for arrays of blocks.
@@ -205,11 +206,12 @@ export const getDocuments = async (type: string, slug?: string) => {
 
     if (data && (!Array.isArray(data) || data.length > 0)) {
       console.log(`✅ Dados encontrados no Sanity para ${type}!`);
-      const normalized = normalizeFetched(data);
+      let normalized = normalizeFetched(data);
 
       // Se o resultado for um array com 1 item, retorna o próprio objeto
-      if (Array.isArray(normalized) && normalized.length === 1) {
-        console.log(`✅ Usando dados do Sanity para ${type} (array com 1 item)`);
+      // MAS APENAS se o query não tinha slug (ou seja, é uma query de lista)
+      if (Array.isArray(normalized) && normalized.length === 1 && !slug) {
+        console.log(`✅ Usando dados do Sanity para ${type} (array com 1 item, convertendo para objeto)`);
         return normalized[0];
       }
 
