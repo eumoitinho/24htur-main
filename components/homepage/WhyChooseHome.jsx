@@ -9,6 +9,15 @@ import { portableTextToPlain } from '../../utils/lib/sanity';
 const WhyChooseHome = () => {
   const { data: homepageData } = useHomepage();
 
+  const iconMap = {
+    'Disponibilidade 24/7': HeadphonesIcon,
+    'Negociação de tarifas': TrendingDown,
+    'Expertise técnica': Users,
+    'Gestão personalizada': User,
+    'Rede consolidada': Globe,
+    'Controle financeiro': ChartBar
+  };
+
   const defaultReasons = [
     {
       icon: HeadphonesIcon,
@@ -42,9 +51,12 @@ const WhyChooseHome = () => {
     }
   ];
 
-  // Garante que sempre seja um array
+  // Garante que sempre seja um array e mapeia ícones se necessário
   const reasons = Array.isArray(homepageData?.whyChoose?.reasons) 
-    ? homepageData.whyChoose.reasons 
+    ? homepageData.whyChoose.reasons.map(reason => ({
+        ...reason,
+        icon: reason.icon || iconMap[reason.title] || HeadphonesIcon
+      }))
     : (homepageData?.whyChoose?.reasons?.items || defaultReasons);
 
   return (

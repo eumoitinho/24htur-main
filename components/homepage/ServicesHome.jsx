@@ -10,11 +10,19 @@ import { portableTextToPlain } from '../../utils/lib/sanity';
 const ServicesHome = () => {
   const { data: homepageData, loading, error } = useHomepage();
   
+  // Icon mapping para quando os dados vêm do Sanity sem ícones
+  const iconMap = {
+    'Viagens corporativas': Briefcase,
+    'Viagens de lazer': Plane,
+    'Viagens para eventos': Calendar,
+    'corporate': Briefcase,
+    'lazer': Plane,
+    'eventos': Calendar
+  };
+  
   // Fallback para dados estáticos caso não carregue do Sanity
   // Garante que sempre seja um array
-  const servicesData = Array.isArray(homepageData?.services) 
-    ? homepageData.services 
-    : (homepageData?.services?.items || [
+  const defaultServices = [
     {
       icon: Briefcase,
       title: 'Viagens corporativas',
@@ -36,7 +44,15 @@ const ServicesHome = () => {
       link: '/eventos',
       ctaText: 'SAIBA MAIS!'
     }
-  ]);
+  ];
+  
+  const servicesData = Array.isArray(homepageData?.services) 
+    ? homepageData.services.map(service => ({
+        ...service,
+        // Se não tem icon, mapeia baseado no title ou link
+        icon: service.icon || iconMap[service.title] || iconMap[service.link?.replace('/', '')] || Briefcase
+      }))
+    : (homepageData?.services?.items || defaultServices);
 
   return (
     <section className="py-14 sm:py-16 lg:py-18 bg-gradient-to-br from-slate-50 to-white">

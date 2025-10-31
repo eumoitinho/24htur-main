@@ -10,6 +10,15 @@ import { portableTextToPlain } from '../../utils/lib/sanity';
 const ProblemsSection = () => {
   const { data: homepageData } = useHomepage();
 
+  const iconMap = {
+    'Sem tempo para planejar?': Clock,
+    'Gastos fora de controle?': TrendingDown,
+    'Problemas no meio da viagem?': AlertCircle,
+    'Burocracia em excesso?': FileText,
+    'Roteiros genéricos?': Map,
+    'Desafios no exterior?': Globe
+  };
+
   const defaultProblems = [
     {
       icon: Clock,
@@ -43,9 +52,12 @@ const ProblemsSection = () => {
     }
   ];
 
-  // Garante que sempre seja um array
+  // Garante que sempre seja um array e mapeia ícones se necessário
   const problems = Array.isArray(homepageData?.problems) 
-    ? homepageData.problems 
+    ? homepageData.problems.map(problem => ({
+        ...problem,
+        icon: problem.icon || iconMap[problem.title] || Clock
+      }))
     : (homepageData?.problems?.items || defaultProblems);
 
   return (

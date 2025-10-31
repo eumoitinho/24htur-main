@@ -9,6 +9,13 @@ import { portableTextToPlain } from '../../utils/lib/sanity';
 const MetricsHome = () => {
   const { data: homepageData } = useHomepage();
 
+  const iconMap = {
+    'anos de experiência no mercado': Clock,
+    'suporte operacional': HeadphonesIcon,
+    'gestão personalizada': CheckCircle,
+    'operações executadas com sucesso': TrendingUp
+  };
+
   const defaultMetrics = [
     {
       icon: Clock,
@@ -32,7 +39,13 @@ const MetricsHome = () => {
     },
   ];
 
-  const metrics = homepageData?.metrics || defaultMetrics;
+  // Garante que sempre seja um array e mapeia ícones se necessário
+  const metrics = Array.isArray(homepageData?.metrics) 
+    ? homepageData.metrics.map(metric => ({
+        ...metric,
+        icon: metric.icon || iconMap[metric.label] || Clock
+      }))
+    : defaultMetrics;
 
   return (
     <section className="py-14 sm:py-16 lg:py-18 bg-gradient-to-br from-slate-50 to-white">
