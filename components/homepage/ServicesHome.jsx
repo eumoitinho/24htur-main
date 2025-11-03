@@ -90,13 +90,13 @@ const ServicesHome = () => {
                     {portableTextToPlain(service.description) || service.description}
                   </p>
 
-                  <Link href={service.link}>
+                  <Link href={service.link || '#'} passHref legacyBehavior>
                     <motion.a
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
                       className="inline-flex items-center text-brand-dark font-semibold hover:text-brand-gold transition-colors duration-300"
                     >
-                      {portableTextToPlain(service.ctaText) || service.ctaText}
+                      {portableTextToPlain(service.ctaText) || service.ctaText || 'SAIBA MAIS!'}
                       <ArrowRight className="ml-2 h-4 w-4" strokeWidth={2} />
                     </motion.a>
                   </Link>

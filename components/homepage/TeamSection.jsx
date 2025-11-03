@@ -77,7 +77,7 @@ const TeamSection = () => {
         </div>
 
         <div className="text-center">
-          <Link href="/equipe">
+          <Link href="/equipe" passHref legacyBehavior>
             <motion.a
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
