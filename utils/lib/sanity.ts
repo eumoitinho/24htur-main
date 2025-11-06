@@ -136,9 +136,49 @@ const loadStaticData = async (type: string) => {
 export const getDocuments = async (type: string, slug?: string) => {
   // SEMPRE tenta buscar do Sanity primeiro
   try {
-    const query = slug 
-      ? `*[_type == "${type}" && slug.current == "${slug}"][0]`
-      : `*[_type == "${type}"]`;
+    // Para homepage, usa uma query específica que projeta os campos corretamente
+    let query: string;
+    if (type === 'homepage' && !slug) {
+      query = `*[_type == "homepage"][0]{
+        _id,
+        _type,
+        title,
+        isActive,
+        seoTitle,
+        seoDescription,
+        hero,
+        metrics[]{
+          _key,
+          value,
+          label
+        },
+        problems,
+        experience,
+        clients{
+          badge,
+          title,
+          subtitle,
+          logos[]{
+            _key,
+            asset->{
+              _ref,
+              _type
+            },
+            alt
+          }
+        },
+        services,
+        whyChoose,
+        aboutCompany,
+        team,
+        testimonials,
+        contact
+      }`;
+    } else {
+      query = slug 
+        ? `*[_type == "${type}" && slug.current == "${slug}"][0]`
+        : `*[_type == "${type}"]`;
+    }
     
     console.log(`🔄 Buscando dados do Sanity para ${type}...`);
     
@@ -156,6 +196,14 @@ export const getDocuments = async (type: string, slug?: string) => {
     });
     
     const data = await fetchClient.fetch(query);
+    
+    // Log para debug das métricas e logos
+    if (type === 'homepage' && data) {
+      console.log('📊 Métricas recebidas do Sanity:', JSON.stringify(data.metrics, null, 2));
+      if (data.clients?.logos) {
+        console.log('🖼️ Logos recebidos do Sanity:', JSON.stringify(data.clients.logos, null, 2));
+      }
+    }
 
     // Normaliza dados recebidos do Sanity:
     // - Se for array com 1 item, retorna o objeto (muitos componentes esperam um objeto único)
@@ -164,11 +212,26 @@ export const getDocuments = async (type: string, slug?: string) => {
     const normalizeFetched = (value: any, key?: string): any => {
       if (value == null) return value;
 
-      // Se for array, normalize cada item
-      if (Array.isArray(value)) return value.map((v) => normalizeFetched(v));
+      // Se for array, normalize cada item preservando _key
+      if (Array.isArray(value)) {
+        return value.map((v, index) => {
+          const normalized = normalizeFetched(v, key);
+          // Preserva _key se existir, caso contrário cria um baseado no índice
+          if (normalized && typeof normalized === 'object' && !normalized._key) {
+            normalized._key = normalized._key || v._key || `item-${index}`;
+          }
+          return normalized;
+        });
+      }
 
-      // Se for um objeto de imagem do Sanity, converte para URL
+      // Se for um objeto de imagem do Sanity
       if (typeof value === 'object' && value._type === 'image' && value.asset) {
+        // Para logos, mantemos a estrutura original (não converte para URL)
+        // O componente vai usar urlFor para gerar a URL quando necessário
+        if (key === 'logos' || (key && key.includes('logo'))) {
+          return value;
+        }
+        // Para outras imagens, converte para URL
         try {
           return urlFor(value).url();
         } catch (e) {

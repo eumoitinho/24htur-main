@@ -180,17 +180,42 @@ export default defineType({
       type: 'object',
       fields: [
         defineField({
+          name: 'badge',
+          title: 'Badge',
+          type: 'string',
+          initialValue: 'Nossa Rede de Confiança'
+        }),
+        defineField({
           name: 'title',
           title: 'Título',
           type: 'string',
-          initialValue: 'NOSSOS CLIENTES',
+          initialValue: 'Empresas que confiam na 24H',
           validation: Rule => Rule.required()
         }),
         defineField({
-          name: 'placeholder',
-          title: 'Texto Placeholder',
+          name: 'subtitle',
+          title: 'Subtítulo',
           type: 'string',
-          initialValue: '(Aguardando envio pela cliente)'
+          initialValue: 'Parcerias que reforçam nossa credibilidade e resultados consistentes em gestão de viagens corporativas.'
+        }),
+        defineField({
+          name: 'logos',
+          title: 'Logos dos Clientes',
+          type: 'array',
+          of: [
+            {
+              type: 'image',
+              fields: [
+                defineField({
+                  name: 'alt',
+                  title: 'Texto Alternativo',
+                  type: 'string',
+                  description: 'Descrição da imagem para acessibilidade'
+                })
+              ]
+            }
+          ],
+          description: 'Adicione os logos dos clientes que serão exibidos no carrossel'
         })
       ]
     }),

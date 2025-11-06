@@ -175,13 +175,11 @@ export interface Homepage {
 
   // Metrics Section
   metrics: {
-    items: {
-      _key: string;
-      value: string;
-      label: string;
-      icon: string;
-    }[];
-  };
+    _key: string;
+    value: string;
+    label: string;
+    icon?: string;
+  }[];
 
   // Problems Section
   problems: {
@@ -203,7 +201,9 @@ export interface Homepage {
 
   // Clients Section
   clients: {
+    badge?: string;
     title: string;
+    subtitle?: string;
     logos: SanityImage[];
   };
 

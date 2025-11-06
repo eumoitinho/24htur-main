@@ -11,9 +11,11 @@ const MetricsHome = () => {
 
   const iconMap = {
     'anos de experiência no mercado': Clock,
+    'anos de experiência': Clock,
     'suporte operacional': HeadphonesIcon,
     'gestão personalizada': CheckCircle,
-    'operações executadas com sucesso': TrendingUp
+    'operações executadas com sucesso': TrendingUp,
+    'operações executadas': TrendingUp
   };
 
   const defaultMetrics = [
@@ -40,12 +42,29 @@ const MetricsHome = () => {
   ];
 
   // Garante que sempre seja um array e mapeia ícones se necessário
-  const metrics = Array.isArray(homepageData?.metrics) 
-    ? homepageData.metrics.map(metric => ({
-        ...metric,
-        icon: metric.icon || iconMap[metric.label] || Clock
-      }))
+  const metrics = Array.isArray(homepageData?.metrics) && homepageData.metrics.length > 0
+    ? homepageData.metrics.map((metric, index) => {
+        const labelLower = metric.label?.toLowerCase() || '';
+        // Tenta encontrar o ícone pelo label (case-insensitive)
+        const matchedIcon = Object.keys(iconMap).find(key => 
+          labelLower.includes(key.toLowerCase()) || key.toLowerCase().includes(labelLower)
+        );
+        
+        return {
+          ...metric,
+          _key: metric._key || `metric-${index}`,
+          icon: metric.icon || (matchedIcon ? iconMap[matchedIcon] : Clock)
+        };
+      })
     : defaultMetrics;
+
+  // Log para debug
+  React.useEffect(() => {
+    if (homepageData) {
+      console.log('📊 Homepage data:', homepageData);
+      console.log('📊 Métricas processadas:', metrics);
+    }
+  }, [homepageData, metrics]);
 
   return (
     <section className="py-14 sm:py-16 lg:py-18 bg-gradient-to-br from-slate-50 to-white">
@@ -55,7 +74,7 @@ const MetricsHome = () => {
             const Icon = metric.icon;
             return (
               <motion.div
-                key={index}
+                key={metric._key || index}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
@@ -69,7 +88,7 @@ const MetricsHome = () => {
                   {metric.value}
                 </div>
                 <div className="text-sm lg:text-base text-slate-600">
-                  {portableTextToPlain(metric.label)}
+                  {typeof metric.label === 'string' ? metric.label : portableTextToPlain(metric.label)}
                 </div>
               </motion.div>
             );
