@@ -80,23 +80,25 @@ const ContactLazer = () => {
 
   const { data: lazerData } = useLazerPage();
 
-  const contact = lazerData?.contact || {
-    badge: 'Contato',
-    title: 'Planeje sua próxima Viagem de Lazer',
-    paragraph: 'Roteiros personalizados, experiências únicas e momentos inesquecíveis. Conte com nossa expertise para criar a viagem perfeita para você e sua família.',
-    features: ["Roteiros personalizados", "Suporte 24/7 durante a viagem", "Parcerias exclusivas", "Experiências locais autênticas", "Planejamento completo"],
+  const defaultContact = {
+    title: 'Deixe a 24H cuidar de tudo',
+    subtitle: 'Preencha o formulário abaixo e nossa equipe de especialistas em lazer entrará em contato para criar um roteiro personalizado e inesquecível para você.',
     phone: '(51) 3516-0098',
-    email: 'lazer@24h.tur.br',
-    offices: ['Porto Alegre, RS – Av. Carlos Gomes 1672', 'Alphaville, SP – Alameda Rio Negro 503', 'Florianópolis, SC – Av. Luiz Boiteaux Piazza 1302']
+    email: 'contato@24h.tur.br',
+    addresses: [
+      { address: 'Avenida Carlos Gomes 1672, 7º andar', city: 'Porto Alegre, RS' },
+      { address: 'Alameda Rio Negro 503, 6º andar', city: 'Alphaville, SP' },
+      { address: 'Avenida Luiz Boiteaux Piazza, 1302', city: 'Florianópolis, SC' }
+    ]
   };
 
-  const badgeText = portableTextToPlain(contact.badge) || contact.badge;
+  const contact = lazerData?.contactForm || defaultContact;
+
   const titleText = portableTextToPlain(contact.title) || contact.title;
-  const paragraphText = portableTextToPlain(contact.paragraph) || contact.paragraph;
-  const features = Array.isArray(contact.features) ? contact.features : [];
-  const phoneNumber = lazerData?.contact?.phone || contact.phone;
-  const emailAddress = lazerData?.contact?.email || contact.email;
-  const offices = Array.isArray(contact.offices) ? contact.offices : contact.offices ? [contact.offices] : [];
+  const subtitleText = portableTextToPlain(contact.subtitle) || contact.subtitle;
+  const phoneNumber = contact.phone || defaultContact.phone;
+  const emailAddress = contact.email || defaultContact.email;
+  const addresses = Array.isArray(contact.addresses) ? contact.addresses : defaultContact.addresses;
 
   return (
     <section id="contato" className="relative py-24 sm:py-28 bg-gradient-to-b from-brand-dark via-brand-dark to-black overflow-hidden">
@@ -105,19 +107,11 @@ const ContactLazer = () => {
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
         <div className="mb-14 text-center max-w-3xl mx-auto">
-          <div className="inline-flex items-center gap-2 rounded-full bg-brand-gold/15 px-5 py-2 ring-1 ring-inset ring-brand-gold/30">
-            <Mail className="h-4 w-4 text-brand-gold" strokeWidth={1.5} />
-            <span className="text-xs font-semibold tracking-[0.15em] text-brand-gold uppercase">{badgeText}</span>
-          </div>
-          <h2 className="mt-6 text-4xl sm:text-5xl font-semibold tracking-tight text-white leading-tight">
-            {titleText ? (
-              <>
-                {titleText.split(' ').slice(0, -3).join(' ')} <span className="text-brand-gold">{titleText.split(' ').slice(-3).join(' ')}</span>
-              </>
-            ) : titleText}
+          <h2 className="text-4xl sm:text-5xl font-semibold tracking-tight text-white leading-tight mb-4">
+            {titleText}
           </h2>
-          <p className="mt-4 text-lg text-white/70 leading-relaxed">
-            {paragraphText}
+          <p className="text-lg text-white/70 leading-relaxed">
+            {subtitleText}
           </p>
         </div>
 
@@ -127,22 +121,8 @@ const ContactLazer = () => {
           <div className="relative grid grid-cols-1 lg:grid-cols-2 divide-y lg:divide-y-0 lg:divide-x divide-white/10">
             {/* Left info column */}
             <div className="p-6 sm:p-10">
-              <p className="text-[11px] uppercase tracking-[0.18em] text-white/50">{portableTextToPlain(lazerData?.contact?.smallLabel) || 'Por que escolher a 24H'}</p>
-              <h3 className="mt-3 text-3xl sm:text-4xl text-white tracking-tight">{portableTextToPlain(lazerData?.contact?.eyebrow) || 'Viagens que marcam a vida'}</h3>
-              <p className="mt-4 text-sm text-white/70 leading-relaxed max-w-md">
-                {portableTextToPlain(lazerData?.contact?.leadParagraph) || 'Criamos experiências únicas e memoráveis, cuidando de cada detalhe para que você só precise se preocupar em aproveitar cada momento.'}
-              </p>
-              <ul className="mt-8 space-y-3 text-[15px]">
-                {features.map((item, idx) => (
-                  <li key={idx} className="flex items-center gap-3 text-white/85">
-                    <span className="h-1.5 w-1.5 rounded-full bg-brand-gold shadow-[0_0_0_3px_rgba(245,197,24,0.25)]" />
-                    <span>{portableTextToPlain(item) || item}</span>
-                  </li>
-                ))}
-              </ul>
-
               {/* Direct contact */}
-              <div className="mt-10 grid gap-6 sm:grid-cols-2">
+              <div className="mb-10 grid gap-6 sm:grid-cols-2">
                 <div className="flex items-start gap-3">
                   <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-brand-gold/20 ring-1 ring-brand-gold/40">
                     <Phone className="h-5 w-5 text-brand-gold" />
@@ -166,8 +146,10 @@ const ContactLazer = () => {
               <div className="mt-10">
                 <div className="text-xs uppercase tracking-wide text-white/50 mb-2">Escritórios</div>
                 <div className="space-y-2 text-[13px] font-medium text-white/80">
-                  {offices.map((o, i) => (
-                    <p key={i}>{portableTextToPlain(o) || o}</p>
+                  {addresses.map((addr, i) => (
+                    <p key={i}>
+                      {addr.address ? `${addr.address} | ${addr.city}` : portableTextToPlain(addr) || addr}
+                    </p>
                   ))}
                 </div>
               </div>

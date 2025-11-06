@@ -43,27 +43,29 @@ const ServicesLazer = () => {
   ];
 
   // Garante que sempre seja um array
-  const services = Array.isArray(lazerData?.services)
-    ? lazerData.services
-    : (lazerData?.services?.items && Array.isArray(lazerData.services.items))
+  const services = Array.isArray(lazerData?.services?.items)
+    ? lazerData.services.items
+    : (lazerData?.services && !Array.isArray(lazerData.services) && lazerData.services.items)
       ? lazerData.services.items
       : defaultServices;
+
+  const title = lazerData?.services?.title || 'Serviços completos para sua viagem de lazer';
+  const ctaText = lazerData?.services?.ctaText || 'PERSONALIZE DO SEU JEITO!';
 
   return (
     <section className="py-14 sm:py-16 lg:py-18">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="text-center mb-12">
           <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight text-slate-900 mb-4">
-            Serviços completos para sua viagem perfeita
+            {portableTextToPlain(title) || title}
           </h2>
-          <p className="text-lg text-slate-600">
-            Tudo o que você precisa para uma experiência de viagem memorável
-          </p>
         </div>
 
-        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 mb-12">
           {services.map((service, index) => {
-            const Icon = service.icon;
+            const serviceName = service.service || service.title || '';
+            const description = service.description || '';
+            
             return (
               <motion.div
                 key={index}
@@ -71,22 +73,35 @@ const ServicesLazer = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 viewport={{ once: true }}
-                className="bg-white rounded-3xl shadow-lg p-8 hover:shadow-2xl transition-all duration-300"
+                className="flex gap-4 bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300"
               >
-                <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-brand-gold/20 to-brand-gold/10 mb-4">
-                  <Icon className="w-8 h-8 text-brand-dark" strokeWidth={1.5} />
+                <div className="flex-shrink-0">
+                  <div className="w-6 h-6 rounded-full bg-brand-gold/20 flex items-center justify-center">
+                    <span className="text-brand-gold text-sm">✓</span>
+                  </div>
                 </div>
-
-                <h3 className="text-xl font-semibold text-slate-900 mb-3">
-                  {portableTextToPlain(service.title) || service.title}
-                </h3>
-
-                <p className="text-sm text-slate-600 leading-relaxed">
-                  {portableTextToPlain(service.description) || service.description}
-                </p>
+                <div className="flex-1">
+                  <h3 className="text-lg font-semibold text-slate-900 mb-2">
+                    {portableTextToPlain(serviceName) || serviceName}
+                  </h3>
+                  <p className="text-sm text-slate-600 leading-relaxed">
+                    {portableTextToPlain(description) || description}
+                  </p>
+                </div>
               </motion.div>
             );
           })}
+        </div>
+
+        <div className="text-center">
+          <motion.a
+            href="#contato"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="inline-flex items-center rounded-2xl bg-gradient-to-r from-brand-gold to-[#F59E0B] px-8 py-4 text-[15px] font-semibold text-brand-dark shadow-sm hover:shadow-xl transition-all duration-300"
+          >
+            {ctaText}
+          </motion.a>
         </div>
       </div>
     </section>
