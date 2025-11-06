@@ -12,6 +12,21 @@ const ClientsHome = () => {
   const clientsData = homepageData?.clients || null;
   const logos = clientsData?.logos || [];
 
+  // Debug: log dos logos recebidos
+  React.useEffect(() => {
+    if (logos && logos.length > 0) {
+      console.log('🖼️ Logos recebidos no componente:', logos);
+      logos.forEach((logo, idx) => {
+        console.log(`Logo ${idx}:`, {
+          _key: logo._key,
+          _type: logo._type,
+          asset: logo.asset,
+          alt: logo.alt
+        });
+      });
+    }
+  }, [logos]);
+
   // Duplicar logos para efeito de marquee infinito
   const duplicatedLogos = useMemo(() => [...logos, ...logos], [logos]);
 
@@ -98,10 +113,30 @@ const ClientsHome = () => {
               {/* Grid repetida para continuidade */}
               <div className="flex gap-6 pr-6">
                 {duplicatedLogos.map((logo, idx) => {
-                  const imageUrl = logo?.asset ? urlFor(logo).url() : null;
+                  let imageUrl = null;
+                  try {
+                    // Tenta gerar URL usando urlFor se logo tem estrutura de imagem do Sanity
+                    if (logo && typeof logo === 'object') {
+                      if (logo._type === 'image' && logo.asset) {
+                        imageUrl = urlFor(logo).url();
+                      } else if (logo.asset?.url) {
+                        // Se o asset já tem URL direta (depois da query expandida)
+                        imageUrl = logo.asset.url;
+                      } else if (logo.asset?._id) {
+                        // Se tem apenas _id, tenta usar urlFor
+                        imageUrl = urlFor(logo).url();
+                      }
+                    }
+                  } catch (error) {
+                    console.error('Erro ao gerar URL do logo:', error, logo);
+                  }
+                  
                   const altText = logo?.alt || 'Logo do cliente';
                   
-                  if (!imageUrl) return null;
+                  if (!imageUrl) {
+                    console.warn('Logo sem URL válida:', logo);
+                    return null;
+                  }
 
                   return (
                     <motion.div

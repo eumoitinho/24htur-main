@@ -160,9 +160,11 @@ export const getDocuments = async (type: string, slug?: string) => {
           subtitle,
           logos[]{
             _key,
+            _type,
             asset->{
-              _ref,
-              _type
+              _id,
+              _type,
+              url
             },
             alt
           }
@@ -214,8 +216,11 @@ export const getDocuments = async (type: string, slug?: string) => {
 
       // Se for array, normalize cada item preservando _key
       if (Array.isArray(value)) {
+        // Se for array de logos, preserva a estrutura das imagens
+        const isLogosArray = key === 'logos';
         return value.map((v, index) => {
-          const normalized = normalizeFetched(v, key);
+          // Passa o contexto para saber que é logos
+          const normalized = normalizeFetched(v, isLogosArray ? 'logos' : key);
           // Preserva _key se existir, caso contrário cria um baseado no índice
           if (normalized && typeof normalized === 'object' && !normalized._key) {
             normalized._key = normalized._key || v._key || `item-${index}`;
@@ -226,10 +231,18 @@ export const getDocuments = async (type: string, slug?: string) => {
 
       // Se for um objeto de imagem do Sanity
       if (typeof value === 'object' && value._type === 'image' && value.asset) {
-        // Para logos, mantemos a estrutura original (não converte para URL)
+        // Para logos (dentro de arrays de logos), mantemos a estrutura original (não converte para URL)
         // O componente vai usar urlFor para gerar a URL quando necessário
+        // Verifica se está dentro de um contexto de logos
         if (key === 'logos' || (key && key.includes('logo'))) {
-          return value;
+          // Preserva a estrutura completa da imagem para logos
+          // Garante que _type está presente e asset está completo
+          return {
+            _type: 'image',
+            _key: value._key,
+            asset: value.asset,
+            alt: value.alt
+          };
         }
         // Para outras imagens, converte para URL
         try {
