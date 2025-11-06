@@ -32,13 +32,21 @@ const AboutHome = () => {
             </h2>
 
             <div className="space-y-4 text-slate-600">
-              {(aboutData?.paragraphs || [
-                'A 24H Escritório de Viagens é uma agência especializada em viagens corporativas, de lazer, turismo de incentivo e eventos. Com mais de 20 anos de experiência no mercado, nossa equipe atua com excelência na gestão de viagens nacionais e internacionais, oferecendo soluções completas e personalizadas para empresas, famílias e clientes individuais.',
-                'Cuidamos de todas as etapas da viagem, desde a cotação até a emissão de passagens, reservas de hotéis, traslados, câmbio, seguros, vistos, locação de veículos, roteiros turísticos e ingressos. Trabalhamos com uma ampla rede de fornecedores e parceiros nos setores aéreo, hoteleiro e de turismo, garantindo agilidade, economia e segurança em cada atendimento.',
-                'Nosso compromisso é oferecer uma experiência de viagem tranquila, eficiente e sem imprevistos, com suporte disponível 24 horas por dia, 7 dias por semana.'
-              ]).map((p, i) => (
-                <p key={i} className="leading-relaxed">{portableTextToPlain(p)}</p>
-              ))}
+              {aboutData?.description ? (
+                Array.isArray(aboutData.description) ? (
+                  aboutData.description.map((block, i) => (
+                    <p key={i} className="leading-relaxed">{portableTextToPlain(block)}</p>
+                  ))
+                ) : (
+                  <p className="leading-relaxed">{portableTextToPlain(aboutData.description)}</p>
+                )
+              ) : (
+                <>
+                  <p className="leading-relaxed">A 24H Escritório de Viagens é uma agência especializada em viagens corporativas, de lazer, turismo de incentivo e eventos. Com mais de 20 anos de experiência no mercado, nossa equipe atua com excelência na gestão de viagens nacionais e internacionais, oferecendo soluções completas e personalizadas para empresas, famílias e clientes individuais.</p>
+                  <p className="leading-relaxed">Cuidamos de todas as etapas da viagem, desde a cotação até a emissão de passagens, reservas de hotéis, traslados, câmbio, seguros, vistos, locação de veículos, roteiros turísticos e ingressos. Trabalhamos com uma ampla rede de fornecedores e parceiros nos setores aéreo, hoteleiro e de turismo, garantindo agilidade, economia e segurança em cada atendimento.</p>
+                  <p className="leading-relaxed">Nosso compromisso é oferecer uma experiência de viagem tranquila, eficiente e sem imprevistos, com suporte disponível 24 horas por dia, 7 dias por semana.</p>
+                </>
+              )}
             </div>
 
             <motion.a

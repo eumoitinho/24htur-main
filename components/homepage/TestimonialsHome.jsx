@@ -28,9 +28,7 @@ const TestimonialsHome = () => {
   ];
 
   // Garante que sempre seja um array
-  const testimonials = Array.isArray(homepageData?.testimonials) 
-    ? homepageData.testimonials 
-    : (homepageData?.testimonials?.items || defaultTestimonials);
+  const testimonials = homepageData?.testimonials?.items || defaultTestimonials;
 
   return (
     <section className="py-14 sm:py-16 lg:py-18 bg-gradient-to-br from-slate-50 to-white">

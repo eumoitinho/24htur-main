@@ -60,7 +60,33 @@ const HeroHome = () => {
               transition={{ duration: 0.8, ease: "easeOut" }}
               className="text-white text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold tracking-tight leading-[1.1]"
             >
-              {portableTextToPlain(homepageData?.hero?.title) || heroData.title}
+              {(() => {
+                const title = homepageData?.hero?.title;
+                if (!title) return heroData.title;
+                
+                // Se é array de blocos (portable text), processa corretamente preservando espaços
+                if (Array.isArray(title)) {
+                  return title.map((block) => {
+                    if (block._type === 'block' && block.children) {
+                      return block.children.map((child) => {
+                        if (child._type === 'span') {
+                          return child.text || '';
+                        }
+                        return '';
+                      }).join(''); // Preserva espaços que já vêm no texto do Sanity
+                    }
+                    return '';
+                  }).join(' ').trim(); // Adiciona espaço entre blocos
+                }
+                
+                // Se é string, usa diretamente
+                if (typeof title === 'string') {
+                  return title;
+                }
+                
+                // Fallback
+                return portableTextToPlain(title) || heroData.title;
+              })()}
             </motion.h1>
 
             <motion.p

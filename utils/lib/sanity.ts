@@ -57,10 +57,11 @@ export const portableTextToPlain = (value: any): string => {
         if (typeof block === 'string') return stripHtml(block);
         if (Array.isArray(block)) return block.map(b => typeof b === 'string' ? stripHtml(b) : String(b)).join(' ');
         if (block.children && Array.isArray(block.children)) {
+          // Preserva espaços entre os children
           return block.children.map((c: any) => {
             const text = c?.text || c?.value || '';
             return typeof text === 'string' ? stripHtml(text) : String(text);
-          }).join('');
+          }).join(''); // Não adiciona espaço aqui, preserva o que vem do Sanity
         }
         if (block.text) {
           const text = block.text;
@@ -71,7 +72,7 @@ export const portableTextToPlain = (value: any): string => {
         return '';
       })
       .filter(Boolean)
-      .join(' ');
+      .join(' '); // Adiciona espaço entre blocos
     return result;
   }
   
@@ -154,26 +155,59 @@ export const getDocuments = async (type: string, slug?: string) => {
         },
         problems,
         experience,
-        clients{
+        "clients": clients{
           badge,
           title,
           subtitle,
-          logos[]{
+          "logos": logos[]{
             _key,
             _type,
             asset->{
               _id,
               _type,
-              url
+              url,
+              originalFilename,
+              mimeType
             },
             alt
           }
         },
         services,
         whyChoose,
-        aboutCompany,
-        team,
-        testimonials,
+        about{
+          badge,
+          title,
+          description,
+          ctaText,
+          stats[]{
+            _key,
+            value,
+            label
+          }
+        },
+        team{
+          title,
+          ctaText,
+          ctaLink,
+          members[]{
+            _key,
+            name,
+            role,
+            education,
+            experience,
+            description
+          }
+        },
+        testimonials{
+          title,
+          subtitle,
+          items[]{
+            _key,
+            name,
+            text,
+            rating
+          }
+        },
         contact
       }`;
     } else {
@@ -191,16 +225,26 @@ export const getDocuments = async (type: string, slug?: string) => {
       useCdn: false, // Desabilita CDN para sempre pegar dados atualizados
       apiVersion: process.env.NEXT_PUBLIC_SANITY_API_VERSION || '2024-01-01',
       token: process.env.NEXT_PUBLIC_SANITY_TOKEN,
-      perspective: 'published',
+      perspective: 'published', // Busca apenas dados publicados
       stega: {
         enabled: false,
       },
     });
     
-    const data = await fetchClient.fetch(query);
+    // Log da query para debug
+    if (type === 'homepage') {
+      console.log('🔍 Query GROQ executada:', query);
+    }
     
-    // Log para debug das métricas e logos
+    // Adiciona timestamp para evitar cache
+    const data = await fetchClient.fetch(query, {}, {
+      cache: 'no-store',
+      next: { revalidate: 0 }
+    });
+    
+    // Log para debug das métricas e logos - ANTES da normalização
     if (type === 'homepage' && data) {
+      console.log('🔍 Dados RAW do Sanity (antes da normalização):', JSON.stringify(data, null, 2));
       console.log('📊 Métricas recebidas do Sanity:', JSON.stringify(data.metrics, null, 2));
       console.log('📦 Dados completos de clients recebidos:', JSON.stringify(data.clients, null, 2));
       if (data.clients) {
@@ -214,9 +258,26 @@ export const getDocuments = async (type: string, slug?: string) => {
           });
         } else if (data.clients.logos) {
           console.log('🖼️ Logos recebidos do Sanity:', JSON.stringify(data.clients.logos, null, 2));
+          console.log('🖼️ Número de logos:', data.clients.logos?.length || 0);
+          if (data.clients.logos && data.clients.logos.length > 0) {
+            data.clients.logos.forEach((logo, idx) => {
+              console.log(`Logo ${idx}:`, {
+                _key: logo._key,
+                _type: logo._type,
+                hasAsset: !!logo.asset,
+                assetUrl: logo.asset?.url,
+                assetId: logo.asset?._id,
+                alt: logo.alt
+              });
+            });
+          } else {
+            console.log('⚠️ Array de logos está vazio! Verifique se você adicionou logos no Sanity Dashboard.');
+            console.log('💡 No Sanity Dashboard, vá em "Página Home" > "Seção Clientes" > "Logos dos Clientes" e adicione imagens.');
+          }
         } else {
           console.log('⚠️ clients.logos não existe ou está vazio');
           console.log('Estrutura de clients:', Object.keys(data.clients || {}));
+          console.log('💡 Verifique se você adicionou logos no Sanity Dashboard em "Página Home" > "Seção Clientes" > "Logos dos Clientes"');
         }
       } else {
         console.log('⚠️ data.clients não existe');
@@ -289,10 +350,11 @@ export const getDocuments = async (type: string, slug?: string) => {
           
           // Garante que campos conhecidos como arrays sempre sejam arrays
           // Nota: 'clients' não deve estar aqui pois é um objeto, não um array
+          // Mas 'logos' dentro de 'clients' deve ser preservado como array
           const arrayFields = [
             'services', 'team', 'testimonials', 'reasons', 'problems',
             'options', 'positions', 'items', 'members', 'destinations',
-            'benefits', 'metrics'
+            'benefits', 'metrics', 'logos' // Adiciona 'logos' para garantir que seja array
           ];
           
           // Se o campo deveria ser array mas não é, converte
@@ -307,6 +369,11 @@ export const getDocuments = async (type: string, slug?: string) => {
           } else {
             out[k] = normalized;
           }
+          
+          // Debug específico para logos
+          if (k === 'logos' && Array.isArray(normalized)) {
+            console.log(`🔍 Normalizando logos: ${normalized.length} logos encontrados`);
+          }
         }
         return out;
       }
@@ -318,6 +385,17 @@ export const getDocuments = async (type: string, slug?: string) => {
     if (data && (!Array.isArray(data) || data.length > 0)) {
       console.log(`✅ Dados encontrados no Sanity para ${type}!`);
       let normalized = normalizeFetched(data);
+
+      // Log após normalização para verificar se logos foram preservados
+      if (type === 'homepage' && normalized) {
+        const finalData = Array.isArray(normalized) && normalized.length === 1 ? normalized[0] : normalized;
+        if (finalData?.clients?.logos) {
+          console.log('✅ Logos preservados após normalização:', finalData.clients.logos.length, 'logos');
+        } else {
+          console.log('⚠️ Logos NÃO foram preservados após normalização!');
+          console.log('Estrutura de clients após normalização:', finalData?.clients);
+        }
+      }
 
       // Se a query retornou um único documento (array com 1 item) e não foi por slug,
       // retorna apenas o objeto (pois é uma query de lista que retornou 1 resultado)

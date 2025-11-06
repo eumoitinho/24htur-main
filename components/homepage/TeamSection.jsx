@@ -10,24 +10,8 @@ import { portableTextToPlain } from '../../utils/lib/sanity';
 const TeamSection = () => {
   const { data: homepageData, loading, error } = useHomepage();
   
-  // Fallback para dados estáticos caso não carregue do Sanity
   // Garante que sempre seja um array
-  const teamData = Array.isArray(homepageData?.team) 
-    ? homepageData.team 
-    : (homepageData?.team?.items || homepageData?.team?.members || [
-    {
-      name: 'Betinna Pavim',
-      role: 'CEO|COO',
-      education: 'Bacharel em Turismo com ênfase em Hotelaria',
-      experience: '20 anos de experiência com agenciamento de viagens'
-    },
-    {
-      name: 'Liciane Rossetto',
-      role: 'CEO|CFO',
-      education: 'Doutora em Turismo',
-      experience: '30 anos de experiência no setor turístico'
-    }
-  ]);
+  const teamData = homepageData?.team?.members || [];
 
   return (
     <section className="py-14 sm:py-16 lg:py-18">
@@ -63,12 +47,21 @@ const TeamSection = () => {
                     <p className="text-sm font-semibold text-brand-gold mb-3">
                       {member.role}
                     </p>
-                    <p className="text-sm text-slate-600 mb-2">
-                      {member.education}
-                    </p>
-                    <p className="text-sm text-slate-600">
-                      {member.experience}
-                    </p>
+                    {member.education && (
+                      <p className="text-sm text-slate-600 mb-2">
+                        {member.education}
+                      </p>
+                    )}
+                    {member.experience && (
+                      <p className="text-sm text-slate-600">
+                        {member.experience}
+                      </p>
+                    )}
+                    {member.description && !member.education && (
+                      <p className="text-sm text-slate-600 whitespace-pre-line">
+                        {member.description}
+                      </p>
+                    )}
                   </div>
                 </div>
               </div>
