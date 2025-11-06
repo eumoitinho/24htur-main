@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Image from 'next/image';
-import { resolveImage } from '../../utils/lib/sanity';
+import { resolveImage, portableTextToPlain } from '../../utils/lib/sanity';
 import { ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useOpcoesViagemPage } from '../../utils/hooks/useSanityData';
@@ -60,7 +60,33 @@ const HeroOpcoesViagem = () => {
               transition={{ duration: 0.8, ease: "easeOut" }}
               className="text-white text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold tracking-tight leading-[1.1]"
             >
-              {opcoesData?.hero?.title ? opcoesData.hero.title.map(b => b.children?.map(c=>c.text).join('')).join(' ') : heroData.title}
+              {(() => {
+                const title = opcoesData?.hero?.title;
+                if (!title) return heroData.title;
+                
+                // Se é string, usa diretamente
+                if (typeof title === 'string') {
+                  return title;
+                }
+                
+                // Se é array de blocos (portable text), processa corretamente preservando espaços
+                if (Array.isArray(title)) {
+                  return title.map((block) => {
+                    if (block._type === 'block' && block.children) {
+                      return block.children.map((child) => {
+                        if (child._type === 'span') {
+                          return child.text || '';
+                        }
+                        return '';
+                      }).join(''); // Preserva espaços que já vêm no texto do Sanity
+                    }
+                    return '';
+                  }).join(' ').trim(); // Adiciona espaço entre blocos
+                }
+                
+                // Fallback: tenta usar portableTextToPlain
+                return portableTextToPlain(title) || heroData.title;
+              })()}
             </motion.h1>
 
             <motion.p
