@@ -247,6 +247,8 @@ export const getDocuments = async (type: string, slug?: string) => {
       console.log('🔍 Dados RAW do Sanity (antes da normalização):', JSON.stringify(data, null, 2));
       console.log('📊 Métricas recebidas do Sanity:', JSON.stringify(data.metrics, null, 2));
       console.log('📦 Dados completos de clients recebidos:', JSON.stringify(data.clients, null, 2));
+      console.log('👥 Dados completos de team recebidos:', JSON.stringify(data.team, null, 2));
+      console.log('💬 Dados completos de testimonials recebidos:', JSON.stringify(data.testimonials, null, 2));
       if (data.clients) {
         if (Array.isArray(data.clients)) {
           console.log('⚠️ clients está como array:', data.clients);
@@ -352,9 +354,10 @@ export const getDocuments = async (type: string, slug?: string) => {
           // Nota: 'clients' não deve estar aqui pois é um objeto, não um array
           // Mas 'logos' dentro de 'clients' deve ser preservado como array
           const arrayFields = [
-            'services', 'team', 'testimonials', 'reasons', 'problems',
+            'services', 'reasons', 'problems',
             'options', 'positions', 'items', 'members', 'destinations',
-            'benefits', 'metrics', 'logos' // Adiciona 'logos' para garantir que seja array
+            'benefits', 'metrics', 'logos' // Campos que devem ser arrays
+            // NOTA: 'team' e 'testimonials' são OBJETOS, não arrays!
           ];
           
           // Se o campo deveria ser array mas não é, converte
@@ -370,9 +373,15 @@ export const getDocuments = async (type: string, slug?: string) => {
             out[k] = normalized;
           }
           
-          // Debug específico para logos
+          // Debug específico para logos, members e items
           if (k === 'logos' && Array.isArray(normalized)) {
             console.log(`🔍 Normalizando logos: ${normalized.length} logos encontrados`);
+          }
+          if (k === 'members' && Array.isArray(normalized)) {
+            console.log(`🔍 Normalizando members: ${normalized.length} membros encontrados`);
+          }
+          if (k === 'items' && Array.isArray(normalized)) {
+            console.log(`🔍 Normalizando items: ${normalized.length} itens encontrados`);
           }
         }
         return out;
@@ -386,7 +395,7 @@ export const getDocuments = async (type: string, slug?: string) => {
       console.log(`✅ Dados encontrados no Sanity para ${type}!`);
       let normalized = normalizeFetched(data);
 
-      // Log após normalização para verificar se logos foram preservados
+      // Log após normalização para verificar se dados foram preservados
       if (type === 'homepage' && normalized) {
         const finalData = Array.isArray(normalized) && normalized.length === 1 ? normalized[0] : normalized;
         if (finalData?.clients?.logos) {
@@ -394,6 +403,18 @@ export const getDocuments = async (type: string, slug?: string) => {
         } else {
           console.log('⚠️ Logos NÃO foram preservados após normalização!');
           console.log('Estrutura de clients após normalização:', finalData?.clients);
+        }
+        if (finalData?.team?.members) {
+          console.log('✅ Team members preservados após normalização:', finalData.team.members.length, 'membros');
+        } else {
+          console.log('⚠️ Team members NÃO foram preservados após normalização!');
+          console.log('Estrutura de team após normalização:', finalData?.team);
+        }
+        if (finalData?.testimonials?.items) {
+          console.log('✅ Testimonials preservados após normalização:', finalData.testimonials.items.length, 'depoimentos');
+        } else {
+          console.log('⚠️ Testimonials NÃO foram preservados após normalização!');
+          console.log('Estrutura de testimonials após normalização:', finalData?.testimonials);
         }
       }
 

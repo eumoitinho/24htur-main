@@ -10,6 +10,14 @@ import { portableTextToPlain } from '../../utils/lib/sanity';
 const TeamSection = () => {
   const { data: homepageData, loading, error } = useHomepage();
   
+  // Debug: log dos dados recebidos
+  React.useEffect(() => {
+    console.log('👥 TeamSection - Homepage data:', homepageData);
+    console.log('👥 TeamSection - Team data:', homepageData?.team);
+    console.log('👥 TeamSection - Members:', homepageData?.team?.members);
+    console.log('👥 TeamSection - Members length:', homepageData?.team?.members?.length || 0);
+  }, [homepageData]);
+  
   // Garante que sempre seja um array
   const teamData = homepageData?.team?.members || [];
 
@@ -22,8 +30,9 @@ const TeamSection = () => {
           </h2>
         </div>
 
-        <div className="grid gap-8 lg:grid-cols-2 mb-12">
-          {teamData.map((member, index) => (
+        {teamData.length > 0 ? (
+          <div className="grid gap-8 lg:grid-cols-2 mb-12">
+            {teamData.map((member, index) => (
             <motion.div
               key={index}
               initial={{ opacity: 0, y: 30 }}
@@ -66,8 +75,13 @@ const TeamSection = () => {
                 </div>
               </div>
             </motion.div>
-          ))}
-        </div>
+            ))}
+          </div>
+        ) : (
+          <div className="text-center mb-12">
+            <p className="text-slate-600">Nenhum membro da equipe encontrado. Verifique os dados no Sanity Dashboard.</p>
+          </div>
+        )}
 
         <div className="text-center">
           <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
