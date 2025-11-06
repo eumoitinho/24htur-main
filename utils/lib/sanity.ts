@@ -219,6 +219,97 @@ export const getDocuments = async (type: string, slug?: string) => {
         },
         contact
       }`;
+    } else if (type === 'lazerPage' && !slug) {
+      query = `*[_type == "lazerPage"][0]{
+        _id,
+        _type,
+        title,
+        isActive,
+        seoTitle,
+        seoDescription,
+        hero{
+          title,
+          subtitle,
+          ctaText
+        },
+        metrics[]{
+          _key,
+          value
+        },
+        arguments{
+          title,
+          items[]{
+            _key,
+            question,
+            answer
+          }
+        },
+        experiences{
+          title,
+          description,
+          ctaText
+        },
+        travelTypes{
+          title,
+          types[]{
+            _key,
+            name,
+            icon
+          }
+        },
+        services{
+          title,
+          ctaText,
+          items[]{
+            _key,
+            service,
+            description
+          }
+        },
+        whyChoose{
+          title,
+          items[]{
+            _key,
+            title,
+            description
+          }
+        },
+        aboutCompany{
+          title,
+          subtitle,
+          description,
+          ctaText
+        },
+        testimonials{
+          title,
+          subtitle,
+          items[]{
+            _key,
+            text,
+            author,
+            rating
+          }
+        },
+        contactForm{
+          title,
+          subtitle
+        },
+        footer{
+          companyName,
+          addresses[]{
+            _key,
+            address,
+            city
+          },
+          phone,
+          email,
+          socialMedia[]{
+            _key,
+            platform,
+            url
+          }
+        }
+      }`;
     } else {
       query = slug 
         ? `*[_type == "${type}" && slug.current == "${slug}"][0]`
@@ -241,8 +332,8 @@ export const getDocuments = async (type: string, slug?: string) => {
     });
     
     // Log da query para debug
-    if (type === 'homepage') {
-      console.log('🔍 Query GROQ executada:', query);
+    if (type === 'homepage' || type === 'lazerPage') {
+      console.log(`🔍 Query GROQ executada para ${type}:`, query);
     }
     
     // Adiciona timestamp para evitar cache
@@ -252,12 +343,20 @@ export const getDocuments = async (type: string, slug?: string) => {
     });
     
     // Log para debug das métricas e logos - ANTES da normalização
-    if (type === 'homepage' && data) {
-      console.log('🔍 Dados RAW do Sanity (antes da normalização):', JSON.stringify(data, null, 2));
-      console.log('📊 Métricas recebidas do Sanity:', JSON.stringify(data.metrics, null, 2));
-      console.log('📦 Dados completos de clients recebidos:', JSON.stringify(data.clients, null, 2));
-      console.log('👥 Dados completos de team recebidos:', JSON.stringify(data.team, null, 2));
-      console.log('💬 Dados completos de testimonials recebidos:', JSON.stringify(data.testimonials, null, 2));
+    if ((type === 'homepage' || type === 'lazerPage') && data) {
+      console.log(`🔍 Dados RAW do Sanity para ${type} (antes da normalização):`, JSON.stringify(data, null, 2));
+      if (type === 'homepage') {
+        console.log('📊 Métricas recebidas do Sanity:', JSON.stringify(data.metrics, null, 2));
+        console.log('📦 Dados completos de clients recebidos:', JSON.stringify(data.clients, null, 2));
+        console.log('👥 Dados completos de team recebidos:', JSON.stringify(data.team, null, 2));
+        console.log('💬 Dados completos de testimonials recebidos:', JSON.stringify(data.testimonials, null, 2));
+      }
+      if (type === 'lazerPage') {
+        console.log('📊 Métricas recebidas do Sanity:', JSON.stringify(data.metrics, null, 2));
+        console.log('📦 Dados completos de arguments recebidos:', JSON.stringify(data.arguments, null, 2));
+        console.log('👥 Dados completos de services recebidos:', JSON.stringify(data.services, null, 2));
+        console.log('💬 Dados completos de testimonials recebidos:', JSON.stringify(data.testimonials, null, 2));
+      }
       if (data.clients) {
         if (Array.isArray(data.clients)) {
           console.log('⚠️ clients está como array:', data.clients);

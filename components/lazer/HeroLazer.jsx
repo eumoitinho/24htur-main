@@ -11,6 +11,14 @@ import Logo from '../Logo';
 const HeroLazer = () => {
   const { data: lazerData, loading, error } = useLazerPage();
   
+  // Debug: log dos dados recebidos
+  React.useEffect(() => {
+    console.log('🏖️ HeroLazer - Lazer data completo:', lazerData);
+    console.log('🏖️ HeroLazer - Hero data:', lazerData?.hero);
+    console.log('🏖️ HeroLazer - Loading:', loading);
+    console.log('🏖️ HeroLazer - Error:', error);
+  }, [lazerData, loading, error]);
+  
   // Fallback para dados estáticos caso não carregue do Sanity
   const heroData = lazerData?.hero || {
     title: "VIAGENS DE LAZER",
