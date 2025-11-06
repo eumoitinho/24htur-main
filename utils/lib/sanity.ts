@@ -86,8 +86,12 @@ const normalizeStaticData = (data: any) => {
   if (!data) return data;
   
   // Normalizar estrutura de valores para sobrePage
-  if (data._type === 'sobrePage' && data.values && data.values.items) {
-    data.values = data.values.items;
+  if (data._type === 'sobrePage' && data.values) {
+    if (data.values.items && Array.isArray(data.values.items)) {
+      data.values = data.values.items;
+    } else if (!Array.isArray(data.values)) {
+      data.values = [];
+    }
   }
   
   // Normalizar outras estruturas conforme necessário
@@ -105,6 +109,11 @@ const normalizeStaticData = (data: any) => {
   
   if (data._type === 'trabalheConoscoPage' && data.positions && !Array.isArray(data.positions)) {
     data.positions = data.positions.items || [];
+  }
+  
+  // Normalizar equipePage
+  if (data._type === 'equipePage' && data.members && !Array.isArray(data.members)) {
+    data.members = data.members.items || [];
   }
   
   return data;
@@ -350,18 +359,18 @@ export const getDocuments = async (type: string, slug?: string) => {
         for (const k of Object.keys(value)) {
           const normalized = normalizeFetched(value[k], k);
           
+          // Normalização especial para 'values' (sobrePage) - sempre deve ser array
+          if (k === 'values' && normalized && typeof normalized === 'object' && !Array.isArray(normalized)) {
+            if (normalized.items && Array.isArray(normalized.items)) {
+              out[k] = normalized.items;
+            } else {
+              out[k] = [];
+            }
+          }
           // Garante que campos conhecidos como arrays sempre sejam arrays
           // Nota: 'clients' não deve estar aqui pois é um objeto, não um array
           // Mas 'logos' dentro de 'clients' deve ser preservado como array
-          const arrayFields = [
-            'services', 'reasons', 'problems',
-            'options', 'positions', 'items', 'members', 'destinations',
-            'benefits', 'metrics', 'logos' // Campos que devem ser arrays
-            // NOTA: 'team' e 'testimonials' são OBJETOS, não arrays!
-          ];
-          
-          // Se o campo deveria ser array mas não é, converte
-          if (arrayFields.includes(k) && !Array.isArray(normalized) && normalized != null) {
+          else if (['services', 'reasons', 'problems', 'options', 'positions', 'items', 'members', 'destinations', 'benefits', 'metrics', 'logos'].includes(k) && !Array.isArray(normalized) && normalized != null) {
             // Se for objeto com propriedade 'items', extrai o array
             if (normalized.items && Array.isArray(normalized.items)) {
               out[k] = normalized.items;
@@ -382,6 +391,9 @@ export const getDocuments = async (type: string, slug?: string) => {
           }
           if (k === 'items' && Array.isArray(normalized)) {
             console.log(`🔍 Normalizando items: ${normalized.length} itens encontrados`);
+          }
+          if (k === 'values' && Array.isArray(out[k])) {
+            console.log(`🔍 Normalizando values: ${out[k].length} valores encontrados`);
           }
         }
         return out;

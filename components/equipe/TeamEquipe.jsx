@@ -8,7 +8,14 @@ const TeamEquipe = () => {
   const { data: equipeData, loading, error } = useEquipePage();
   
   // Fallback para dados estáticos caso não carregue do Sanity
-  const teamData = equipeData?.team || [
+  // Garante que sempre seja um array
+  const teamData = Array.isArray(equipeData?.team)
+    ? equipeData.team
+    : (equipeData?.team?.members && Array.isArray(equipeData.team.members))
+      ? equipeData.team.members
+      : (equipeData?.team?.items && Array.isArray(equipeData.team.items))
+        ? equipeData.team.items
+        : [
     {
       name: "Betinna Pavim",
       position: "CEO|COO",

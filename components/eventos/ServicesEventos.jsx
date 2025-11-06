@@ -42,7 +42,12 @@ const ServicesEventos = () => {
     }
   ];
 
-  const servicos = eventosData?.services && Array.isArray(eventosData.services) ? eventosData.services : defaultServicos;
+  // Garante que sempre seja um array
+  const servicos = Array.isArray(eventosData?.services)
+    ? eventosData.services
+    : (eventosData?.services?.items && Array.isArray(eventosData.services.items))
+      ? eventosData.services.items
+      : defaultServicos;
 
   return (
     <section className="py-20">

@@ -50,7 +50,12 @@ const OpenPositionsTrabalheConosco = () => {
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error loading content</div>;
 
-  const positions = trabalheConoscoData?.positions || defaultPositions;
+  // Garante que sempre seja um array
+  const positions = Array.isArray(trabalheConoscoData?.positions)
+    ? trabalheConoscoData.positions
+    : (trabalheConoscoData?.positions?.items && Array.isArray(trabalheConoscoData.positions.items))
+      ? trabalheConoscoData.positions.items
+      : defaultPositions;
 
   const titleText = portableTextToPlain(trabalheConoscoData?.positionsTitle) || 'Vagas Disponíveis';
   const leadText = portableTextToPlain(trabalheConoscoData?.positionsLead) || 'Confira as oportunidades abertas e candidate-se à vaga que mais combina com seu perfil';

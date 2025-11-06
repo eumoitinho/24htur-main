@@ -42,9 +42,12 @@ const ServicesLazer = () => {
     }
   ];
 
-  const services = lazerData?.services && Array.isArray(lazerData.services)
+  // Garante que sempre seja um array
+  const services = Array.isArray(lazerData?.services)
     ? lazerData.services
-    : defaultServices;
+    : (lazerData?.services?.items && Array.isArray(lazerData.services.items))
+      ? lazerData.services.items
+      : defaultServices;
 
   return (
     <section className="py-14 sm:py-16 lg:py-18">

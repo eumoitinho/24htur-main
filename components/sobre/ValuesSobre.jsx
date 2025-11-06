@@ -10,7 +10,12 @@ const ValuesSobre = () => {
   const { data: sobreData, loading, error } = useSobrePage();
   
   // Fallback para dados estáticos caso não carregue do Sanity
-  const valuesData = sobreData?.values || [
+  // Garante que sempre seja um array
+  const valuesData = Array.isArray(sobreData?.values) 
+    ? sobreData.values 
+    : (sobreData?.values?.items && Array.isArray(sobreData.values.items))
+      ? sobreData.values.items
+      : [
     {
       name: "Personalização",
       description: "Acreditamos que cada viagem é única. Por isso, adaptamos nossos serviços para atender às necessidades e desejos individuais de cada cliente, criando experiências sob medida."

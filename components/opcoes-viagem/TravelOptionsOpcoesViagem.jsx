@@ -8,7 +8,12 @@ const TravelOptionsOpcoesViagem = () => {
   const { data: opcoesData, loading, error } = useOpcoesViagemPage();
   
   // Fallback para dados estáticos caso não carregue do Sanity
-  const optionsData = opcoesData?.options || [
+  // Garante que sempre seja um array
+  const optionsData = Array.isArray(opcoesData?.options)
+    ? opcoesData.options
+    : (opcoesData?.options?.items && Array.isArray(opcoesData.options.items))
+      ? opcoesData.options.items
+      : [
     {
       name: "24H ÚNICO",
       description: "Para clientes que buscam o extraordinário, o programa 24H Único cria roteiros de viagem sob medida, com experiências verdadeiramente exclusivas. Mergulhe em roteiros personalizados, onde cada detalhe é pensado para superar suas expectativas e proporcionar momentos de luxo, privacidade e exclusividade."
