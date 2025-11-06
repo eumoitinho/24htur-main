@@ -77,16 +77,15 @@ const TeamSection = () => {
         </div>
 
         <div className="text-center">
-          <Link href="/equipe" passHref legacyBehavior>
-            <motion.a
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+            <Link
+              href="/equipe"
               className="inline-flex items-center text-brand-dark font-semibold hover:text-brand-gold transition-colors duration-300"
             >
               {portableTextToPlain(homepageData?.team?.ctaText) || 'CONHEÇA NOSSA EQUIPE COMPLETA'}
               <ArrowRight className="ml-2 h-5 w-5" strokeWidth={2} />
-            </motion.a>
-          </Link>
+            </Link>
+          </motion.div>
         </div>
       </div>
     </section>

@@ -202,8 +202,24 @@ export const getDocuments = async (type: string, slug?: string) => {
     // Log para debug das métricas e logos
     if (type === 'homepage' && data) {
       console.log('📊 Métricas recebidas do Sanity:', JSON.stringify(data.metrics, null, 2));
-      if (data.clients?.logos) {
-        console.log('🖼️ Logos recebidos do Sanity:', JSON.stringify(data.clients.logos, null, 2));
+      console.log('📦 Dados completos de clients recebidos:', JSON.stringify(data.clients, null, 2));
+      if (data.clients) {
+        if (Array.isArray(data.clients)) {
+          console.log('⚠️ clients está como array:', data.clients);
+          data.clients.forEach((client, idx) => {
+            console.log(`Client ${idx}:`, client);
+            if (client.logos) {
+              console.log(`🖼️ Logos do client ${idx}:`, client.logos);
+            }
+          });
+        } else if (data.clients.logos) {
+          console.log('🖼️ Logos recebidos do Sanity:', JSON.stringify(data.clients.logos, null, 2));
+        } else {
+          console.log('⚠️ clients.logos não existe ou está vazio');
+          console.log('Estrutura de clients:', Object.keys(data.clients || {}));
+        }
+      } else {
+        console.log('⚠️ data.clients não existe');
       }
     }
 
@@ -237,10 +253,11 @@ export const getDocuments = async (type: string, slug?: string) => {
         if (key === 'logos' || (key && key.includes('logo'))) {
           // Preserva a estrutura completa da imagem para logos
           // Garante que _type está presente e asset está completo
+          // IMPORTANTE: Preserva asset.url se existir (quando asset foi expandido pela query)
           return {
             _type: 'image',
             _key: value._key,
-            asset: value.asset,
+            asset: value.asset, // Preserva asset completo incluindo url se expandido
             alt: value.alt
           };
         }
@@ -251,6 +268,18 @@ export const getDocuments = async (type: string, slug?: string) => {
           return value;
         }
       }
+      
+      // Se for um objeto que parece ser uma imagem mas não tem _type='image'
+      // (pode acontecer quando a query expande o asset)
+      if (typeof value === 'object' && value.asset && (key === 'logos' || (key && key.includes('logo')))) {
+        // Preserva a estrutura mesmo sem _type='image' explícito
+        return {
+          _type: value._type || 'image',
+          _key: value._key,
+          asset: value.asset, // Preserva asset completo incluindo url se expandido
+          alt: value.alt
+        };
+      }
 
       // Se for objeto, percorre chaves recursivamente
       if (typeof value === 'object') {
@@ -259,10 +288,11 @@ export const getDocuments = async (type: string, slug?: string) => {
           const normalized = normalizeFetched(value[k], k);
           
           // Garante que campos conhecidos como arrays sempre sejam arrays
+          // Nota: 'clients' não deve estar aqui pois é um objeto, não um array
           const arrayFields = [
             'services', 'team', 'testimonials', 'reasons', 'problems',
             'options', 'positions', 'items', 'members', 'destinations',
-            'benefits', 'clients', 'metrics'
+            'benefits', 'metrics'
           ];
           
           // Se o campo deveria ser array mas não é, converte

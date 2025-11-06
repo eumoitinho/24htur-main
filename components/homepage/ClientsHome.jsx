@@ -9,11 +9,19 @@ import { portableTextToPlain, urlFor } from '../../utils/lib/sanity';
 const ClientsHome = () => {
   const { data: homepageData } = useHomepage();
 
+  // Debug: log completo dos dados recebidos
+  React.useEffect(() => {
+    console.log('🏠 Homepage data completo:', homepageData);
+    console.log('👥 Clients data:', homepageData?.clients);
+  }, [homepageData]);
+
   const clientsData = homepageData?.clients || null;
   const logos = clientsData?.logos || [];
 
   // Debug: log dos logos recebidos
   React.useEffect(() => {
+    console.log('📋 ClientsData completo:', clientsData);
+    console.log('🖼️ Logos array:', logos);
     if (logos && logos.length > 0) {
       console.log('🖼️ Logos recebidos no componente:', logos);
       logos.forEach((logo, idx) => {
@@ -24,8 +32,10 @@ const ClientsHome = () => {
           alt: logo.alt
         });
       });
+    } else {
+      console.log('⚠️ Nenhum logo encontrado no array');
     }
-  }, [logos]);
+  }, [logos, clientsData]);
 
   // Duplicar logos para efeito de marquee infinito
   const duplicatedLogos = useMemo(() => [...logos, ...logos], [logos]);

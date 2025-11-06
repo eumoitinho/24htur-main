@@ -3,7 +3,7 @@ import HeroHome from '../components/homepage/HeroHome';
 import MetricsHome from '../components/homepage/MetricsHome';
 import ProblemsSection from '../components/homepage/ProblemsSection';
 import Experience24H from '../components/homepage/Experience24H';
-import ClientsHome from '../components/homepage/ClientsHome';
+import ClientsSection from '../components/ClientsSection';
 import ServicesHome from '../components/homepage/ServicesHome';
 import WhyChooseHome from '../components/homepage/WhyChooseHome';
 import AboutHome from '../components/homepage/AboutHome';
@@ -21,7 +21,7 @@ export default function Home() {
         <MetricsHome />
         <ProblemsSection />
         <Experience24H />
-        <ClientsHome />
+        <ClientsSection />
         <ServicesHome />
         <WhyChooseHome />
         <AboutHome />
