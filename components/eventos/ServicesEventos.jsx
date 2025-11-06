@@ -43,11 +43,17 @@ const ServicesEventos = () => {
   ];
 
   // Garante que sempre seja um array
-  const servicos = Array.isArray(eventosData?.services)
-    ? eventosData.services
-    : (eventosData?.services?.items && Array.isArray(eventosData.services.items))
-      ? eventosData.services.items
-      : defaultServicos;
+  const servicos = Array.isArray(eventosData?.eventServices?.items)
+    ? eventosData.eventServices.items
+    : (eventosData?.eventServices && !Array.isArray(eventosData.eventServices) && eventosData.eventServices.items)
+      ? eventosData.eventServices.items
+      : (Array.isArray(eventosData?.services))
+        ? eventosData.services
+        : (eventosData?.services?.items && Array.isArray(eventosData.services.items))
+          ? eventosData.services.items
+          : defaultServicos;
+
+  const servicesTitle = eventosData?.eventServices?.title || 'Nossos serviços';
 
   return (
     <section className="py-20">
@@ -60,19 +66,30 @@ const ServicesEventos = () => {
           className="text-center mb-16"
         >
           <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-900">
-            Nossos{' '}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#D38E17] to-[#F59E0B]">
-              serviços
-            </span>
+            {portableTextToPlain(servicesTitle) || servicesTitle}
           </h2>
         </motion.div>
 
         <div className="grid md:grid-cols-2 gap-8">
           {servicos.map((servico, index) => {
-            const Icon = servico.icon;
+            // Mapeia ícones por título do serviço ou usa ícone padrão
+            const getIconForService = (title) => {
+              const titleLower = (title || '').toLowerCase();
+              if (titleLower.includes('palestrantes') || titleLower.includes('congressistas')) return Users;
+              if (titleLower.includes('passagens') || titleLower.includes('aéreas')) return Plane;
+              if (titleLower.includes('hospedagem') || titleLower.includes('hotel')) return Building;
+              if (titleLower.includes('transporte') || titleLower.includes('traslado')) return Car;
+              if (titleLower.includes('sala') || titleLower.includes('locação')) return MapPin;
+              if (titleLower.includes('alimentos') || titleLower.includes('bebidas') || titleLower.includes('a&b')) return Coffee;
+              return Users; // Ícone padrão
+            };
+
+            // Se o serviço tem um ícone (do fallback), usa ele. Senão, mapeia pelo título
+            const Icon = servico.icon || getIconForService(servico.title || servico.titulo);
+            
             return (
               <motion.div
-                key={index}
+                key={servico._key || index}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
@@ -80,10 +97,10 @@ const ServicesEventos = () => {
                 className="bg-gray-50 rounded-2xl p-6 hover:shadow-lg transition-all duration-300"
               >
                 <div className="bg-gradient-to-br from-[#D38E17] to-[#F59E0B] w-16 h-16 rounded-full flex items-center justify-center mb-4 text-white">
-                  <Icon className="w-8 h-8" />
+                  {Icon && <Icon className="w-8 h-8" />}
                 </div>
-                <h3 className="text-xl font-bold mb-3 text-gray-900">{portableTextToPlain(servico.titulo) || servico.titulo}</h3>
-                <p className="text-gray-600 leading-relaxed">{portableTextToPlain(servico.descricao) || servico.descricao}</p>
+                <h3 className="text-xl font-bold mb-3 text-gray-900">{portableTextToPlain(servico.title || servico.titulo) || servico.title || servico.titulo}</h3>
+                <p className="text-gray-600 leading-relaxed">{portableTextToPlain(servico.description || servico.descricao) || servico.description || servico.descricao}</p>
               </motion.div>
             );
           })}

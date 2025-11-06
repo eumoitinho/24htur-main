@@ -310,6 +310,210 @@ export const getDocuments = async (type: string, slug?: string) => {
           }
         }
       }`;
+    } else if (type === 'eventosPage' && !slug) {
+      query = `*[_type == "eventosPage"][0]{
+        _id,
+        _type,
+        title,
+        isActive,
+        seoTitle,
+        seoDescription,
+        hero{
+          title,
+          subtitle,
+          ctaText
+        },
+        metrics[]{
+          _key,
+          value,
+          label
+        },
+        problems{
+          title,
+          items[]{
+            _key,
+            title,
+            description
+          }
+        },
+        experience{
+          title,
+          description,
+          ctaText
+        },
+        clients{
+          title,
+          placeholder
+        },
+        services{
+          title,
+          items[]{
+            _key,
+            title,
+            description,
+            link,
+            ctaText
+          }
+        },
+        whyChoose{
+          title,
+          items[]{
+            _key,
+            title,
+            description
+          }
+        },
+        about{
+          badge,
+          title,
+          description,
+          ctaText,
+          stats[]{
+            _key,
+            value,
+            label
+          }
+        },
+        team{
+          title,
+          ctaText,
+          ctaLink,
+          members[]{
+            _key,
+            name,
+            role,
+            education,
+            experience
+          }
+        },
+        testimonials{
+          title,
+          subtitle,
+          items[]{
+            _key,
+            name,
+            text,
+            rating
+          }
+        },
+        contact{
+          title,
+          subtitle,
+          ctaText
+        },
+        eventServices{
+          title,
+          items[]{
+            _key,
+            title,
+            description
+          }
+        },
+        upcomingEvents{
+          title,
+          events[]{
+            _key,
+            name,
+            preCongress,
+            mainEvent,
+            location,
+            address,
+            link,
+            linkText
+          }
+        }
+      }`;
+    } else if (type === 'cbenfPage' && !slug) {
+      query = `*[_type == "cbenfPage"][0]{
+        _id,
+        _type,
+        title,
+        isActive,
+        hero{
+          title,
+          subtitle,
+          ctaText,
+          eventName,
+          preCongressDates,
+          mainEventDates,
+          location,
+          participants,
+          backgroundImage{
+            asset->{
+              _id,
+              _type,
+              url,
+              originalFilename,
+              mimeType
+            }
+          }
+        },
+        about{
+          title,
+          subtitle,
+          description,
+          expectedParticipants,
+          edition,
+          parallelEvents,
+          preCongressDescription,
+          mainEventDescription,
+          locationDescription,
+          ctaText,
+          image{
+            asset->{
+              _id,
+              _type,
+              url,
+              originalFilename,
+              mimeType
+            }
+          }
+        },
+        services{
+          title,
+          subtitle,
+          items[]{
+            _key,
+            title,
+            description
+          }
+        },
+        accommodation{
+          title,
+          subtitle,
+          hotels[]{
+            _key,
+            name,
+            distance,
+            basePrice,
+            badge,
+            image{
+              asset->{
+                _id,
+                _type,
+                url,
+                originalFilename,
+                mimeType
+              }
+            },
+            details[]
+          }
+        },
+        whyChoose{
+          title,
+          description,
+          benefits[],
+          stats[]{
+            _key,
+            number,
+            text
+          }
+        },
+        contact{
+          title,
+          subtitle
+        }
+      }`;
     } else {
       query = slug 
         ? `*[_type == "${type}" && slug.current == "${slug}"][0]`
@@ -332,7 +536,7 @@ export const getDocuments = async (type: string, slug?: string) => {
     });
     
     // Log da query para debug
-    if (type === 'homepage' || type === 'lazerPage') {
+    if (type === 'homepage' || type === 'lazerPage' || type === 'eventosPage' || type === 'cbenfPage') {
       console.log(`🔍 Query GROQ executada para ${type}:`, query);
     }
     
@@ -343,7 +547,7 @@ export const getDocuments = async (type: string, slug?: string) => {
     });
     
     // Log para debug das métricas e logos - ANTES da normalização
-    if ((type === 'homepage' || type === 'lazerPage') && data) {
+    if ((type === 'homepage' || type === 'lazerPage' || type === 'eventosPage' || type === 'cbenfPage') && data) {
       console.log(`🔍 Dados RAW do Sanity para ${type} (antes da normalização):`, JSON.stringify(data, null, 2));
       if (type === 'homepage') {
         console.log('📊 Métricas recebidas do Sanity:', JSON.stringify(data.metrics, null, 2));
@@ -356,6 +560,15 @@ export const getDocuments = async (type: string, slug?: string) => {
         console.log('📦 Dados completos de arguments recebidos:', JSON.stringify(data.arguments, null, 2));
         console.log('👥 Dados completos de services recebidos:', JSON.stringify(data.services, null, 2));
         console.log('💬 Dados completos de testimonials recebidos:', JSON.stringify(data.testimonials, null, 2));
+      }
+      if (type === 'eventosPage') {
+        console.log('📊 Hero recebido do Sanity:', JSON.stringify(data.hero, null, 2));
+        console.log('📦 Dados completos de eventServices recebidos:', JSON.stringify(data.eventServices, null, 2));
+        console.log('👥 Dados completos de upcomingEvents recebidos:', JSON.stringify(data.upcomingEvents, null, 2));
+      }
+      if (type === 'cbenfPage') {
+        console.log('📊 Hero recebido do Sanity:', JSON.stringify(data.hero, null, 2));
+        console.log('📦 Dados completos de about recebidos:', JSON.stringify(data.about, null, 2));
       }
       if (data.clients) {
         if (Array.isArray(data.clients)) {

@@ -5,11 +5,11 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { ArrowRight, Calendar, MapPin, Users } from 'lucide-react';
 import Logo from '../Logo';
-import { useHomepage } from '../../utils/hooks/useSanityData';
+import { useCBEnfPage } from '../../utils/hooks/useSanityData';
 import { resolveImage, portableTextToPlain } from '../../utils/lib/sanity';
 
 const HeroCBEnf = () => {
-  const { data: homepageData } = useHomepage();
+  const { data: cbenfData } = useCBEnfPage();
 
   const handleCTAClick = () => {
     const formSection = document.getElementById('contato');
@@ -22,7 +22,7 @@ const HeroCBEnf = () => {
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-red-500/50 to-transparent"></div>
       <div className="absolute inset-0 z-0">
         <Image
-          src={resolveImage(homepageData?.hero?.backgroundImage, '/image.jpeg')}
+          src={resolveImage(cbenfData?.hero?.backgroundImage, '/image.jpeg')}
           alt="75º CBEn"
           fill
           className="object-cover opacity-40"
@@ -42,19 +42,22 @@ const HeroCBEnf = () => {
             <Logo className="w-20 h-20 md:w-28 md:h-28" />
             <div className="inline-flex items-center gap-2 bg-white/15 backdrop-blur-md border border-white/30 rounded-full py-2 px-4 shadow-lg">
               <span className="flex h-2 w-2 rounded-full bg-[#D38E17] shadow-lg"></span>
-              <span className="text-xs md:text-sm font-bold text-white drop-shadow-lg">{portableTextToPlain(homepageData?.hero?.badgeText) || '75º Congresso Brasileiro de Enfermagem'}</span>
+              <span className="text-xs md:text-sm font-bold text-white drop-shadow-lg">{cbenfData?.hero?.eventName || '75º Congresso Brasileiro de Enfermagem'}</span>
             </div>
           </div>
 
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold mb-6 leading-tight text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.25)]">
-            Sua participação no{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ae2724] to-[#DC2626]">
-              75º CBEn
-            </span>{" "}
-            <span className="text-white">sem complicações!</span>
+            {portableTextToPlain(cbenfData?.hero?.title) || (
+              <>Sua participação no{" "}
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ae2724] to-[#DC2626]">
+                  75º CBEn
+                </span>{" "}
+                <span className="text-white">sem complicações!</span>
+              </>
+            )}
           </h1>
           <p className="text-lg md:text-xl text-gray-200 mb-10 max-w-3xl leading-relaxed drop-shadow-[0_1px_3px_rgba(0,0,0,0.2)]">
-            {portableTextToPlain(homepageData?.hero?.subtitle) || 'Esqueça o estresse de organizar hospedagem, passagens e passeios. A 24H Escritório de Viagens cuida de tudo para você focar no que realmente importa: o conhecimento e networking do maior congresso de enfermagem do Brasil.'}
+            {portableTextToPlain(cbenfData?.hero?.subtitle) || 'Esqueça o estresse de organizar hospedagem, passagens e passeios. A 24H Escritório de Viagens cuida de tudo para você focar no que realmente importa: o conhecimento e networking do maior congresso de enfermagem do Brasil.'}
           </p>
 
           <button
@@ -62,7 +65,7 @@ const HeroCBEnf = () => {
             onClick={handleCTAClick}
           >
             <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-out"></div>
-            <span className="relative z-10">{portableTextToPlain(homepageData?.hero?.ctaText) || 'QUERO MEU PACOTE EXCLUSIVO!'}</span>
+            <span className="relative z-10">{cbenfData?.hero?.ctaText || 'QUERO MEU PACOTE EXCLUSIVO!'}</span>
             <ArrowRight className="w-5 h-5 relative z-10 group-hover:translate-x-1 transition-transform" />
           </button>
         </motion.div>
@@ -81,10 +84,14 @@ const HeroCBEnf = () => {
           >
             <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
             <Calendar className="w-14 h-14 text-white mb-4 mx-auto drop-shadow-lg group-hover:scale-110 transition-transform duration-300" />
-            <h3 className="font-black mb-2 text-white drop-shadow-lg">{portableTextToPlain(homepageData?.hero?.datesTitle) || 'Datas do Evento'}</h3>
+            <h3 className="font-black mb-2 text-white drop-shadow-lg">Datas do Evento</h3>
             <p className="text-sm text-white/90 leading-relaxed drop-shadow-md font-semibold">
-              <strong>{portableTextToPlain(homepageData?.hero?.preCongressLabel) || 'Pré-congresso:'}</strong> {homepageData?.hero?.preCongressDates || '22-23 Nov'}<br />
-              <strong>{portableTextToPlain(homepageData?.hero?.eventLabel) || 'Evento:'}</strong> {homepageData?.hero?.eventDates || '23-26 Nov 2025'}
+              {cbenfData?.hero?.preCongressDates && (
+                <>
+                  <strong>Pré-congresso:</strong> {cbenfData.hero.preCongressDates}<br />
+                </>
+              )}
+              <strong>Evento:</strong> {cbenfData?.hero?.mainEventDates || '23-26 Nov 2025'}
             </p>
             <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-[#ae2724] to-[#DC2626] opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
           </motion.div>
@@ -96,10 +103,9 @@ const HeroCBEnf = () => {
           >
             <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
             <MapPin className="w-14 h-14 text-white mb-4 mx-auto drop-shadow-lg group-hover:scale-110 transition-transform duration-300" />
-            <h3 className="font-black mb-2 text-white drop-shadow-lg">{portableTextToPlain(homepageData?.hero?.locationTitle) || 'Local'}</h3>
+            <h3 className="font-black mb-2 text-white drop-shadow-lg">Local</h3>
             <p className="text-sm text-white/90 leading-relaxed drop-shadow-md font-semibold">
-              <strong>{homepageData?.hero?.locationName || 'Campus da PUCRS'}</strong><br />
-              {homepageData?.hero?.locationCity || 'Porto Alegre - RS'}
+              <strong>{cbenfData?.hero?.location || 'Campus da PUCRS'}</strong>
             </p>
             <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-[#ae2724] to-[#DC2626] opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
           </motion.div>
@@ -111,10 +117,9 @@ const HeroCBEnf = () => {
           >
             <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
             <Users className="w-14 h-14 text-white mb-4 mx-auto drop-shadow-lg group-hover:scale-110 transition-transform duration-300" />
-            <h3 className="font-black mb-2 text-white drop-shadow-lg">{portableTextToPlain(homepageData?.hero?.participantsTitle) || 'Participantes'}</h3>
+            <h3 className="font-black mb-2 text-white drop-shadow-lg">Participantes</h3>
             <p className="text-sm text-white/90 leading-relaxed drop-shadow-md font-semibold">
-              <strong>{homepageData?.hero?.participantsMain || 'Profissionais e estudantes'}</strong><br />
-              {homepageData?.hero?.participantsSub || 'de todo o Brasil'}
+              <strong>{cbenfData?.hero?.participants || 'Profissionais e estudantes de todo o Brasil'}</strong>
             </p>
             <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-[#ae2724] to-[#DC2626] opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
           </motion.div>

@@ -2,11 +2,13 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { useEventosPage } from '../../utils/hooks/useSanityData';
+import { useCBEnfPage } from '../../utils/hooks/useSanityData';
 import { portableTextToPlain } from '../../utils/lib/sanity';
 import { Plane, Hotel, Car, Camera, MapPin, Users, Clock, Shield } from 'lucide-react';
 
 const ServicesCBEnf = () => {
+  const { data: cbenfData } = useCBEnfPage();
+
   const localServices = [
     {
       icon: Plane,
@@ -50,12 +52,24 @@ const ServicesCBEnf = () => {
     }
   ];
 
-  const { data: eventosData } = useEventosPage();
+  // Mapeia ícones por título do serviço
+  const getIconForService = (title) => {
+    const titleLower = (title || '').toLowerCase();
+    if (titleLower.includes('passagem') || titleLower.includes('aérea')) return Plane;
+    if (titleLower.includes('hospedagem') || titleLower.includes('hotel')) return Hotel;
+    if (titleLower.includes('translado') || titleLower.includes('transfer')) return Car;
+    if (titleLower.includes('tour') || titleLower.includes('city')) return Camera;
+    if (titleLower.includes('localização') || titleLower.includes('estratégica')) return MapPin;
+    if (titleLower.includes('grupo') || titleLower.includes('organizado')) return Users;
+    if (titleLower.includes('suporte') || titleLower.includes('24')) return Clock;
+    if (titleLower.includes('seguro') || titleLower.includes('viagem')) return Shield;
+    return Plane; // Ícone padrão
+  };
 
   // Prefer services from Sanity when available, otherwise use localServices
-  const services = (eventosData && Array.isArray(eventosData.services) && eventosData.services.length)
-    ? eventosData.services.map((s, i) => ({
-        icon: localServices[i]?.icon || localServices[0].icon,
+  const services = Array.isArray(cbenfData?.services?.items) && cbenfData.services.items.length > 0
+    ? cbenfData.services.items.map((s, i) => ({
+        icon: getIconForService(s.title),
         title: portableTextToPlain(s.title) || s.title || (localServices[i] && localServices[i].title) || 'Serviço',
         description: portableTextToPlain(s.description) || s.description || (localServices[i] && localServices[i].description) || ''
       }))
@@ -77,13 +91,13 @@ const ServicesCBEnf = () => {
             </div>
 
             <h2 className="mt-6 text-3xl sm:text-4xl lg:text-5xl font-semibold tracking-tight text-slate-900 leading-tight">
-              {portableTextToPlain(eventosData?.services?.title) || (
+              {portableTextToPlain(cbenfData?.services?.title) || (
                 <>Tudo incluído para sua <span className="text-brand-gold">experiência completa</span></>
               )}
             </h2>
 
             <p className="mt-6 text-lg text-slate-600 leading-relaxed">
-              {portableTextToPlain(eventosData?.services?.subtitle) || 'Cuidamos de cada detalhe da sua viagem ao CBEnf 2024. Desde a chegada até a partida, nossa equipe especializada garante que você aproveite ao máximo este importante evento.'}
+              {portableTextToPlain(cbenfData?.services?.subtitle) || 'Cuidamos de cada detalhe da sua viagem ao CBEnf 2024. Desde a chegada até a partida, nossa equipe especializada garante que você aproveite ao máximo este importante evento.'}
             </p>
           </motion.div>
         </div>
@@ -100,7 +114,7 @@ const ServicesCBEnf = () => {
             >
               <div className="relative overflow-hidden rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-100 transition-all duration-300 hover:shadow-xl hover:ring-slate-200 hover:-translate-y-1">
                 <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-brand-gold/10 ring-1 ring-brand-gold/20 group-hover:bg-brand-gold/20 transition-colors">
-                  <service.icon className="h-6 w-6 text-brand-gold" strokeWidth={1.5} />
+                  {service.icon && <service.icon className="h-6 w-6 text-brand-gold" strokeWidth={1.5} />}
                 </div>
 
                 <h3 className="mt-4 text-lg font-semibold text-slate-900 group-hover:text-brand-gold transition-colors">

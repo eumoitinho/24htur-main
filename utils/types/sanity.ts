@@ -570,3 +570,82 @@ export interface TrabalheConoscoPage {
     requirements: string[];
   }[];
 }
+
+export interface CBEnfPage {
+  _id: string;
+  _type: 'cbenfPage';
+  title: string;
+  isActive: boolean;
+  seoTitle?: string;
+  seoDescription?: string;
+
+  // Hero Section
+  hero: {
+    title: string;
+    subtitle: string;
+    ctaText: string;
+    eventName: string;
+    preCongressDates?: string;
+    mainEventDates: string;
+    location: string;
+    participants?: string;
+  };
+
+  // About Section
+  about: {
+    title: string;
+    subtitle?: string;
+    description: string;
+    expectedParticipants?: string;
+    edition?: string;
+    parallelEvents?: string;
+    preCongressDescription?: string;
+    mainEventDescription?: string;
+    locationDescription?: string;
+    ctaText: string;
+  };
+
+  // Services Section
+  services: {
+    title: string;
+    subtitle?: string;
+    items: {
+      _key: string;
+      title: string;
+      description: string;
+    }[];
+  };
+
+  // Accommodation Section
+  accommodation: {
+    title: string;
+    subtitle?: string;
+    hotels: {
+      _key: string;
+      name: string;
+      distance: string;
+      basePrice: string;
+      badge?: string;
+      image?: SanityImage;
+      details: string[];
+    }[];
+  };
+
+  // Why Choose Section
+  whyChoose: {
+    title: string;
+    description?: string;
+    benefits: string[];
+    stats: {
+      _key: string;
+      number: string;
+      text: string;
+    }[];
+  };
+
+  // Contact Section
+  contact: {
+    title: string;
+    subtitle?: string;
+  };
+}

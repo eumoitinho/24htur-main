@@ -3,9 +3,13 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { CheckCircle, Award, Users, Shield, Clock } from 'lucide-react';
+import { useCBEnfPage } from '../../utils/hooks/useSanityData';
+import { portableTextToPlain } from '../../utils/lib/sanity';
 
 const WhyChooseCBEnf = () => {
-  const benefits = [
+  const { data: cbenfData } = useCBEnfPage();
+
+  const defaultBenefits = [
     "Experiência de 15+ anos organizando viagens para eventos científicos",
     "Parcerias exclusivas com hotéis próximos ao convention center",
     "Tarifas especiais negociadas diretamente com companhias aéreas",
@@ -14,7 +18,7 @@ const WhyChooseCBEnf = () => {
     "Flexibilidade para personalizar seu pacote conforme necessidade"
   ];
 
-  const stats = [
+  const defaultStats = [
     {
       icon: Users,
       number: "2.500+",
@@ -37,6 +41,22 @@ const WhyChooseCBEnf = () => {
     }
   ];
 
+  const benefits = Array.isArray(cbenfData?.whyChoose?.benefits) && cbenfData.whyChoose.benefits.length > 0
+    ? cbenfData.whyChoose.benefits
+    : defaultBenefits;
+
+  const stats = Array.isArray(cbenfData?.whyChoose?.stats) && cbenfData.whyChoose.stats.length > 0
+    ? cbenfData.whyChoose.stats.map(stat => ({
+        ...stat,
+        icon: stat.number?.includes('2.500') ? Users : 
+              stat.number?.includes('15') ? Award :
+              stat.number?.includes('100') ? Shield : Clock
+      }))
+    : defaultStats;
+
+  const title = portableTextToPlain(cbenfData?.whyChoose?.title) || 'Especialistas em turismo científico';
+  const description = portableTextToPlain(cbenfData?.whyChoose?.description) || 'Somos referência na organização de viagens para eventos científicos e congressos médicos. Nossa experiência garante que você chegue descansado, hospedado no melhor local e pronto para aproveitar cada momento do CBEnf 2024.';
+
   return (
     <section className="py-16 sm:py-20 lg:py-24 bg-white">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
@@ -55,11 +75,15 @@ const WhyChooseCBEnf = () => {
               </div>
 
               <h2 className="mt-6 text-3xl sm:text-4xl lg:text-5xl font-semibold tracking-tight text-slate-900 leading-tight">
-                Especialistas em <span className="text-brand-gold">turismo científico</span>
+                {title.includes('turismo científico') ? (
+                  <>Especialistas em <span className="text-brand-gold">turismo científico</span></>
+                ) : (
+                  title
+                )}
               </h2>
 
               <p className="mt-6 text-lg text-slate-600 leading-relaxed">
-                Somos referência na organização de viagens para eventos científicos e congressos médicos. Nossa experiência garante que você chegue descansado, hospedado no melhor local e pronto para aproveitar cada momento do CBEnf 2024.
+                {description}
               </p>
             </motion.div>
 
@@ -74,7 +98,7 @@ const WhyChooseCBEnf = () => {
               {benefits.map((benefit, index) => (
                 <div key={index} className="flex items-start gap-3">
                   <CheckCircle className="h-5 w-5 text-brand-gold mt-0.5 flex-shrink-0" strokeWidth={2} />
-                  <span className="text-slate-700 leading-relaxed">{benefit}</span>
+                  <span className="text-slate-700 leading-relaxed">{portableTextToPlain(benefit) || benefit}</span>
                 </div>
               ))}
             </motion.div>

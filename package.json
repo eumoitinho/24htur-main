@@ -8,7 +8,11 @@
     "start": "next start",
     "lint": "next lint",
     "populate:lazer": "node populate-lazer.js",
-    "populate:lazer:dry": "DRY_RUN=true node populate-lazer.js"
+    "populate:lazer:dry": "DRY_RUN=true node populate-lazer.js",
+    "populate:eventos": "node populate-eventos.js",
+    "populate:eventos:dry": "DRY_RUN=true node populate-eventos.js",
+    "populate:cbenf": "node populate-cbenf.js",
+    "populate:cbenf:dry": "DRY_RUN=true node populate-cbenf.js"
   },
   "dependencies": {
     "@sanity/client": "^7.11.2",

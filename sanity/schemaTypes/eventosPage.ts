@@ -617,13 +617,20 @@ export default defineType({
 
     // Eventos Specific Content
     defineField({
-      name: 'eventosContent',
-      title: 'Conteúdo Específico de Eventos',
+      name: 'eventServices',
+      title: 'Serviços de Eventos',
       type: 'object',
       fields: [
         defineField({
-          name: 'eventServices',
-          title: 'Serviços de Eventos',
+          name: 'title',
+          title: 'Título da Seção',
+          type: 'string',
+          initialValue: 'Nossos serviços',
+          validation: Rule => Rule.required()
+        }),
+        defineField({
+          name: 'items',
+          title: 'Serviços',
           type: 'array',
           of: [
             {
@@ -670,7 +677,9 @@ export default defineType({
               description: 'Gerenciamos a parte gastronômica do seu evento, desde coffee breaks a jantares de gala, com opções que se encaixam no seu perfil e orçamento.'
             }
           ]
-        }),
+        })
+      ]
+    }),
         defineField({
           name: 'upcomingEvents',
           title: 'Próximos Eventos',
@@ -723,7 +732,7 @@ export default defineType({
                     defineField({
                       name: 'link',
                       title: 'Link para Mais Informações',
-                      type: 'url'
+                      type: 'string'
                     }),
                     defineField({
                       name: 'linkText',
@@ -741,6 +750,7 @@ export default defineType({
                   mainEvent: '23 a 26 de novembro de 2025',
                   location: 'Campus da PUCRS - Pontifícia Universidade Católica do Rio Grande do Sul',
                   address: 'Bairro Partenon - Zona Leste de Porto Alegre',
+                  link: '/eventos/cbenf',
                   linkText: 'SAIBA MAIS!'
                 }
               ]

@@ -10,7 +10,8 @@ import {
   EquipePage,
   EventosInfoPage,
   OpcoesViagemPage,
-  TrabalheConoscoPage
+  TrabalheConoscoPage,
+  CBEnfPage
 } from '../types/sanity';
 
 // Static fallbacks imported directly to avoid dynamic import expressions
@@ -218,4 +219,10 @@ export const useTrabalheConoscoPage = createPageHook<TrabalheConoscoPage>(
   'trabalheConoscoPage',
   trabalheConoscoPageStatic as unknown as TrabalheConoscoPage,
   'Erro ao carregar página trabalhe conosco'
+);
+
+export const useCBEnfPage = createPageHook<CBEnfPage>(
+  'cbenfPage',
+  null,
+  'Erro ao carregar página CBENF'
 );
