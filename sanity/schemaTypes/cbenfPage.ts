@@ -338,24 +338,395 @@ export default defineType({
       ]
     }),
 
-    // Contact Section
+    // Flights Section
     defineField({
-      name: 'contact',
-      title: 'Bloco 6 - Formulário de Contato',
+      name: 'flights',
+      title: 'Bloco 4 - Passagens Aéreas',
       type: 'object',
       fields: [
         defineField({
           name: 'title',
           title: 'Título',
           type: 'string',
-          initialValue: 'Garanta sua participação',
+          initialValue: 'Passagens aéreas com os melhores preços',
+          validation: Rule => Rule.required()
+        }),
+        defineField({
+          name: 'description',
+          title: 'Descrição',
+          type: 'text',
+          initialValue: 'Trabalhamos com todas as companhias aéreas nacionais e internacionais. Nossa expertise garante os melhores preços e horários para sua viagem.'
+        }),
+        defineField({
+          name: 'benefits',
+          title: 'Benefícios',
+          type: 'array',
+          of: [
+            {
+              type: 'object',
+              fields: [
+                defineField({
+                  name: 'title',
+                  title: 'Título',
+                  type: 'string',
+                  validation: Rule => Rule.required()
+                }),
+                defineField({
+                  name: 'description',
+                  title: 'Descrição',
+                  type: 'string',
+                  validation: Rule => Rule.required()
+                })
+              ]
+            }
+          ],
+          initialValue: [
+            {
+              title: 'Todas as companhias em um só lugar',
+              description: 'Compare e escolha a melhor opção para você'
+            },
+            {
+              title: 'Melhor custo-benefício garantido',
+              description: 'Negociação especial para o evento'
+            }
+          ]
+        }),
+        defineField({
+          name: 'note',
+          title: 'Nota',
+          type: 'string',
+          initialValue: '* O parcelamento no cartão de crédito depende das regras de cada companhia.'
+        }),
+        defineField({
+          name: 'ctaText',
+          title: 'Texto do CTA',
+          type: 'string',
+          initialValue: 'SOLICITAR COTAÇÃO!'
+        }),
+        defineField({
+          name: 'image',
+          title: 'Imagem',
+          type: 'image',
+          options: {
+            hotspot: true
+          }
+        })
+      ]
+    }),
+
+    // Tours Section
+    defineField({
+      name: 'tours',
+      title: 'Bloco 5 - Passeios Exclusivos',
+      type: 'object',
+      fields: [
+        defineField({
+          name: 'title',
+          title: 'Título',
+          type: 'string',
+          initialValue: 'Aproveite sua estadia para conhecer o melhor de Porto Alegre e região com nossos tours privativos.',
+          validation: Rule => Rule.required()
+        }),
+        defineField({
+          name: 'info',
+          title: 'Informações Importantes',
+          type: 'array',
+          of: [{ type: 'string' }],
+          initialValue: [
+            'Experiências privativas com mínimo de duas pessoas.',
+            'Veículos compatíveis com número de passageiros.',
+            'City tours incluem parques, igrejas, museus, centros culturais e pontos turísticos (acesso gratuito).',
+            'Menores devem estar acompanhados de pais ou responsável.',
+            'Cafés e restaurantes podem ser substituídos por equivalentes em caso de fechamento permanente ou temporário da casa.'
+          ]
+        }),
+        defineField({
+          name: 'items',
+          title: 'Passeios',
+          type: 'array',
+          of: [
+            {
+              type: 'object',
+              fields: [
+                defineField({
+                  name: 'name',
+                  title: 'Nome do Passeio',
+                  type: 'string',
+                  validation: Rule => Rule.required()
+                }),
+                defineField({
+                  name: 'price',
+                  title: 'Preço',
+                  type: 'string',
+                  validation: Rule => Rule.required()
+                }),
+                defineField({
+                  name: 'priceDetail',
+                  title: 'Detalhe do Preço',
+                  type: 'string',
+                  initialValue: 'por pessoa'
+                }),
+                defineField({
+                  name: 'minimum',
+                  title: 'Mínimo de Pessoas',
+                  type: 'string',
+                  initialValue: 'Saída com mínimo de duas pessoas'
+                }),
+                defineField({
+                  name: 'description',
+                  title: 'Descrição',
+                  type: 'text',
+                  validation: Rule => Rule.required()
+                }),
+                defineField({
+                  name: 'image',
+                  title: 'Imagem',
+                  type: 'image',
+                  options: {
+                    hotspot: true
+                  }
+                })
+              ]
+            }
+          ],
+          initialValue: []
+        })
+      ]
+    }),
+
+    // Payment Section
+    defineField({
+      name: 'payment',
+      title: 'Bloco 6 - Condições de Pagamento',
+      type: 'object',
+      fields: [
+        defineField({
+          name: 'title',
+          title: 'Título',
+          type: 'string',
+          initialValue: 'Conheça nossas formas de pagamento',
+          validation: Rule => Rule.required()
+        }),
+        defineField({
+          name: 'accommodationAndTours',
+          title: 'Hospedagem e Passeios',
+          type: 'object',
+          fields: [
+            defineField({
+              name: 'options',
+              title: 'Opções de Pagamento',
+              type: 'array',
+              of: [
+                {
+                  type: 'object',
+                  fields: [
+                    defineField({
+                      name: 'times',
+                      title: 'Vezes',
+                      type: 'string',
+                      validation: Rule => Rule.required()
+                    }),
+                    defineField({
+                      name: 'method',
+                      title: 'Método',
+                      type: 'string',
+                      validation: Rule => Rule.required()
+                    })
+                  ]
+                }
+              ],
+              initialValue: [
+                { times: '1 vez', method: 'via boleto bancário ou Pix' },
+                { times: '5 vezes', method: 'via Pix (parcelas mensais e quitação antes do check-in)' },
+                { times: 'Até 10 vezes', method: 'via cartão de crédito (nesta modalidade, o valor pode sofrer alteração)' }
+              ]
+            }),
+            defineField({
+              name: 'note',
+              title: 'Nota',
+              type: 'string',
+              initialValue: 'O não pagamento na data estipulada, acarretará no cancelamento automático da reserva*'
+            })
+          ]
+        }),
+        defineField({
+          name: 'travelInsurance',
+          title: 'Seguro Viagem',
+          type: 'object',
+          fields: [
+            defineField({
+              name: 'period',
+              title: 'Período',
+              type: 'string',
+              initialValue: 'Período: 23 a 26 de novembro'
+            }),
+            defineField({
+              name: 'planName',
+              title: 'Nome do Plano',
+              type: 'string',
+              initialValue: 'Plano Nacional 60.000'
+            }),
+            defineField({
+              name: 'prices',
+              title: 'Preços por Idade',
+              type: 'array',
+              of: [
+                {
+                  type: 'object',
+                  fields: [
+                    defineField({
+                      name: 'ageRange',
+                      title: 'Faixa Etária',
+                      type: 'string',
+                      validation: Rule => Rule.required()
+                    }),
+                    defineField({
+                      name: 'price',
+                      title: 'Preço',
+                      type: 'string',
+                      validation: Rule => Rule.required()
+                    })
+                  ]
+                }
+              ],
+              initialValue: [
+                { ageRange: 'Até 64 anos', price: 'R$ 41,80' },
+                { ageRange: '65 até 85 anos', price: 'R$ 62,70' },
+                { ageRange: '86 até 89 anos', price: 'R$ 125,40' }
+              ]
+            }),
+            defineField({
+              name: 'note',
+              title: 'Nota',
+              type: 'string',
+              initialValue: '*Consulte valores para períodos menores ou maiores!'
+            }),
+            defineField({
+              name: 'paymentMethods',
+              title: 'Formas de Pagamento',
+              type: 'array',
+              of: [{ type: 'string' }],
+              initialValue: [
+                '1 vez via boleto bancário ou Pix',
+                '5 vezes via pix (parcelas mensais e quitação antes do check-in)',
+                'Consulte o parcelamento no cartão de crédito'
+              ]
+            })
+          ]
+        }),
+        defineField({
+          name: 'ctaText',
+          title: 'Texto do CTA',
+          type: 'string',
+          initialValue: 'SOLICITAR COTAÇÃO'
+        })
+      ]
+    }),
+
+    // About 24H Section
+    defineField({
+      name: 'about24H',
+      title: 'Bloco 7 - Sobre a 24H',
+      type: 'object',
+      fields: [
+        defineField({
+          name: 'title',
+          title: 'Título',
+          type: 'string',
+          initialValue: 'Soluções completas para sua viagem de lazer ou negócios',
+          validation: Rule => Rule.required()
+        }),
+        defineField({
+          name: 'description',
+          title: 'Descrição',
+          type: 'array',
+          of: [{ type: 'block' }],
+          initialValue: [
+            {
+              _type: 'block',
+              children: [
+                {
+                  _type: 'span',
+                  text: 'Fundada em 2015, a 24H Escritório de Viagens nasceu com uma proposta clara: oferecer soluções completas para viagens de lazer e corporativas. Nosso nome reflete exatamente nossa filosofia de trabalho - estar disponível quando você precisar, combinando a praticidade de um escritório de viagens com o profissionalismo que grandes eventos exigem.'
+                }
+              ]
+            },
+            {
+              _type: 'block',
+              children: [
+                {
+                  _type: 'span',
+                  text: 'Nossa equipe é majoritariamente composta por mulheres com mais de 20 anos de expertise no agenciamento de viagens, o que nos proporciona uma visão única sobre as necessidades dos viajantes e a sensibilidade necessária para cuidar de cada detalhe da sua experiência.'
+                }
+              ]
+            },
+            {
+              _type: 'block',
+              children: [
+                {
+                  _type: 'span',
+                  text: 'Trabalhamos com uma ampla gama de fornecedores estratégicos que nos permitem oferecer desde serviços avulsos como passagens aéreas, seguros, locação de veículos, hospedagem, vistos e câmbio, até a personalização completa de pacotes sob medida.'
+                }
+              ]
+            },
+            {
+              _type: 'block',
+              children: [
+                {
+                  _type: 'span',
+                  text: 'Quando você escolhe a 24H, está optando por uma parceria com experiência comprovada, relacionamentos sólidos no mercado e uma reputação construída dia após dia através da satisfação de nossos clientes.'
+                }
+              ]
+            }
+          ]
+        }),
+        defineField({
+          name: 'foundedYear',
+          title: 'Ano de Fundação',
+          type: 'string',
+          initialValue: '2015'
+        }),
+        defineField({
+          name: 'image',
+          title: 'Imagem da Equipe',
+          type: 'image',
+          options: {
+            hotspot: true
+          }
+        }),
+        defineField({
+          name: 'ctaText',
+          title: 'Texto do CTA',
+          type: 'string',
+          initialValue: 'FALE COM UM ESPECIALISTA!'
+        })
+      ]
+    }),
+
+    // Contact Section
+    defineField({
+      name: 'contact',
+      title: 'Bloco 8 - Formulário de Contato',
+      type: 'object',
+      fields: [
+        defineField({
+          name: 'title',
+          title: 'Título',
+          type: 'string',
+          initialValue: 'Preencha o formulário abaixo e receba uma proposta exclusiva em até 24 horas!',
           validation: Rule => Rule.required()
         }),
         defineField({
           name: 'subtitle',
           title: 'Subtítulo',
-          type: 'text',
-          initialValue: 'Preencha o formulário abaixo e nossa equipe entrará em contato para criar um pacote personalizado para sua participação no 75º CBEn.'
+          type: 'string',
+          initialValue: 'Solicite seu pacote personalizado'
+        }),
+        defineField({
+          name: 'ctaText',
+          title: 'Texto do Botão',
+          type: 'string',
+          initialValue: 'RECEBER PROPOSTA PERSONALIZADA'
         })
       ]
     })

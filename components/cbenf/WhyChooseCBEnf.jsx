@@ -95,12 +95,17 @@ const WhyChooseCBEnf = () => {
               viewport={{ once: true }}
               className="mt-8 space-y-4"
             >
-              {benefits.map((benefit, index) => (
-                <div key={index} className="flex items-start gap-3">
-                  <CheckCircle className="h-5 w-5 text-brand-gold mt-0.5 flex-shrink-0" strokeWidth={2} />
-                  <span className="text-slate-700 leading-relaxed">{portableTextToPlain(benefit) || benefit}</span>
-                </div>
-              ))}
+              {benefits.map((benefit, index) => {
+                const benefitText = typeof benefit === 'string' 
+                  ? benefit 
+                  : portableTextToPlain(benefit) || JSON.stringify(benefit);
+                return (
+                  <div key={index} className="flex items-start gap-3">
+                    <CheckCircle className="h-5 w-5 text-brand-gold mt-0.5 flex-shrink-0" strokeWidth={2} />
+                    <span className="text-slate-700 leading-relaxed">{benefitText}</span>
+                  </div>
+                );
+              })}
             </motion.div>
           </div>
 

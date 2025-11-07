@@ -518,9 +518,86 @@ export const getDocuments = async (type: string, slug?: string) => {
             text
           }
         },
+        flights{
+          title,
+          description,
+          benefits[]{
+            title,
+            description
+          },
+          note,
+          ctaText,
+          image{
+            asset->{
+              _id,
+              _type,
+              url,
+              originalFilename,
+              mimeType
+            }
+          }
+        },
+        tours{
+          title,
+          info[],
+          items[]{
+            _key,
+            name,
+            price,
+            priceDetail,
+            minimum,
+            description,
+            image{
+              asset->{
+                _id,
+                _type,
+                url,
+                originalFilename,
+                mimeType
+              }
+            }
+          }
+        },
+        payment{
+          title,
+          accommodationAndTours{
+            options[]{
+              times,
+              method
+            },
+            note
+          },
+          travelInsurance{
+            period,
+            planName,
+            prices[]{
+              ageRange,
+              price
+            },
+            note,
+            paymentMethods[]
+          },
+          ctaText
+        },
+        about24H{
+          title,
+          description[],
+          foundedYear,
+          image{
+            asset->{
+              _id,
+              _type,
+              url,
+              originalFilename,
+              mimeType
+            }
+          },
+          ctaText
+        },
         contact{
           title,
-          subtitle
+          subtitle,
+          ctaText
         }
       }`;
     } else {

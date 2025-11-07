@@ -1,9 +1,12 @@
 import Header from '../../../components/Header';
 import HeroCBEnf from '../../../components/cbenf/HeroCBEnf';
 import AboutCBEnf from '../../../components/cbenf/AboutCBEnf';
-import ServicesCBEnf from '../../../components/cbenf/ServicesCBEnf';
 import AccommodationCBEnf from '../../../components/cbenf/AccommodationCBEnf';
+import FlightsCBEnf from '../../../components/cbenf/FlightsCBEnf';
+import ToursCBEnf from '../../../components/cbenf/ToursCBEnf';
+import PaymentCBEnf from '../../../components/cbenf/PaymentCBEnf';
 import WhyChooseCBEnf from '../../../components/cbenf/WhyChooseCBEnf';
+import About24HCBEnf from '../../../components/cbenf/About24HCBEnf';
 import ContactCBEnf from '../../../components/cbenf/ContactCBEnf';
 import Footer from '../../../components/Footer';
 
@@ -18,16 +21,25 @@ export default function CBEnf() {
         {/* Bloco 2 - Sobre o Evento */}
         <AboutCBEnf />
 
-        {/* Bloco 3 - Serviços */}
-        <ServicesCBEnf />
-
-        {/* Bloco 4 - Hospedagem */}
+        {/* Bloco 3 - Hospedagem */}
         <AccommodationCBEnf />
 
-        {/* Bloco 5 - Por que Escolher */}
+        {/* Bloco 4 - Passagens Aéreas */}
+        <FlightsCBEnf />
+
+        {/* Bloco 5 - Passeios Exclusivos */}
+        <ToursCBEnf />
+
+        {/* Bloco 6 - Condições de Pagamento */}
+        <PaymentCBEnf />
+
+        {/* Bloco 7 - Por que Escolher */}
         <WhyChooseCBEnf />
 
-        {/* Bloco 6 - Formulário de Contato */}
+        {/* Bloco 8 - Sobre a 24H */}
+        <About24HCBEnf />
+
+        {/* Bloco 9 - Formulário de Contato */}
         <ContactCBEnf />
       </main>
       <Footer />
