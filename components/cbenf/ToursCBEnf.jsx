@@ -6,9 +6,11 @@ import { Users, ArrowRight } from 'lucide-react';
 import { useCBEnfPage } from '../../utils/hooks/useSanityData';
 import { resolveImage, portableTextToPlain } from '../../utils/lib/sanity';
 import Image from 'next/image';
+import TourModalCBEnf from './modals/TourModalCBEnf';
 
 const ToursCBEnf = () => {
   const { data: cbenfData } = useCBEnfPage();
+  const [selectedTour, setSelectedTour] = useState(null);
   const [showAll, setShowAll] = useState(false);
 
   const tours = cbenfData?.tours || {};
@@ -35,29 +37,61 @@ const ToursCBEnf = () => {
             Passeios exclusivos
           </span>
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mt-4 mb-6">
-            {title}
+            {title.includes('Porto Alegre e região') ? (
+              <>Aproveite sua estadia para conhecer o melhor de{' '}
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#D38E17] to-[#F59E0B]">
+                  Porto Alegre e região
+                </span>{' '}
+                com nossos tours privativos.
+              </>
+            ) : (
+              title
+            )}
           </h2>
         </motion.div>
 
         {/* Informações importantes */}
-        {info.length > 0 && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-            className="bg-gradient-to-r from-gray-50 to-gray-100 rounded-2xl p-8 mb-12 border border-gray-200"
-          >
-            <div className="space-y-3 text-gray-700">
-              {info.map((item, index) => (
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+          className="bg-gradient-to-r from-gray-50 to-gray-100 rounded-2xl p-8 mb-12 border border-gray-200"
+        >
+          <div className="space-y-3 text-gray-700">
+            {info.length > 0 ? (
+              info.map((item, index) => (
                 <p key={index} className="flex items-start gap-2">
                   <span className="text-[#D38E17] mt-1">•</span>
                   <span>{portableTextToPlain(item) || item}</span>
                 </p>
-              ))}
-            </div>
-          </motion.div>
-        )}
+              ))
+            ) : (
+              <>
+                <p className="flex items-start gap-2">
+                  <span className="text-[#D38E17] mt-1">•</span>
+                  <span>Experiências privativas com mínimo de duas pessoas.</span>
+                </p>
+                <p className="flex items-start gap-2">
+                  <span className="text-[#D38E17] mt-1">•</span>
+                  <span>Veículos compatíveis com número de passageiros.</span>
+                </p>
+                <p className="flex items-start gap-2">
+                  <span className="text-[#D38E17] mt-1">•</span>
+                  <span>City tours incluem parques, igrejas, museus, centros culturais e pontos turísticos (acesso gratuito).</span>
+                </p>
+                <p className="flex items-start gap-2">
+                  <span className="text-[#D38E17] mt-1">•</span>
+                  <span>Menores devem estar acompanhados de pais ou responsável.</span>
+                </p>
+                <p className="flex items-start gap-2">
+                  <span className="text-[#D38E17] mt-1">•</span>
+                  <span>Cafés e restaurantes podem ser substituídos por equivalentes em caso de fechamento permanente ou temporário da casa.</span>
+                </p>
+              </>
+            )}
+          </div>
+        </motion.div>
 
         {/* Passeios Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
@@ -70,7 +104,7 @@ const ToursCBEnf = () => {
               viewport={{ once: true }}
               className="bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 group"
             >
-              <div className="relative h-48 overflow-hidden bg-slate-200">
+              <div className="relative h-48 overflow-hidden">
                 {tour.image ? (
                   <Image
                     src={resolveImage(tour.image, '/placeholder.jpg')}
@@ -78,14 +112,9 @@ const ToursCBEnf = () => {
                     fill
                     className="object-cover group-hover:scale-110 transition-transform duration-500"
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    onError={(e) => {
-                      e.target.src = '/placeholder.jpg';
-                    }}
                   />
                 ) : (
-                  <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-slate-200 to-slate-300">
-                    <span className="text-slate-500 text-sm font-medium">Imagem em breve</span>
-                  </div>
+                  <div className="w-full h-full bg-gradient-to-br from-gray-300 to-gray-400"></div>
                 )}
                 <div className="absolute top-4 right-4 bg-gradient-to-r from-[#D38E17] via-[#F59E0B] to-[#D38E17] backdrop-blur-md border border-amber-300/50 px-4 py-2 rounded-full text-white shadow-2xl">
                   <span className="text-xl font-black drop-shadow-lg">{tour.price || 'R$ 0,00'}</span>
@@ -108,10 +137,7 @@ const ToursCBEnf = () => {
                 )}
 
                 <button
-                  onClick={() => {
-                    const formSection = document.getElementById('contato');
-                    formSection?.scrollIntoView({ behavior: 'smooth' });
-                  }}
+                  onClick={() => setSelectedTour(tour)}
                   className="group relative overflow-hidden w-full bg-gradient-to-r from-[#D38E17] to-[#F59E0B] text-white font-bold py-3 rounded-full hover:shadow-lg transition-all duration-300 hover:scale-105 flex items-center justify-center gap-2"
                 >
                   <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-out"></div>
@@ -124,21 +150,25 @@ const ToursCBEnf = () => {
         </div>
 
         {/* Ver mais/menos */}
-        {tourItems.length > 6 && (
-          <div className="text-center">
-            <button
-              onClick={() => setShowAll(!showAll)}
-              className="group relative overflow-hidden inline-flex items-center gap-2 bg-gradient-to-r from-[#D38E17] to-[#F59E0B] text-white border-2 border-[#D38E17] font-bold px-8 py-3 rounded-full transition-all duration-300 hover:scale-105"
-            >
-              <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/15 to-white/0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-out"></div>
-              <span className="relative z-10">{showAll ? 'Ver menos' : `Ver todos os ${tourItems.length} passeios`}</span>
-            </button>
-          </div>
-        )}
+        <div className="text-center">
+          <button
+            onClick={() => setShowAll(!showAll)}
+            className="group relative overflow-hidden inline-flex items-center gap-2 bg-gradient-to-r from-[#D38E17] to-[#F59E0B] text-white border-2 border-[#D38E17] font-bold px-8 py-3 rounded-full transition-all duration-300 hover:scale-105"
+          >
+            <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/15 to-white/0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-out"></div>
+            <span className="relative z-10">{showAll ? 'Ver menos' : `Ver todos os ${tourItems.length} passeios`}</span>
+          </button>
+        </div>
       </div>
+
+      {selectedTour && (
+        <TourModalCBEnf
+          tour={selectedTour}
+          onClose={() => setSelectedTour(null)}
+        />
+      )}
     </section>
   );
 };
 
 export default ToursCBEnf;
-

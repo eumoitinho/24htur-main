@@ -22,6 +22,30 @@ export const urlFor = (source: any) => builder.image(source);
 export const resolveImage = (value: any, fallback?: string): string | undefined => {
   if (!value) return fallback;
   if (typeof value === 'string') return value;
+  
+  // Se tem URL direta do asset (quando expandido pela query)
+  if (value?.asset?.url) {
+    return value.asset.url;
+  }
+  
+  // Se tem _ref, precisa construir o objeto de imagem
+  if (value?.asset?._ref) {
+    try {
+      const imageObj = {
+        _type: 'image',
+        asset: {
+          _ref: value.asset._ref,
+          _type: 'reference'
+        }
+      };
+      return urlFor(imageObj).url();
+    } catch (e) {
+      console.warn('Erro ao gerar URL da imagem Sanity:', e);
+      return fallback;
+    }
+  }
+  
+  // Se é um objeto de imagem do Sanity
   if (typeof value === 'object' && value._type === 'image') {
     try {
       return urlFor(value).url();
@@ -30,6 +54,24 @@ export const resolveImage = (value: any, fallback?: string): string | undefined 
       return fallback;
     }
   }
+  
+  // Se tem asset._id
+  if (value?.asset?._id) {
+    try {
+      const imageObj = {
+        _type: 'image',
+        asset: {
+          _ref: value.asset._id,
+          _type: 'reference'
+        }
+      };
+      return urlFor(imageObj).url();
+    } catch (e) {
+      console.warn('Erro ao gerar URL da imagem Sanity:', e);
+      return fallback;
+    }
+  }
+  
   return fallback;
 };
 
