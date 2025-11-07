@@ -12,6 +12,14 @@ import Logo from '../Logo';
 const HeroHome = () => {
   const { data: homepageData, loading, error } = useHomepage();
   
+  // Debug: log dos dados recebidos
+  React.useEffect(() => {
+    console.log('🏠 HeroHome - HomepageData completo:', homepageData);
+    console.log('🏠 HeroHome - Hero data:', homepageData?.hero);
+    console.log('🏠 HeroHome - Title:', homepageData?.hero?.title);
+    console.log('🏠 HeroHome - Subtitle:', homepageData?.hero?.subtitle);
+  }, [homepageData]);
+  
   // Fallback para dados estáticos caso não carregue do Sanity
   const heroData = homepageData?.hero || {
     title: "Gestão completa de viagens de negócios e lazer",
