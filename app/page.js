@@ -12,6 +12,10 @@ import TestimonialsHome from '../components/homepage/TestimonialsHome';
 import ContactHome from '../components/homepage/ContactHome';
 import Footer from '../components/Footer';
 
+// Força revalidação dinâmica para sempre buscar dados atualizados do Sanity
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 export default function Home() {
   return (
     <div className="min-h-screen bg-white">

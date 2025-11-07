@@ -4,7 +4,7 @@ import imageUrlBuilder from '@sanity/image-url';
 export const client = createClient({
   projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || 'kyx4ncqy',
   dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || 'production',
-  useCdn: true,
+  useCdn: false, // Desabilita CDN para sempre pegar dados atualizados
   apiVersion: process.env.NEXT_PUBLIC_SANITY_API_VERSION || '2024-01-01',
   token: process.env.NEXT_PUBLIC_SANITY_TOKEN,
   // Configurações para resolver problemas de CORS
@@ -198,7 +198,20 @@ export const getDocuments = async (type: string, slug?: string) => {
         isActive,
         seoTitle,
         seoDescription,
-        hero,
+        hero{
+          title,
+          subtitle,
+          ctaText,
+          backgroundImage{
+            asset->{
+              _id,
+              _type,
+              url,
+              originalFilename,
+              mimeType
+            }
+          }
+        },
         metrics[]{
           _key,
           value,
