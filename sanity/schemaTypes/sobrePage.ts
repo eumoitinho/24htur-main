@@ -21,7 +21,7 @@ export default defineType({
         defineField({
           name: 'subtitle',
           title: 'Subtítulo',
-          type: 'text',
+          type: 'string',
           initialValue: 'Com mais de 20 anos de expertise, a 24H Escritório de Viagens se consolidou como uma agência especializada e líder na gestão de viagens de lazer, negócios e eventos, nacionais e internacionais.',
           validation: Rule => Rule.required()
         }),
@@ -97,7 +97,7 @@ export default defineType({
                 defineField({
                   name: 'description',
                   title: 'Descrição',
-                  type: 'text',
+                  type: 'string',
                   validation: Rule => Rule.required()
                 })
               ]
@@ -234,7 +234,7 @@ export default defineType({
                 defineField({
                   name: 'description',
                   title: 'Descrição',
-                  type: 'text',
+                  type: 'string',
                   validation: Rule => Rule.required()
                 }),
                 defineField({
@@ -306,7 +306,7 @@ export default defineType({
                 defineField({
                   name: 'description',
                   title: 'Descrição',
-                  type: 'text',
+                  type: 'string',
                   validation: Rule => Rule.required()
                 })
               ]
@@ -452,7 +452,7 @@ export default defineType({
         defineField({
           name: 'description',
           title: 'Descrição',
-          type: 'text',
+          type: 'string',
           initialValue: 'O propósito da 24H Escritório de Viagens é ir além do agenciamento. Buscamos a excelência e a disponibilidade contínua no agenciamento de viagens de lazer e negócios, com o objetivo de sempre superar as expectativas de nossos clientes. Valorizamos profundamente a colaboração e o relacionamento com nossos colaboradores e fornecedores, reconhecendo que são pilares essenciais para o nosso sucesso.',
           validation: Rule => Rule.required()
         })
@@ -475,7 +475,7 @@ export default defineType({
         defineField({
           name: 'intro',
           title: 'Introdução',
-          type: 'text',
+          type: 'string',
           initialValue: 'Nossos valores guiam todas as nossas ações e decisões, refletindo a essência da 24H Escritório de Viagens:',
           validation: Rule => Rule.required()
         }),
@@ -496,7 +496,7 @@ export default defineType({
                 defineField({
                   name: 'description',
                   title: 'Descrição',
-                  type: 'text',
+                  type: 'string',
                   validation: Rule => Rule.required()
                 })
               ]
@@ -652,7 +652,7 @@ export default defineType({
                 defineField({
                   name: 'text',
                   title: 'Texto',
-                  type: 'text',
+                  type: 'string',
                   validation: Rule => Rule.required()
                 }),
                 defineField({

@@ -21,7 +21,7 @@ export default defineType({
         defineField({
           name: 'subtitle',
           title: 'Subtítulo',
-          type: 'text',
+          type: 'string',
           initialValue: 'Esqueça o estresse de organizar hospedagem, passagens e passeios. A 24H Escritório de Viagens cuida de tudo para você focar no que realmente importa: o conhecimento e networking do maior congresso de enfermagem do Brasil.',
           validation: Rule => Rule.required()
         }),
@@ -88,7 +88,7 @@ export default defineType({
         defineField({
           name: 'description',
           title: 'Descrição',
-          type: 'text',
+          type: 'string',
           initialValue: 'A Associação Brasileira de Enfermagem (ABEn) promove este encontro fundamental para profissionais, estudantes, pesquisadores e gestores de todo o país.\n\nUma oportunidade única de atualização científica, networking e desenvolvimento profissional em um ambiente de excelência acadêmica.',
           validation: Rule => Rule.required()
         }),
@@ -113,19 +113,19 @@ export default defineType({
         defineField({
           name: 'preCongressDescription',
           title: 'Descrição do Pré-congresso',
-          type: 'text',
+          type: 'string',
           initialValue: 'Workshops e cursos preparatórios com especialistas renomados'
         }),
         defineField({
           name: 'mainEventDescription',
           title: 'Descrição do Evento Principal',
-          type: 'text',
+          type: 'string',
           initialValue: 'Palestras, painéis, apresentações de trabalhos e networking'
         }),
         defineField({
           name: 'locationDescription',
           title: 'Descrição do Local',
-          type: 'text',
+          type: 'string',
           initialValue: 'Porto Alegre - RS\nEstrutura completa e moderna'
         }),
         defineField({
@@ -154,7 +154,7 @@ export default defineType({
         defineField({
           name: 'subtitle',
           title: 'Subtítulo',
-          type: 'text',
+          type: 'string',
           initialValue: 'Cuidamos de cada detalhe da sua viagem ao CBEnf 2024. Desde a chegada até a partida, nossa equipe especializada garante que você aproveite ao máximo este importante evento.'
         }),
         defineField({
@@ -174,7 +174,7 @@ export default defineType({
                 defineField({
                   name: 'description',
                   title: 'Descrição',
-                  type: 'text',
+                  type: 'string',
                   validation: Rule => Rule.required()
                 })
               ]
@@ -218,7 +218,7 @@ export default defineType({
         defineField({
           name: 'subtitle',
           title: 'Subtítulo',
-          type: 'text',
+          type: 'string',
           initialValue: 'Hotéis estrategicamente localizados próximos ao evento, com tarifas especiais para congressistas.'
         }),
         defineField({
@@ -288,7 +288,7 @@ export default defineType({
         defineField({
           name: 'description',
           title: 'Descrição',
-          type: 'text',
+          type: 'string',
           initialValue: 'Somos referência na organização de viagens para eventos científicos e congressos médicos. Nossa experiência garante que você chegue descansado, hospedado no melhor local e pronto para aproveitar cada momento do CBEnf 2024.'
         }),
         defineField({
@@ -354,7 +354,7 @@ export default defineType({
         defineField({
           name: 'description',
           title: 'Descrição',
-          type: 'text',
+          type: 'string',
           initialValue: 'Trabalhamos com todas as companhias aéreas nacionais e internacionais. Nossa expertise garante os melhores preços e horários para sua viagem.'
         }),
         defineField({
@@ -475,7 +475,7 @@ export default defineType({
                 defineField({
                   name: 'description',
                   title: 'Descrição',
-                  type: 'text',
+                  type: 'string',
                   validation: Rule => Rule.required()
                 }),
                 defineField({

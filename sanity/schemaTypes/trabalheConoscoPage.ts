@@ -28,7 +28,7 @@ export default defineType({
         defineField({
           name: 'intro',
           title: 'Introdução',
-          type: 'text',
+          type: 'string',
           initialValue: 'Se você busca uma oportunidade de fazer parte de uma equipe experiente e dedicada, que transforma sonhos em realidade e oferece soluções inovadoras no mercado de turismo, você encontrou o lugar certo.',
           validation: Rule => Rule.required()
         }),
@@ -104,7 +104,7 @@ export default defineType({
                 defineField({
                   name: 'description',
                   title: 'Descrição',
-                  type: 'text',
+                  type: 'string',
                   validation: Rule => Rule.required()
                 })
               ]
@@ -241,7 +241,7 @@ export default defineType({
                 defineField({
                   name: 'description',
                   title: 'Descrição',
-                  type: 'text',
+                  type: 'string',
                   validation: Rule => Rule.required()
                 }),
                 defineField({
@@ -313,7 +313,7 @@ export default defineType({
                 defineField({
                   name: 'description',
                   title: 'Descrição',
-                  type: 'text',
+                  type: 'string',
                   validation: Rule => Rule.required()
                 })
               ]
@@ -559,7 +559,7 @@ export default defineType({
                 defineField({
                   name: 'text',
                   title: 'Texto',
-                  type: 'text',
+                  type: 'string',
                   validation: Rule => Rule.required()
                 }),
                 defineField({

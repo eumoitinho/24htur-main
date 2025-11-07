@@ -21,7 +21,7 @@ export default defineType({
         defineField({
           name: 'subtitle',
           title: 'Subtítulo',
-          type: 'text',
+          type: 'string',
           initialValue: 'Deixe a 24H Escritório de Viagens transformar seus sonhos em realidade, com roteiros personalizados e experiências que ficarão para sempre na sua memória.',
           validation: Rule => Rule.required()
         }),
@@ -91,7 +91,7 @@ export default defineType({
                 defineField({
                   name: 'answer',
                   title: 'Resposta',
-                  type: 'text',
+                  type: 'string',
                   validation: Rule => Rule.required()
                 })
               ]
@@ -143,7 +143,7 @@ export default defineType({
         defineField({
           name: 'description',
           title: 'Descrição',
-          type: 'text',
+          type: 'string',
           initialValue: 'Cada viagem é uma oportunidade única de criar memórias e explorar novos horizontes. A 24H Escritório de Viagens oferece um serviço de agenciamento completo para sua viagem de lazer, cuidando de cada detalhe para que você desfrute ao máximo de seus momentos de descanso e diversão.\n\nCom uma equipe de profissionais com mais de 20 anos de expertise e uma rede extensa de fornecedores, operamos serviços personalizados no Brasil ou no exterior. Nossa missão é proporcionar uma experiência de viagem perfeita, sem preocupações, desde o momento em que você sonha com o destino até o momento em que retorna para casa com o coração cheio de boas lembranças.',
           validation: Rule => Rule.required()
         }),
@@ -255,7 +255,7 @@ export default defineType({
                 defineField({
                   name: 'description',
                   title: 'Descrição',
-                  type: 'text',
+                  type: 'string',
                   validation: Rule => Rule.required()
                 })
               ]
@@ -357,7 +357,7 @@ export default defineType({
                 defineField({
                   name: 'description',
                   title: 'Descrição',
-                  type: 'text',
+                  type: 'string',
                   validation: Rule => Rule.required()
                 })
               ]
@@ -416,7 +416,7 @@ export default defineType({
         defineField({
           name: 'description',
           title: 'Descrição',
-          type: 'text',
+          type: 'string',
           initialValue: 'A 24H Escritório de Viagens é uma agência especializada em viagens corporativas, de lazer, turismo de incentivo e eventos. Com mais de 20 anos de experiência no mercado, nossa equipe atua com excelência na gestão de viagens nacionais e internacionais, oferecendo soluções completas e personalizadas para empresas, famílias e clientes individuais.\n\nCuidamos de todas as etapas da viagem, desde a cotação até a emissão de passagens, reservas de hotéis, traslados, câmbio, seguros, vistos, locação de veículos, roteiros turísticos e ingressos. Trabalhamos com uma ampla rede de fornecedores e parceiros nos setores aéreo, hoteleiro e de turismo, garantindo agilidade, economia e segurança em cada atendimento.\n\nNosso compromisso é oferecer uma experiência de viagem tranquila, eficiente e sem imprevistos, com suporte disponível 24 horas por dia, 7 dias por semana.',
           validation: Rule => Rule.required()
         }),
@@ -461,7 +461,7 @@ export default defineType({
                 defineField({
                   name: 'text',
                   title: 'Texto do Depoimento',
-                  type: 'text',
+                  type: 'string',
                   validation: Rule => Rule.required()
                 }),
                 defineField({
@@ -516,7 +516,7 @@ export default defineType({
         defineField({
           name: 'subtitle',
           title: 'Subtítulo',
-          type: 'text',
+          type: 'string',
           initialValue: 'Preencha o formulário abaixo e nossa equipe de especialistas em lazer entrará em contato para criar um roteiro personalizado e inesquecível para você.',
           validation: Rule => Rule.required()
         })

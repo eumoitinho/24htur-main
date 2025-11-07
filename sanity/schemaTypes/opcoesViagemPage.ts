@@ -104,7 +104,7 @@ export default defineType({
                 defineField({
                   name: 'description',
                   title: 'Descrição',
-                  type: 'text',
+                  type: 'string',
                   validation: Rule => Rule.required()
                 })
               ]
@@ -241,7 +241,7 @@ export default defineType({
                 defineField({
                   name: 'description',
                   title: 'Descrição',
-                  type: 'text',
+                  type: 'string',
                   validation: Rule => Rule.required()
                 }),
                 defineField({
@@ -313,7 +313,7 @@ export default defineType({
                 defineField({
                   name: 'description',
                   title: 'Descrição',
-                  type: 'text',
+                  type: 'string',
                   validation: Rule => Rule.required()
                 })
               ]
@@ -559,7 +559,7 @@ export default defineType({
                 defineField({
                   name: 'text',
                   title: 'Texto',
-                  type: 'text',
+                  type: 'string',
                   validation: Rule => Rule.required()
                 }),
                 defineField({
@@ -640,7 +640,7 @@ export default defineType({
             defineField({
               name: 'description',
               title: 'Descrição',
-              type: 'text',
+              type: 'string',
               validation: Rule => Rule.required()
             })
           ]

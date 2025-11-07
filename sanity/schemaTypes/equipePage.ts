@@ -21,7 +21,7 @@ export default defineType({
         defineField({
           name: 'subtitle',
           title: 'Subtítulo',
-          type: 'text',
+          type: 'string',
           initialValue: 'Por trás de cada viagem bem-sucedida e de cada cliente satisfeito, existe uma equipe de profissionais altamente qualificados e apaixonados pelo que fazem.',
           validation: Rule => Rule.required()
         }),
@@ -97,7 +97,7 @@ export default defineType({
                 defineField({
                   name: 'description',
                   title: 'Descrição',
-                  type: 'text',
+                  type: 'string',
                   validation: Rule => Rule.required()
                 })
               ]
@@ -234,7 +234,7 @@ export default defineType({
                 defineField({
                   name: 'description',
                   title: 'Descrição',
-                  type: 'text',
+                  type: 'string',
                   validation: Rule => Rule.required()
                 }),
                 defineField({
@@ -306,7 +306,7 @@ export default defineType({
                 defineField({
                   name: 'description',
                   title: 'Descrição',
-                  type: 'text',
+                  type: 'string',
                   validation: Rule => Rule.required()
                 })
               ]
@@ -452,7 +452,7 @@ export default defineType({
         defineField({
           name: 'intro',
           title: 'Introdução',
-          type: 'text',
+          type: 'string',
           initialValue: 'Por trás de cada viagem bem-sucedida e de cada cliente satisfeito, existe uma equipe de profissionais altamente qualificados e apaixonados pelo que fazem. São eles que transformam seus planos em realidade, oferecendo um atendimento personalizado e a excelência que nos diferencia no mercado.',
           validation: Rule => Rule.required()
         }),
@@ -486,13 +486,13 @@ export default defineType({
                 defineField({
                   name: 'education',
                   title: 'Formação',
-                  type: 'text',
+                  type: 'string',
                   validation: Rule => Rule.required()
                 }),
                 defineField({
                   name: 'experience',
                   title: 'Experiência',
-                  type: 'text',
+                  type: 'string',
                   validation: Rule => Rule.required()
                 })
               ]
@@ -600,7 +600,7 @@ export default defineType({
                 defineField({
                   name: 'text',
                   title: 'Texto',
-                  type: 'text',
+                  type: 'string',
                   validation: Rule => Rule.required()
                 }),
                 defineField({
