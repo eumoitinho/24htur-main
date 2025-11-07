@@ -130,7 +130,7 @@ const normalizeStaticData = (data: any) => {
   // Normalizar estrutura de valores para sobrePage
   if (data._type === 'sobrePage' && data.values) {
     if (data.values.items && Array.isArray(data.values.items)) {
-      data.values = data.values.items;
+    data.values = data.values.items;
     } else if (!Array.isArray(data.values)) {
       data.values = [];
     }
@@ -217,8 +217,29 @@ export const getDocuments = async (type: string, slug?: string) => {
           value,
           label
         },
-        problems,
-        experience,
+        problems{
+          title,
+          items[]{
+            _key,
+            title,
+            description
+          }
+        },
+        experience{
+          title,
+          subtitle,
+          description,
+          ctaText,
+          image{
+            asset->{
+              _id,
+              _type,
+              url,
+              originalFilename,
+              mimeType
+            }
+          }
+        },
         "clients": clients{
           badge,
           title,
@@ -236,8 +257,24 @@ export const getDocuments = async (type: string, slug?: string) => {
             alt
           }
         },
-        services,
-        whyChoose,
+        services{
+          title,
+          items[]{
+            _key,
+            title,
+            description,
+            link,
+            ctaText
+          }
+        },
+        whyChoose{
+          title,
+          reasons[]{
+            _key,
+            title,
+            description
+          }
+        },
         about{
           badge,
           title,
@@ -272,7 +309,17 @@ export const getDocuments = async (type: string, slug?: string) => {
             rating
           }
         },
-        contact
+        contact{
+          title,
+          subtitle,
+          submitText,
+          labels{
+            name,
+            email,
+            phone,
+            message
+          }
+        }
       }`;
     } else if (type === 'lazerPage' && !slug) {
       query = `*[_type == "lazerPage"][0]{

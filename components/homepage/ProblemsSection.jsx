@@ -53,12 +53,12 @@ const ProblemsSection = () => {
   ];
 
   // Garante que sempre seja um array e mapeia ícones se necessário
-  const problems = Array.isArray(homepageData?.problems) 
-    ? homepageData.problems.map(problem => ({
+  const problems = Array.isArray(homepageData?.problems?.items) && homepageData.problems.items.length > 0
+    ? homepageData.problems.items.map(problem => ({
         ...problem,
-        icon: problem.icon || iconMap[problem.title] || Clock
+        icon: problem.icon || iconMap[portableTextToPlain(problem.title)] || Clock
       }))
-    : (homepageData?.problems?.items || defaultProblems);
+    : defaultProblems;
 
   return (
     <section className="py-14 sm:py-16 lg:py-18">

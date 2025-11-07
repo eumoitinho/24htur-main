@@ -46,20 +46,20 @@ const ServicesHome = () => {
     }
   ];
   
-  const servicesData = Array.isArray(homepageData?.services) 
-    ? homepageData.services.map(service => ({
+  const servicesData = Array.isArray(homepageData?.services?.items) && homepageData.services.items.length > 0
+    ? homepageData.services.items.map(service => ({
         ...service,
         // Se não tem icon, mapeia baseado no title ou link
-        icon: service.icon || iconMap[service.title] || iconMap[service.link?.replace('/', '')] || Briefcase
+        icon: service.icon || iconMap[portableTextToPlain(service.title)] || iconMap[service.link?.replace('/', '')] || Briefcase
       }))
-    : (homepageData?.services?.items || defaultServices);
+    : defaultServices;
 
   return (
     <section className="py-14 sm:py-16 lg:py-18 bg-gradient-to-br from-slate-50 to-white">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="text-center mb-12">
           <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight text-slate-900 mb-4">
-            {portableTextToPlain(homepageData?.servicesTitle) || 'NOSSOS SERVIÇOS'}
+            {portableTextToPlain(homepageData?.services?.title) || 'NOSSOS SERVIÇOS'}
           </h2>
         </div>
 

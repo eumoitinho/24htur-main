@@ -52,12 +52,12 @@ const WhyChooseHome = () => {
   ];
 
   // Garante que sempre seja um array e mapeia ícones se necessário
-  const reasons = Array.isArray(homepageData?.whyChoose?.reasons) 
+  const reasons = Array.isArray(homepageData?.whyChoose?.reasons) && homepageData.whyChoose.reasons.length > 0
     ? homepageData.whyChoose.reasons.map(reason => ({
         ...reason,
-        icon: reason.icon || iconMap[reason.title] || HeadphonesIcon
+        icon: reason.icon || iconMap[portableTextToPlain(reason.title)] || HeadphonesIcon
       }))
-    : (homepageData?.whyChoose?.reasons?.items || defaultReasons);
+    : defaultReasons;
 
   return (
     <section className="py-14 sm:py-16 lg:py-18">

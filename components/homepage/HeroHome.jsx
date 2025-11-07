@@ -74,17 +74,28 @@ const HeroHome = () => {
                 
                 // Se é array de blocos (portable text), processa corretamente preservando espaços
                 if (Array.isArray(title)) {
-                  return title.map((block) => {
-                    if (block._type === 'block' && block.children) {
+                  const processed = title.map((block) => {
+                    // Se é um bloco com children
+                    if (block && block.children && Array.isArray(block.children)) {
                       return block.children.map((child) => {
-                        if (child._type === 'span') {
-                          return child.text || '';
+                        if (child && child.text) {
+                          return child.text;
                         }
                         return '';
                       }).join(''); // Preserva espaços que já vêm no texto do Sanity
                     }
+                    // Se é um objeto com text direto
+                    if (block && block.text) {
+                      return block.text;
+                    }
+                    // Se é string direto no array
+                    if (typeof block === 'string') {
+                      return block;
+                    }
                     return '';
-                  }).join(' ').trim(); // Adiciona espaço entre blocos
+                  }).filter(Boolean).join(' ').trim(); // Adiciona espaço entre blocos
+                  
+                  if (processed) return processed;
                 }
                 
                 // Se é string, usa diretamente
@@ -92,8 +103,9 @@ const HeroHome = () => {
                   return title;
                 }
                 
-                // Fallback
-                return portableTextToPlain(title) || heroData.title;
+                // Fallback: usa portableTextToPlain
+                const plainTitle = portableTextToPlain(title);
+                return plainTitle || heroData.title;
               })()}
             </motion.h1>
 
@@ -103,7 +115,41 @@ const HeroHome = () => {
               transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
               className="mt-6 text-white/90 text-[18px] leading-7"
             >
-              {portableTextToPlain(homepageData?.hero?.subtitle) || heroData.subtitle}
+              {(() => {
+                const subtitle = homepageData?.hero?.subtitle;
+                if (!subtitle) return heroData.subtitle;
+                
+                // Se é string, usa diretamente
+                if (typeof subtitle === 'string') {
+                  return subtitle;
+                }
+                
+                // Se é array (portable text), processa
+                if (Array.isArray(subtitle)) {
+                  const processed = subtitle.map((block) => {
+                    if (block && block.children && Array.isArray(block.children)) {
+                      return block.children.map((child) => {
+                        if (child && child.text) {
+                          return child.text;
+                        }
+                        return '';
+                      }).join('');
+                    }
+                    if (block && block.text) {
+                      return block.text;
+                    }
+                    if (typeof block === 'string') {
+                      return block;
+                    }
+                    return '';
+                  }).filter(Boolean).join(' ').trim();
+                  
+                  if (processed) return processed;
+                }
+                
+                // Fallback: usa portableTextToPlain
+                return portableTextToPlain(subtitle) || heroData.subtitle;
+              })()}
             </motion.p>
 
             <motion.div
