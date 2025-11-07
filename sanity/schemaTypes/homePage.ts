@@ -20,7 +20,7 @@ export default defineType({
         defineField({
           name: 'subtitle',
           title: 'Subtítulo',
-          type: 'text',
+          type: 'string',
           initialValue: 'Soluções estratégicas com atendimento 24/7 e mais de 20 anos de experiência no mercado',
           validation: Rule => Rule.required()
         }),
