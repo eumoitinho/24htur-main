@@ -680,81 +680,80 @@ export default defineType({
         })
       ]
     }),
+
+    defineField({
+      name: 'upcomingEvents',
+      title: 'Próximos Eventos',
+      type: 'object',
+      fields: [
         defineField({
-          name: 'upcomingEvents',
-          title: 'Próximos Eventos',
-          type: 'object',
-          fields: [
-            defineField({
-              name: 'title',
-              title: 'Título da Seção',
-              type: 'string',
-              initialValue: 'Confira as condições especiais para nossos próximos eventos:',
-              validation: Rule => Rule.required()
-            }),
-            defineField({
-              name: 'events',
-              title: 'Eventos',
-              type: 'array',
-              of: [
-                {
-                  type: 'object',
-                  fields: [
-                    defineField({
-                      name: 'name',
-                      title: 'Nome do Evento',
-                      type: 'string',
-                      validation: Rule => Rule.required()
-                    }),
-                    defineField({
-                      name: 'preCongress',
-                      title: 'Pré-congresso',
-                      type: 'string'
-                    }),
-                    defineField({
-                      name: 'mainEvent',
-                      title: 'Evento Principal',
-                      type: 'string',
-                      validation: Rule => Rule.required()
-                    }),
-                    defineField({
-                      name: 'location',
-                      title: 'Local',
-                      type: 'string',
-                      validation: Rule => Rule.required()
-                    }),
-                    defineField({
-                      name: 'address',
-                      title: 'Endereço',
-                      type: 'string',
-                      validation: Rule => Rule.required()
-                    }),
-                    defineField({
-                      name: 'link',
-                      title: 'Link para Mais Informações',
-                      type: 'string'
-                    }),
-                    defineField({
-                      name: 'linkText',
-                      title: 'Texto do Link',
-                      type: 'string',
-                      initialValue: 'SAIBA MAIS!'
-                    })
-                  ]
-                }
-              ],
-              initialValue: [
-                {
-                  name: '75º Congresso Brasileiro de Enfermagem - Porto Alegre/RS',
-                  preCongress: '22 e 23 de novembro',
-                  mainEvent: '23 a 26 de novembro de 2025',
-                  location: 'Campus da PUCRS - Pontifícia Universidade Católica do Rio Grande do Sul',
-                  address: 'Bairro Partenon - Zona Leste de Porto Alegre',
-                  link: '/eventos/cbenf',
-                  linkText: 'SAIBA MAIS!'
-                }
+          name: 'title',
+          title: 'Título da Seção',
+          type: 'string',
+          initialValue: 'Confira as condições especiais para nossos próximos eventos:',
+          validation: Rule => Rule.required()
+        }),
+        defineField({
+          name: 'events',
+          title: 'Eventos',
+          type: 'array',
+          of: [
+            {
+              type: 'object',
+              fields: [
+                defineField({
+                  name: 'name',
+                  title: 'Nome do Evento',
+                  type: 'string',
+                  validation: Rule => Rule.required()
+                }),
+                defineField({
+                  name: 'preCongress',
+                  title: 'Pré-congresso',
+                  type: 'string'
+                }),
+                defineField({
+                  name: 'mainEvent',
+                  title: 'Evento Principal',
+                  type: 'string',
+                  validation: Rule => Rule.required()
+                }),
+                defineField({
+                  name: 'location',
+                  title: 'Local',
+                  type: 'string',
+                  validation: Rule => Rule.required()
+                }),
+                defineField({
+                  name: 'address',
+                  title: 'Endereço',
+                  type: 'string',
+                  validation: Rule => Rule.required()
+                }),
+                defineField({
+                  name: 'link',
+                  title: 'Link para Mais Informações',
+                  type: 'string'
+                }),
+                defineField({
+                  name: 'linkText',
+                  title: 'Texto do Link',
+                  type: 'string',
+                  initialValue: 'SAIBA MAIS!'
+                })
               ]
-            })
+            }
+          ],
+          initialValue: [
+            {
+              name: '75º Congresso Brasileiro de Enfermagem - Porto Alegre/RS',
+              preCongress: '22 e 23 de novembro',
+              mainEvent: '23 a 26 de novembro de 2025',
+              location: 'Campus da PUCRS - Pontifícia Universidade Católica do Rio Grande do Sul',
+              address: 'Bairro Partenon - Zona Leste de Porto Alegre',
+              link: '/eventos/cbenf',
+              linkText: 'SAIBA MAIS!'
+            }
           ]
         })
       ]
