@@ -731,6 +731,23 @@ export const getDocuments = async (type: string, slug?: string) => {
       next: { revalidate: 0 }
     });
     
+    // Debug: log dos dados brutos recebidos do Sanity
+    if (type === 'homepage') {
+      console.log('📦 Dados brutos do Sanity (homepage) - ANTES de normalização:', JSON.stringify(data, null, 2));
+      if (data?.hero) {
+        console.log('📦 Hero completo (ANTES normalização):', JSON.stringify(data.hero, null, 2));
+        console.log('📦 Hero subtitle tipo:', typeof data.hero.subtitle);
+        console.log('📦 Hero subtitle valor COMPLETO:', data.hero.subtitle);
+        console.log('📦 Hero subtitle length:', data.hero.subtitle?.length || 'N/A');
+        if (Array.isArray(data.hero.subtitle)) {
+          console.log('📦 Hero subtitle array length:', data.hero.subtitle.length);
+          data.hero.subtitle.forEach((block, idx) => {
+            console.log(`📦 Hero subtitle block ${idx}:`, JSON.stringify(block, null, 2));
+          });
+        }
+      }
+    }
+    
     // Dados recebidos do Sanity
 
     // Normaliza dados recebidos do Sanity:
@@ -844,11 +861,26 @@ export const getDocuments = async (type: string, slug?: string) => {
     if (data && (!Array.isArray(data) || data.length > 0)) {
       let normalized = normalizeFetched(data);
 
+      // Debug: log dos dados APÓS normalização
+      if (type === 'homepage' && normalized && !Array.isArray(normalized)) {
+        console.log('📦 Dados APÓS normalização (homepage):', JSON.stringify(normalized, null, 2));
+        if (normalized?.hero) {
+          console.log('📦 Hero completo (APÓS normalização):', JSON.stringify(normalized.hero, null, 2));
+          console.log('📦 Hero subtitle (APÓS normalização):', normalized.hero.subtitle);
+          console.log('📦 Hero subtitle length (APÓS normalização):', normalized.hero.subtitle?.length || 'N/A');
+        }
+      }
+
       // Se a query retornou um único documento (array com 1 item) e não foi por slug,
       // retorna apenas o objeto (pois é uma query de lista que retornou 1 resultado)
       // MAS preserva a estrutura interna de arrays
       if (Array.isArray(normalized) && normalized.length === 1 && !slug) {
         const singleItem = normalized[0];
+        // Debug: log do item único
+        if (type === 'homepage' && singleItem?.hero) {
+          console.log('📦 Hero subtitle (item único):', singleItem.hero.subtitle);
+          console.log('📦 Hero subtitle length (item único):', singleItem.hero.subtitle?.length || 'N/A');
+        }
         return singleItem;
       }
 
