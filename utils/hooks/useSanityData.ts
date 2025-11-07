@@ -45,15 +45,12 @@ const createPageHook = <T>(
           
           // Se há dados do Sanity, usa eles
           if (result) {
-            console.log(`✅ Usando dados do Sanity para ${type}`);
             setData(result);
             return; // Sair aqui se conseguiu dados do Sanity
           }
           
           // Se não há dados no Sanity, tenta dados estáticos
           if (staticData) {
-            console.warn(`⚠️ Nenhum dado no Sanity para ${type}, usando dados estáticos`);
-            console.warn(`💡 Configure os dados no Sanity para usar conteúdo dinâmico!`);
             setData(staticData as unknown as T);
           } else {
             setError(`Nenhum dado disponível para ${type}`);
@@ -67,23 +64,16 @@ const createPageHook = <T>(
                                 err?.message?.includes('NetworkError');
           
           if (isNetworkError) {
-            console.error(`❌ Erro de CORS ao carregar ${type}.`);
-            console.error(`💡 Configure CORS no Sanity: https://www.sanity.io/manage/personal/project/kyx4ncqy/settings/api`);
-            
             // Em caso de CORS, usa dados estáticos como último recurso
             if (staticData) {
-              console.log(`🔧 Usando dados estáticos devido a erro de CORS`);
               setData(staticData as unknown as T);
               setError(null);
             } else {
               setError(`Erro de CORS. Configure no painel do Sanity.`);
             }
           } else {
-            console.error(`❌ Erro ao carregar ${type}:`, err);
-            
             // Para outros erros, também tenta dados estáticos como fallback
             if (staticData) {
-              console.log(`🔧 Usando dados estáticos como fallback para ${type}`);
               setData(staticData as unknown as T);
               setError(null);
             } else {

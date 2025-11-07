@@ -11,12 +11,6 @@ import Logo from '../Logo';
 const HeroEventos = () => {
   const { data: eventosData } = useEventosPage();
 
-  // Debug: log dos dados recebidos
-  React.useEffect(() => {
-    console.log('🎪 HeroEventos - Eventos data completo:', eventosData);
-    console.log('🎪 HeroEventos - Hero data:', eventosData?.hero);
-  }, [eventosData]);
-
   const hero = eventosData?.hero || {};
   const titleText = portableTextToPlain(hero.title) || 'VIAGENS PARA EVENTOS';
   const subtitleText = portableTextToPlain(hero.subtitle) || 'Somos especialistas em transformar a complexidade da organização de viagens para eventos em uma experiência fluida e tranquila, garantindo que palestrantes, equipes, organizadores e visitantes cheguem ao seu destino com conforto e pontualidade.';

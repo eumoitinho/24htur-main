@@ -321,7 +321,16 @@ export const getDocuments = async (type: string, slug?: string) => {
         hero{
           title,
           subtitle,
-          ctaText
+          ctaText,
+          backgroundImage{
+            asset->{
+              _id,
+              _type,
+              url,
+              originalFilename,
+              mimeType
+            }
+          }
         },
         metrics[]{
           _key,
@@ -535,10 +544,7 @@ export const getDocuments = async (type: string, slug?: string) => {
       },
     });
     
-    // Log da query para debug
-    if (type === 'homepage' || type === 'lazerPage' || type === 'eventosPage' || type === 'cbenfPage') {
-      console.log(`🔍 Query GROQ executada para ${type}:`, query);
-    }
+    // Query GROQ executada
     
     // Adiciona timestamp para evitar cache
     const data = await fetchClient.fetch(query, {}, {
@@ -546,66 +552,7 @@ export const getDocuments = async (type: string, slug?: string) => {
       next: { revalidate: 0 }
     });
     
-    // Log para debug das métricas e logos - ANTES da normalização
-    if ((type === 'homepage' || type === 'lazerPage' || type === 'eventosPage' || type === 'cbenfPage') && data) {
-      console.log(`🔍 Dados RAW do Sanity para ${type} (antes da normalização):`, JSON.stringify(data, null, 2));
-      if (type === 'homepage') {
-        console.log('📊 Métricas recebidas do Sanity:', JSON.stringify(data.metrics, null, 2));
-        console.log('📦 Dados completos de clients recebidos:', JSON.stringify(data.clients, null, 2));
-        console.log('👥 Dados completos de team recebidos:', JSON.stringify(data.team, null, 2));
-        console.log('💬 Dados completos de testimonials recebidos:', JSON.stringify(data.testimonials, null, 2));
-      }
-      if (type === 'lazerPage') {
-        console.log('📊 Métricas recebidas do Sanity:', JSON.stringify(data.metrics, null, 2));
-        console.log('📦 Dados completos de arguments recebidos:', JSON.stringify(data.arguments, null, 2));
-        console.log('👥 Dados completos de services recebidos:', JSON.stringify(data.services, null, 2));
-        console.log('💬 Dados completos de testimonials recebidos:', JSON.stringify(data.testimonials, null, 2));
-      }
-      if (type === 'eventosPage') {
-        console.log('📊 Hero recebido do Sanity:', JSON.stringify(data.hero, null, 2));
-        console.log('📦 Dados completos de eventServices recebidos:', JSON.stringify(data.eventServices, null, 2));
-        console.log('👥 Dados completos de upcomingEvents recebidos:', JSON.stringify(data.upcomingEvents, null, 2));
-      }
-      if (type === 'cbenfPage') {
-        console.log('📊 Hero recebido do Sanity:', JSON.stringify(data.hero, null, 2));
-        console.log('📦 Dados completos de about recebidos:', JSON.stringify(data.about, null, 2));
-      }
-      if (data.clients) {
-        if (Array.isArray(data.clients)) {
-          console.log('⚠️ clients está como array:', data.clients);
-          data.clients.forEach((client, idx) => {
-            console.log(`Client ${idx}:`, client);
-            if (client.logos) {
-              console.log(`🖼️ Logos do client ${idx}:`, client.logos);
-            }
-          });
-        } else if (data.clients.logos) {
-          console.log('🖼️ Logos recebidos do Sanity:', JSON.stringify(data.clients.logos, null, 2));
-          console.log('🖼️ Número de logos:', data.clients.logos?.length || 0);
-          if (data.clients.logos && data.clients.logos.length > 0) {
-            data.clients.logos.forEach((logo, idx) => {
-              console.log(`Logo ${idx}:`, {
-                _key: logo._key,
-                _type: logo._type,
-                hasAsset: !!logo.asset,
-                assetUrl: logo.asset?.url,
-                assetId: logo.asset?._id,
-                alt: logo.alt
-              });
-            });
-          } else {
-            console.log('⚠️ Array de logos está vazio! Verifique se você adicionou logos no Sanity Dashboard.');
-            console.log('💡 No Sanity Dashboard, vá em "Página Home" > "Seção Clientes" > "Logos dos Clientes" e adicione imagens.');
-          }
-        } else {
-          console.log('⚠️ clients.logos não existe ou está vazio');
-          console.log('Estrutura de clients:', Object.keys(data.clients || {}));
-          console.log('💡 Verifique se você adicionou logos no Sanity Dashboard em "Página Home" > "Seção Clientes" > "Logos dos Clientes"');
-        }
-      } else {
-        console.log('⚠️ data.clients não existe');
-      }
-    }
+    // Dados recebidos do Sanity
 
     // Normaliza dados recebidos do Sanity:
     // - Se for array com 1 item, retorna o objeto (muitos componentes esperam um objeto único)
@@ -696,16 +643,16 @@ export const getDocuments = async (type: string, slug?: string) => {
           
           // Debug específico para logos, members e items
           if (k === 'logos' && Array.isArray(normalized)) {
-            console.log(`🔍 Normalizando logos: ${normalized.length} logos encontrados`);
+            // Normalizando logos
           }
           if (k === 'members' && Array.isArray(normalized)) {
-            console.log(`🔍 Normalizando members: ${normalized.length} membros encontrados`);
+            // Normalizando members
           }
           if (k === 'items' && Array.isArray(normalized)) {
-            console.log(`🔍 Normalizando items: ${normalized.length} itens encontrados`);
+            // Normalizando items
           }
           if (k === 'values' && Array.isArray(out[k])) {
-            console.log(`🔍 Normalizando values: ${out[k].length} valores encontrados`);
+            // Normalizando values
           }
         }
         return out;
@@ -716,67 +663,24 @@ export const getDocuments = async (type: string, slug?: string) => {
     };
 
     if (data && (!Array.isArray(data) || data.length > 0)) {
-      console.log(`✅ Dados encontrados no Sanity para ${type}!`);
       let normalized = normalizeFetched(data);
-
-      // Log após normalização para verificar se dados foram preservados
-      if (type === 'homepage' && normalized) {
-        const finalData = Array.isArray(normalized) && normalized.length === 1 ? normalized[0] : normalized;
-        if (finalData?.clients?.logos) {
-          console.log('✅ Logos preservados após normalização:', finalData.clients.logos.length, 'logos');
-        } else {
-          console.log('⚠️ Logos NÃO foram preservados após normalização!');
-          console.log('Estrutura de clients após normalização:', finalData?.clients);
-        }
-        if (finalData?.team?.members) {
-          console.log('✅ Team members preservados após normalização:', finalData.team.members.length, 'membros');
-        } else {
-          console.log('⚠️ Team members NÃO foram preservados após normalização!');
-          console.log('Estrutura de team após normalização:', finalData?.team);
-        }
-        if (finalData?.testimonials?.items) {
-          console.log('✅ Testimonials preservados após normalização:', finalData.testimonials.items.length, 'depoimentos');
-        } else {
-          console.log('⚠️ Testimonials NÃO foram preservados após normalização!');
-          console.log('Estrutura de testimonials após normalização:', finalData?.testimonials);
-        }
-      }
 
       // Se a query retornou um único documento (array com 1 item) e não foi por slug,
       // retorna apenas o objeto (pois é uma query de lista que retornou 1 resultado)
       // MAS preserva a estrutura interna de arrays
       if (Array.isArray(normalized) && normalized.length === 1 && !slug) {
-        console.log(`✅ Usando dados do Sanity para ${type} (array com 1 item, convertendo para objeto)`);
         const singleItem = normalized[0];
         return singleItem;
       }
 
-      console.log(`✅ Usando dados do Sanity para ${type}`);
       return normalized;
     }
     
     // Se não há dados no Sanity, retorna null
-    console.warn(`⚠️ Nenhum dado encontrado no Sanity para ${type}`);
     return null;
     
   } catch (error: any) {
-    // Verifica se é erro de CORS ou rede
-    const isNetworkError = error?.message?.includes('CORS') || 
-                          error?.message?.includes('ERR_FAILED') ||
-                          error?.message?.includes('NetworkError') ||
-                          error?.message?.includes('Failed to fetch');
-    
-    if (isNetworkError) {
-      console.error(`❌ Erro de CORS/Rede ao buscar dados do Sanity para ${type}:`, error.message);
-      console.error(`💡 SOLUÇÃO: Configure CORS no painel do Sanity em:`);
-      console.error(`   https://www.sanity.io/manage/personal/project/kyx4ncqy/settings/api`);
-      console.error(`   Adicione: https://www.24h.tur.br e https://24h.tur.br`);
-    } else {
-      console.error(`❌ Erro ao buscar dados do Sanity para ${type}:`, error);
-    }
-    
-    // Em caso de erro, NÃO usa dados estáticos automaticamente
-    // Deixa o componente decidir ou lança o erro
+    // Em caso de erro, lança o erro para o componente tratar
     throw error;
   }
 };
