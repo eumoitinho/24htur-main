@@ -1,7 +1,9 @@
 'use client'
 import React from 'react';
+import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { useEventosInfoPage } from '../../utils/hooks/useSanityData';
+import { resolveImage } from '../../utils/lib/sanity';
 
 const HeroEventosInfo = () => {
   const { data: eventosInfoData, loading, error } = useEventosInfoPage();
@@ -11,7 +13,16 @@ const HeroEventosInfo = () => {
 
   return (
     <section className="relative min-h-screen pt-20 pb-16 overflow-hidden flex flex-col justify-center">
-      <div className="absolute inset-0 bg-gradient-to-br from-brand-dark via-brand-dark/95 to-brand-gold/20" />
+      <div className="absolute inset-0 z-0">
+        <Image
+          src={resolveImage(eventosInfoData?.hero?.backgroundImage, '/hero-eventos-info.jpg')}
+          alt={eventosInfoData?.hero?.title || 'Hero background'}
+          fill
+          className="object-cover"
+          sizes="100vw"
+        />
+        <div className="absolute inset-0 bg-gradient-to-br from-brand-dark/90 via-brand-dark/80 to-brand-gold/20" />
+      </div>
 
       <div className="relative z-10 container mx-auto px-4">
         <div className="max-w-4xl mx-auto text-center">

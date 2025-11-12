@@ -31,6 +31,14 @@ export default defineType({
           type: 'string',
           initialValue: 'FALE AGORA COM UM ESPECIALISTA!',
           validation: Rule => Rule.required()
+        }),
+        defineField({
+          name: 'backgroundImage',
+          title: 'Imagem de Fundo',
+          type: 'image',
+          options: {
+            hotspot: true
+          }
         })
       ]
     }),

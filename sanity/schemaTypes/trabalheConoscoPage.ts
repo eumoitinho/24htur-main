@@ -38,6 +38,14 @@ export default defineType({
           type: 'string',
           initialValue: 'FALE COM UM ESPECIALISTA!',
           validation: Rule => Rule.required()
+        }),
+        defineField({
+          name: 'backgroundImage',
+          title: 'Imagem de Fundo',
+          type: 'image',
+          options: {
+            hotspot: true
+          }
         })
       ]
     }),
@@ -618,6 +626,74 @@ export default defineType({
           type: 'string',
           initialValue: 'Enviar mensagem',
           validation: Rule => Rule.required()
+        })
+      ]
+    }),
+
+    // Open Positions Section
+    defineField({
+      name: 'positions',
+      title: 'Seção Vagas Disponíveis',
+      type: 'object',
+      fields: [
+        defineField({
+          name: 'title',
+          title: 'Título da Seção',
+          type: 'string',
+          initialValue: 'Vagas Disponíveis',
+          validation: Rule => Rule.required()
+        }),
+        defineField({
+          name: 'lead',
+          title: 'Texto de Introdução',
+          type: 'string',
+          initialValue: 'Confira as oportunidades abertas e candidate-se à vaga que mais combina com seu perfil',
+          validation: Rule => Rule.required()
+        }),
+        defineField({
+          name: 'items',
+          title: 'Vagas',
+          type: 'array',
+          of: [
+            {
+              type: 'object',
+              fields: [
+                defineField({
+                  name: 'title',
+                  title: 'Título da Vaga',
+                  type: 'string',
+                  validation: Rule => Rule.required()
+                }),
+                defineField({
+                  name: 'location',
+                  title: 'Localização',
+                  type: 'string',
+                  validation: Rule => Rule.required()
+                }),
+                defineField({
+                  name: 'type',
+                  title: 'Tipo de Contrato',
+                  type: 'string',
+                  initialValue: 'Tempo Integral',
+                  validation: Rule => Rule.required()
+                }),
+                defineField({
+                  name: 'department',
+                  title: 'Departamento',
+                  type: 'string',
+                  validation: Rule => Rule.required()
+                }),
+                defineField({
+                  name: 'requirements',
+                  title: 'Requisitos',
+                  type: 'array',
+                  of: [{ type: 'string' }],
+                  validation: Rule => Rule.required().min(1)
+                })
+              ]
+            }
+          ],
+          description: 'Deixe vazio para não exibir nenhuma vaga (mostrará mensagem de "Nenhuma vaga disponível")'
         })
       ]
     }),
