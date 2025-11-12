@@ -471,6 +471,7 @@ export interface EventosInfoPage {
 
   // Hero Section
   hero: {
+    backgroundImage?: SanityImage;
     title: string;
     subtitle: string;
     ctaText: string;
@@ -549,6 +550,7 @@ export interface TrabalheConoscoPage {
 
   // Hero Section
   hero: {
+    backgroundImage?: SanityImage;
     title: string;
     subtitle: string;
     ctaText: string;
@@ -564,11 +566,15 @@ export interface TrabalheConoscoPage {
   // Positions Section
   positions: {
     title: string;
-    location: string;
-    type: string;
-    department: string;
-    requirements: string[];
-  }[];
+    lead: string;
+    items: {
+      title: string;
+      location: string;
+      type: string;
+      department: string;
+      requirements: string[];
+    }[];
+  };
 }
 
 export interface CBEnfPage {

@@ -3,62 +3,20 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { MapPin, Clock, Users, Briefcase } from 'lucide-react';
 import { useTrabalheConoscoPage } from '../../utils/hooks/useSanityData';
-import { portableTextToPlain } from '../../utils/lib/sanity';
 
 const OpenPositionsTrabalheConosco = () => {
   const { data: trabalheConoscoData, loading, error } = useTrabalheConoscoPage();
 
-  const defaultPositions = [
-    {
-      title: "Consultor de Viagens Sênior",
-      location: "Porto Alegre, RS",
-      type: "Tempo Integral",
-      department: "Comercial",
-      requirements: [
-        "Experiência mínima de 3 anos em turismo",
-        "Conhecimento em sistemas de reservas",
-        "Inglês intermediário",
-        "Paixão por viagens e atendimento ao cliente"
-      ]
-    },
-    {
-      title: "Analista de Eventos",
-      location: "São Paulo, SP",
-      type: "Tempo Integral",
-      department: "Eventos",
-      requirements: [
-        "Formação em Turismo, Eventos ou áreas afins",
-        "Experiência em organização de eventos corporativos",
-        "Conhecimento em logística de viagens",
-        "Boa comunicação e organização"
-      ]
-    },
-    {
-      title: "Assistente Comercial",
-      location: "Florianópolis, SC",
-      type: "Tempo Integral",
-      department: "Comercial",
-      requirements: [
-        "Ensino superior completo ou cursando",
-        "Experiência em atendimento ao cliente",
-        "Conhecimento básico de pacote Office",
-        "Proatividade e dinamismo"
-      ]
-    }
-  ];
-
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error loading content</div>;
 
-  // Garante que sempre seja um array
-  const positions = Array.isArray(trabalheConoscoData?.positions)
-    ? trabalheConoscoData.positions
-    : (trabalheConoscoData?.positions?.items && Array.isArray(trabalheConoscoData.positions.items))
-      ? trabalheConoscoData.positions.items
-      : defaultPositions;
+  // Busca as vagas do Sanity
+  const positions = trabalheConoscoData?.positions?.items && Array.isArray(trabalheConoscoData.positions.items)
+    ? trabalheConoscoData.positions.items
+    : [];
 
-  const titleText = portableTextToPlain(trabalheConoscoData?.positionsTitle) || 'Vagas Disponíveis';
-  const leadText = portableTextToPlain(trabalheConoscoData?.positionsLead) || 'Confira as oportunidades abertas e candidate-se à vaga que mais combina com seu perfil';
+  const titleText = trabalheConoscoData?.positions?.title || 'Vagas Disponíveis';
+  const leadText = trabalheConoscoData?.positions?.lead || 'Confira as oportunidades abertas e candidate-se à vaga que mais combina com seu perfil';
 
   return (
     <section id="vagas" className="py-20 bg-brand-beige">
@@ -91,21 +49,21 @@ const OpenPositionsTrabalheConosco = () => {
             >
               <div className="mb-6">
                 <h3 className="text-2xl font-bold text-brand-dark mb-3">
-                  {portableTextToPlain(position.title) || position.title}
+                  {position.title}
                 </h3>
 
                 <div className="flex flex-wrap gap-4 text-sm text-gray-600 mb-4">
                   <div className="flex items-center space-x-2">
                     <MapPin className="w-4 h-4 text-brand-gold" />
-                    <span>{portableTextToPlain(position.location) || position.location}</span>
+                    <span>{position.location}</span>
                   </div>
                   <div className="flex items-center space-x-2">
                     <Clock className="w-4 h-4 text-brand-gold" />
-                    <span>{portableTextToPlain(position.type) || position.type}</span>
+                    <span>{position.type}</span>
                   </div>
                   <div className="flex items-center space-x-2">
                     <Briefcase className="w-4 h-4 text-brand-gold" />
-                    <span>{portableTextToPlain(position.department) || position.department}</span>
+                    <span>{position.department}</span>
                   </div>
                 </div>
               </div>
@@ -116,7 +74,7 @@ const OpenPositionsTrabalheConosco = () => {
                   {position.requirements.map((req, reqIndex) => (
                     <li key={reqIndex} className="flex items-start text-sm text-gray-600">
                       <div className="w-2 h-2 bg-brand-gold rounded-full mr-3 mt-2 flex-shrink-0" />
-                      {portableTextToPlain(req) || req}
+                      {req}
                     </li>
                   ))}
                 </ul>

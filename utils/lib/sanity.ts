@@ -45,7 +45,24 @@ export const resolveImage = (value: any, fallback?: string): string | undefined 
     }
   }
   
-  // Se é um objeto de imagem do Sanity
+  // Se tem asset._id (pode ser usado como _ref)
+  if (value?.asset?._id) {
+    try {
+      const imageObj = {
+        _type: 'image',
+        asset: {
+          _ref: value.asset._id,
+          _type: 'reference'
+        }
+      };
+      return urlFor(imageObj).url();
+    } catch (e) {
+      console.warn('Erro ao gerar URL da imagem Sanity:', e);
+      return fallback;
+    }
+  }
+  
+  // Se é um objeto de imagem do Sanity (com _type='image')
   if (typeof value === 'object' && value._type === 'image') {
     try {
       return urlFor(value).url();
@@ -55,15 +72,19 @@ export const resolveImage = (value: any, fallback?: string): string | undefined 
     }
   }
   
-  // Se tem asset._id
-  if (value?.asset?._id) {
+  // Se é um objeto com asset mas sem _type explícito (quando expandido pela query)
+  if (typeof value === 'object' && value?.asset) {
     try {
+      // Tenta construir o objeto de imagem
       const imageObj = {
         _type: 'image',
-        asset: {
+        asset: value.asset._ref ? {
+          _ref: value.asset._ref,
+          _type: 'reference'
+        } : value.asset._id ? {
           _ref: value.asset._id,
           _type: 'reference'
-        }
+        } : value.asset
       };
       return urlFor(imageObj).url();
     } catch (e) {
@@ -332,7 +353,16 @@ export const getDocuments = async (type: string, slug?: string) => {
         hero{
           title,
           subtitle,
-          ctaText
+          ctaText,
+          backgroundImage{
+            asset->{
+              _id,
+              _type,
+              url,
+              originalFilename,
+              mimeType
+            }
+          }
         },
         metrics[]{
           _key,
@@ -771,6 +801,15 @@ export const getDocuments = async (type: string, slug?: string) => {
             alt: value.alt
           };
         }
+        // Para backgroundImage, preserva a estrutura completa (não converte para URL)
+        // O componente vai usar resolveImage que pode lidar com asset.url ou asset._ref
+        if (key === 'backgroundImage') {
+          return {
+            _type: 'image',
+            asset: value.asset, // Preserva asset completo incluindo url se expandido
+            alt: value.alt
+          };
+        }
         // Para outras imagens, converte para URL
         try {
           return urlFor(value).url();
@@ -781,14 +820,16 @@ export const getDocuments = async (type: string, slug?: string) => {
       
       // Se for um objeto que parece ser uma imagem mas não tem _type='image'
       // (pode acontecer quando a query expande o asset)
-      if (typeof value === 'object' && value.asset && (key === 'logos' || (key && key.includes('logo')))) {
-        // Preserva a estrutura mesmo sem _type='image' explícito
-        return {
-          _type: value._type || 'image',
-          _key: value._key,
-          asset: value.asset, // Preserva asset completo incluindo url se expandido
-          alt: value.alt
-        };
+      if (typeof value === 'object' && value.asset) {
+        // Para logos ou backgroundImage, preserva a estrutura
+        if (key === 'logos' || (key && key.includes('logo')) || key === 'backgroundImage') {
+          return {
+            _type: value._type || 'image',
+            _key: value._key,
+            asset: value.asset, // Preserva asset completo incluindo url se expandido
+            alt: value.alt
+          };
+        }
       }
 
       // Se for objeto, percorre chaves recursivamente

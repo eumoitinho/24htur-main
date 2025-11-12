@@ -24,7 +24,7 @@ const HeroHome = () => {
         <div className="relative overflow-hidden rounded-[40px] sm:rounded-[44px] lg:rounded-[50px] px-6 sm:px-10 md:px-12 lg:px-16 py-12 sm:py-16 md:py-20 lg:py-24 bg-brand-dark bg-center bg-cover bg-no-repeat">
           <div className="absolute inset-0 z-0">
             <Image
-              src={resolveImage(homepageData?.hero?.backgroundImage, '/hero-home.jpg')}
+              src={resolveImage(homepageData?.hero?.backgroundImage, '/hero-home-fallback.jpg')}
               alt={homepageData?.hero?.title || 'Hero background'}
               fill
               className="object-cover"
@@ -62,41 +62,101 @@ const HeroHome = () => {
             >
               {(() => {
                 const title = homepageData?.hero?.title;
-                if (!title) return heroData.title;
+                if (!title) {
+                  // Fallback com quebra de linha
+                  return (
+                    <>
+                      Gestão completa de viagens<br className="hidden md:block" />
+                      <span className="text-brand-gold">de negócios e lazer</span>
+                    </>
+                  );
+                }
                 
-                // Se é array de blocos (portable text), processa corretamente preservando espaços
+                // Se é array de blocos (portable text), processa cada bloco como uma linha
                 if (Array.isArray(title)) {
-                  const processed = title.map((block) => {
+                  return title.map((block, index) => {
+                    let text = '';
+                    
                     // Se é um bloco com children
                     if (block && block.children && Array.isArray(block.children)) {
-                      return block.children.map((child) => {
+                      text = block.children.map((child) => {
                         if (child && child.text) {
                           return child.text;
                         }
                         return '';
-                      }).join(''); // Preserva espaços que já vêm no texto do Sanity
+                      }).join('');
                     }
                     // Se é um objeto com text direto
-                    if (block && block.text) {
-                      return block.text;
+                    else if (block && block.text) {
+                      text = block.text;
                     }
                     // Se é string direto no array
-                    if (typeof block === 'string') {
-                      return block;
+                    else if (typeof block === 'string') {
+                      text = block;
                     }
-                    return '';
-                  }).filter(Boolean).join(' ').trim(); // Adiciona espaço entre blocos
-                  
-                  if (processed) return processed;
+                    
+                    if (!text) return null;
+                    
+                    // Se é o último bloco e contém "viagens corporativas", destaca
+                    const isLast = index === title.length - 1;
+                    const hasCorporate = text.toLowerCase().includes('corporativas') || text.toLowerCase().includes('negócios');
+                    
+                    return (
+                      <React.Fragment key={index}>
+                        {index > 0 && <br className="hidden md:block" />}
+                        {isLast && hasCorporate ? (
+                          <span className="text-brand-gold">{text}</span>
+                        ) : (
+                          text
+                        )}
+                      </React.Fragment>
+                    );
+                  }).filter(Boolean);
                 }
                 
-                // Se é string, usa diretamente
+                // Se é string, verifica se precisa quebrar
                 if (typeof title === 'string') {
+                  // Se contém "Gestão completa de viagens de negócios e lazer", separa
+                  if (title.includes('Gestão completa de viagens')) {
+                    // Separa em "Gestão completa de viagens" e "de negócios e lazer"
+                    if (title.includes('de negócios e lazer')) {
+                      const [first] = title.split('de negócios e lazer');
+                      return (
+                        <>
+                          {first.trim()}
+                          <br className="hidden md:block" />
+                          <span className="text-brand-gold">de negócios e lazer</span>
+                        </>
+                      );
+                    }
+                    // Se contém "viagens corporativas" no final, separa também
+                    if (title.includes('viagens corporativas')) {
+                      const parts = title.split('viagens corporativas');
+                      return (
+                        <>
+                          {parts[0].trim()}
+                          <br className="hidden md:block" />
+                          <span className="text-brand-gold">viagens corporativas</span>
+                        </>
+                      );
+                    }
+                  }
                   return title;
                 }
                 
                 // Fallback: usa portableTextToPlain
                 const plainTitle = portableTextToPlain(title);
+                if (plainTitle && plainTitle.includes('negócios e lazer')) {
+                  const [first, ...rest] = plainTitle.split('de negócios e lazer');
+                  return (
+                    <>
+                      {first.trim()}
+                      <br className="hidden md:block" />
+                      <span className="text-brand-gold">de negócios e lazer</span>
+                      {rest.join('de negócios e lazer')}
+                    </>
+                  );
+                }
                 return plainTitle || heroData.title;
               })()}
             </motion.h1>
