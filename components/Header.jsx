@@ -4,11 +4,47 @@ import React, { useState, useEffect } from 'react';
 import { Menu, ArrowRight, Phone, ChevronDown } from 'lucide-react';
 import { motion } from 'framer-motion';
 import Logo from './Logo';
+import { getSiteSettings } from '../utils/lib/sanity';
 
 const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [servicesDropdownOpen, setServicesDropdownOpen] = useState(false);
   const [dropdownTimeout, setDropdownTimeout] = useState(null);
+  const [siteSettings, setSiteSettings] = useState(null);
+
+  // Fallback data caso o Sanity não esteja disponível
+  const fallbackMenuItems = [
+    { href: '/', label: 'Início' },
+    {
+      href: '#',
+      label: 'Serviços',
+      hasDropdown: true,
+      dropdownItems: [
+        { href: '/lazer', label: 'Viagens de Lazer' },
+        { href: '/eventos', label: 'Eventos Corporativos' },
+        { href: '/corporate', label: 'Viagens Corporativas' }
+      ]
+    },
+    { href: '/sobre', label: 'Sobre' },
+    { href: '/equipe', label: 'Equipe' },
+    { href: '/opcoes-viagem', label: 'Opções de Viagem' },
+    { href: '/trabalhe-conosco', label: 'Trabalhe Conosco' },
+  ];
+
+  const fallbackPhone = '(51) 3516-0098';
+
+  useEffect(() => {
+    const loadSettings = async () => {
+      try {
+        const settings = await getSiteSettings();
+        setSiteSettings(settings);
+      } catch (error) {
+        console.warn('Usando dados fallback para o Header:', error);
+      }
+    };
+
+    loadSettings();
+  }, []);
 
   const handleMouseEnter = () => {
     if (dropdownTimeout) {
@@ -33,23 +69,9 @@ const Header = () => {
     };
   }, [dropdownTimeout]);
 
-  const menuItems = [
-    { href: '/', label: 'Início' },
-    {
-      href: '#',
-      label: 'Serviços',
-      hasDropdown: true,
-      dropdownItems: [
-        { href: '/lazer', label: 'Viagens de Lazer' },
-        { href: '/eventos', label: 'Eventos Corporativos' },
-        { href: '/corporate', label: 'Viagens Corporativas' }
-      ]
-    },
-    { href: '/sobre', label: 'Sobre' },
-    { href: '/equipe', label: 'Equipe' },
-    { href: '/opcoes-viagem', label: 'Opções de Viagem' },
-    { href: '/trabalhe-conosco', label: 'Trabalhe Conosco' },
-  ];
+  // Usa dados do Sanity ou fallback
+  const menuItems = siteSettings?.headerNavigation?.menuItems || fallbackMenuItems;
+  const phoneNumber = siteSettings?.headerNavigation?.phoneNumber || fallbackPhone;
 
   return (
     <motion.header
@@ -124,7 +146,7 @@ const Header = () => {
           {/* CTA Button */}
           <div className="hidden sm:flex">
             <motion.a
-              href="tel:(51) 3516-0098"
+              href={`tel:${phoneNumber}`}
               className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-white transition-all hover:opacity-95 bg-brand-gold shadow-md hover:shadow-lg"
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -133,7 +155,7 @@ const Header = () => {
               whileTap={{ scale: 0.95 }}
             >
               <Phone className="h-4 w-4" strokeWidth={1.5} />
-              <span className="text-sm font-semibold">(51) 3516-0098</span>
+              <span className="text-sm font-semibold">{phoneNumber}</span>
             </motion.a>
           </div>
 
@@ -180,13 +202,13 @@ const Header = () => {
                 </div>
               ))}
               <a
-                href="tel:(51) 3516-0098"
+                href={`tel:${phoneNumber}`}
                 className="block px-3 py-2 rounded-md text-base font-medium text-white bg-brand-gold hover:opacity-95"
                 onClick={() => setMobileMenuOpen(false)}
               >
                 <div className="flex items-center space-x-2">
                   <Phone className="h-4 w-4" />
-                  <span>(51) 3516-0098</span>
+                  <span>{phoneNumber}</span>
                 </div>
               </a>
             </div>

@@ -7,7 +7,8 @@ import opcoesViagemPage from './opcoesViagemPage'
 import trabalheConoscoPage from './trabalheConoscoPage'
 import lazerPage from './lazerPage'
 import cbenfPage from './cbenfPage'
+import siteSettings from './siteSettings'
 
 export const schema: { types: SchemaTypeDefinition[] } = {
-  types: [homePage, sobrePage, equipePage, eventosPage, opcoesViagemPage, trabalheConoscoPage, lazerPage, cbenfPage],
+  types: [siteSettings, homePage, sobrePage, equipePage, eventosPage, opcoesViagemPage, trabalheConoscoPage, lazerPage, cbenfPage],
 }

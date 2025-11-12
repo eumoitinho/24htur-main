@@ -1,13 +1,16 @@
 'use client'
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Instagram, Facebook, Linkedin } from 'lucide-react';
 import Logo from './Logo';
+import { getSiteSettings } from '../utils/lib/sanity';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
-  
-  const menuItems = [
+  const [siteSettings, setSiteSettings] = useState(null);
+
+  // Fallback data caso o Sanity não esteja disponível
+  const fallbackMenuItems = [
     { href: '#inicio', label: 'Início' },
     { href: '#servicos', label: 'Serviços' },
     { href: '#self-booking', label: 'Self Booking' },
@@ -16,23 +19,57 @@ const Footer = () => {
     { href: '#contato', label: 'Contato' },
   ];
 
-  const socialLinks = [
-    { 
-      href: 'https://www.instagram.com/24hescritoriodeviagens', 
-      icon: Instagram, 
-      label: 'Instagram' 
+  const fallbackSocialLinks = [
+    {
+      platform: 'instagram',
+      url: 'https://www.instagram.com/24hescritoriodeviagens',
+      label: 'Instagram'
     },
-    { 
-      href: 'http://www.facebook.com/24HEscritoriodeViagens', 
-      icon: Facebook, 
-      label: 'Facebook' 
+    {
+      platform: 'facebook',
+      url: 'http://www.facebook.com/24HEscritoriodeViagens',
+      label: 'Facebook'
     },
-    { 
-      href: 'https://www.linkedin.com/company/24hescritoriodeviagens', 
-      icon: Linkedin, 
-      label: 'LinkedIn' 
+    {
+      platform: 'linkedin',
+      url: 'https://www.linkedin.com/company/24hescritoriodeviagens',
+      label: 'LinkedIn'
     }
   ];
+
+  const fallbackCopyrightText = '24H Escritório de Viagens. Todos os direitos reservados.';
+  const fallbackPrivacyLink = { label: 'Privacidade', href: '#contato' };
+  const fallbackTermsLink = { label: 'Termos', href: '#contato' };
+
+  useEffect(() => {
+    const loadSettings = async () => {
+      try {
+        const settings = await getSiteSettings();
+        setSiteSettings(settings);
+      } catch (error) {
+        console.warn('Usando dados fallback para o Footer:', error);
+      }
+    };
+
+    loadSettings();
+  }, []);
+
+  // Usa dados do Sanity ou fallback
+  const menuItems = siteSettings?.footerNavigation?.menuItems || fallbackMenuItems;
+  const socialLinks = siteSettings?.footerNavigation?.socialLinks || fallbackSocialLinks;
+  const copyrightText = siteSettings?.footerNavigation?.copyrightText || fallbackCopyrightText;
+  const privacyLink = siteSettings?.footerNavigation?.privacyLink || fallbackPrivacyLink;
+  const termsLink = siteSettings?.footerNavigation?.termsLink || fallbackTermsLink;
+
+  // Função para mapear platform para ícone
+  const getIconForPlatform = (platform) => {
+    const icons = {
+      instagram: Instagram,
+      facebook: Facebook,
+      linkedin: Linkedin,
+    };
+    return icons[platform] || Instagram;
+  };
 
   return (
     <footer className="border-t border-slate-200/70">
@@ -57,7 +94,7 @@ const Footer = () => {
           {/* Social Links */}
           <div className="flex items-center gap-3">
             {socialLinks.map((social) => {
-              const Icon = social.icon;
+              const Icon = getIconForPlatform(social.platform);
               return (
                 <div
                   key={social.label}
@@ -71,15 +108,15 @@ const Footer = () => {
             })}
           </div>
         </div>
-        
+
         <div className="mt-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <p className="text-sm text-slate-500">
-            © {currentYear} 24H Escritório de Viagens. Todos os direitos reservados.
+            © {currentYear} {copyrightText}
           </p>
           <div className="flex items-center gap-3 text-sm text-slate-500">
-            <a href="#contato" className="hover:text-slate-700">Privacidade</a>
+            <a href={privacyLink.href} className="hover:text-slate-700">{privacyLink.label}</a>
             <span aria-hidden="true">•</span>
-            <a href="#contato" className="hover:text-slate-700">Termos</a>
+            <a href={termsLink.href} className="hover:text-slate-700">{termsLink.label}</a>
           </div>
         </div>
       </div>

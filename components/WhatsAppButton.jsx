@@ -1,18 +1,41 @@
 'use client'
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { trackWhatsappClick } from '../utils/gtm';
 import { trackWhatsappClickExtended, registerInteraction } from '../utils/tracking/engagement';
+import { getSiteSettings } from '../utils/lib/sanity';
 
 const WhatsAppButton = () => {
-  const whatsappNumber = '5551999555555'; // Número real da 24H
-  const defaultMessage = 'Olá! Gostaria de solicitar uma proposta para viagens corporativas da 24H Escritório de Viagens.';
-  
+  const [siteSettings, setSiteSettings] = useState(null);
+
+  // Fallback data caso o Sanity não esteja disponível
+  const fallbackWhatsappNumber = '5551999555555';
+  const fallbackDefaultMessage = 'Olá! Gostaria de solicitar uma proposta para viagens corporativas da 24H Escritório de Viagens.';
+  const fallbackButtonTitle = 'Fale conosco no WhatsApp';
+
+  useEffect(() => {
+    const loadSettings = async () => {
+      try {
+        const settings = await getSiteSettings();
+        setSiteSettings(settings);
+      } catch (error) {
+        console.warn('Usando dados fallback para o WhatsAppButton:', error);
+      }
+    };
+
+    loadSettings();
+  }, []);
+
+  // Usa dados do Sanity ou fallback
+  const whatsappNumber = siteSettings?.whatsapp?.phoneNumber || fallbackWhatsappNumber;
+  const defaultMessage = siteSettings?.whatsapp?.defaultMessage || fallbackDefaultMessage;
+  const buttonTitle = siteSettings?.whatsapp?.buttonTitle || fallbackButtonTitle;
+
   const handleWhatsAppClick = () => {
     const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(defaultMessage)}`;
     window.open(whatsappUrl, '_blank');
-    
+
   // Tracking base
   trackWhatsappClick(whatsappNumber, { event_category: 'contact', event_label: 'whatsapp_button', source: 'floating_button' });
   // Tracking avançado (repeat / intent depth)
@@ -24,7 +47,7 @@ const WhatsAppButton = () => {
     <motion.div
       onClick={handleWhatsAppClick}
       className="fixed bottom-5 right-5 w-[60px] h-[60px] bg-[#25d366] rounded-full shadow-lg cursor-pointer z-50 flex items-center justify-center"
-      title="Fale conosco no WhatsApp"
+      title={buttonTitle}
       initial={{ scale: 0, opacity: 0 }}
       animate={{ 
         scale: 1, 

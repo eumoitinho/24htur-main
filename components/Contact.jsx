@@ -4,8 +4,10 @@ import React, { useState, useEffect } from 'react';
 import { Mail, Phone, MapPin, Building2, User, AtSign, Send, CheckCircle2, RotateCw } from 'lucide-react';
 import { trackFormSubmit, trackPhoneClick, trackEmailClick } from '../utils/gtm';
 import { initFormTracking, registerInteraction } from '../utils/tracking/engagement';
+import { getSiteSettings } from '../utils/lib/sanity';
 
 const Contact = () => {
+  const [siteSettings, setSiteSettings] = useState(null);
   const [formData, setFormData] = useState({
     empresa: '',
     nome: '',
@@ -25,6 +27,20 @@ const Contact = () => {
     empresa: '',
     telefone: ''
   });
+
+  // Carregar settings do Sanity
+  useEffect(() => {
+    const loadSettings = async () => {
+      try {
+        const settings = await getSiteSettings();
+        setSiteSettings(settings);
+      } catch (error) {
+        console.warn('Usando dados fallback para o Contact:', error);
+      }
+    };
+
+    loadSettings();
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -83,9 +99,10 @@ const Contact = () => {
       source: 'schedule_modal'
     });
     registerInteraction('schedule_lead');
-    
-    // Depois redirecionar para o Calendly
-    window.open('https://calendly.com/liciane-24h', '_blank');
+
+    // Depois redirecionar para o Calendly (usa a constante calendlyUrl definida no escopo)
+    const calendlyUrlFromSettings = siteSettings?.contactForm?.calendlyUrl || 'https://calendly.com/liciane-24h';
+    window.open(calendlyUrlFromSettings, '_blank');
     setShowScheduleModal(false);
     setScheduleData({ nome: '', email: '', empresa: '', telefone: '' });
   };
@@ -94,7 +111,8 @@ const Contact = () => {
     initFormTracking('#form-contato-principal');
   }, []);
 
-  const interessesOptions = [
+  // Fallback data
+  const fallbackInteressesOptions = [
     { value: 'aereo', label: 'Passagens aéreas' },
     { value: 'hospedagem', label: 'Hospedagem' },
     { value: 'transporte', label: 'Transporte terrestre' },
@@ -102,6 +120,40 @@ const Contact = () => {
     { value: 'incentivo', label: 'Viagens de incentivo' },
     { value: 'outros', label: 'Outros' }
   ];
+
+  // Dados do formulário do Sanity ou fallback
+  const formConfig = siteSettings?.contactForm || {};
+  const contactInfo = siteSettings?.contactInfo || {};
+
+  const formTitle = formConfig.title || 'Consultoria e Gestão de Viagens Corporativas';
+  const formSubtitle = formConfig.subtitle || 'Otimize processos, reduza custos e garanta a melhor experiência para colaboradores. Fale com nossos especialistas e receba uma proposta personalizada.';
+  const interessesOptions = formConfig.interessesOptions || fallbackInteressesOptions;
+  const assuntoOptions = formConfig.assuntoOptions || ['Proposta corporativa', 'Suporte operacional', 'Parcerias', 'Outros'];
+  const lgpdText = formConfig.lgpdText || 'Concordo em ser contatado e autorizo o uso dos meus dados conforme a LGPD.';
+  const submitButtonText = formConfig.submitButtonText || 'Enviar mensagem';
+  const calendlyUrl = formConfig.calendlyUrl || 'https://calendly.com/liciane-24h';
+
+  const mainPhone = contactInfo.mainPhone || '(51) 3516-0098';
+  const mainEmail = contactInfo.mainEmail || 'contato@24h.tur.br';
+  const offices = contactInfo.offices || [
+    { city: 'Porto Alegre', state: 'RS', address: 'Av. Carlos Gomes 1672' },
+    { city: 'Alphaville', state: 'SP', address: 'Alameda Rio Negro 503' },
+    { city: 'Florianópolis', state: 'SC', address: 'Av. Luiz Boiteaux Piazza 1302' }
+  ];
+
+  // Labels dos campos
+  const labels = formConfig.fields || {};
+  const empresaLabel = labels.empresa?.label || 'Empresa';
+  const empresaPlaceholder = labels.empresa?.placeholder || 'Nome da empresa';
+  const nomeLabel = labels.nome?.label || 'Seu nome';
+  const nomePlaceholder = labels.nome?.placeholder || 'Seu nome completo';
+  const emailLabel = labels.email?.label || 'E-mail';
+  const emailPlaceholder = labels.email?.placeholder || 'seuemail@empresa.com';
+  const telefoneLabel = labels.telefone?.label || 'Telefone';
+  const telefonePlaceholder = labels.telefone?.placeholder || '(00) 00000-0000';
+  const assuntoLabel = labels.assunto?.label || 'Assunto';
+  const mensagemLabel = labels.mensagem?.label || 'Mensagem';
+  const mensagemPlaceholder = labels.mensagem?.placeholder || 'Conte um pouco sobre sua necessidade...';
 
   return (
     <section id="contato" className="relative py-24 sm:py-28 bg-gradient-to-b from-brand-dark via-brand-dark to-black overflow-hidden">
@@ -115,10 +167,15 @@ const Contact = () => {
             <span className="text-xs font-semibold tracking-[0.15em] text-brand-gold uppercase">Contato</span>
           </div>
           <h2 className="mt-6 text-4xl sm:text-5xl font-semibold tracking-tight text-white leading-tight">
-            Consultoria e Gestão de <span className="text-brand-gold">Viagens Corporativas</span>
+            {formTitle.split('Viagens Corporativas').map((part, i, arr) => (
+              <React.Fragment key={i}>
+                {part}
+                {i < arr.length - 1 && <span className="text-brand-gold">Viagens Corporativas</span>}
+              </React.Fragment>
+            ))}
           </h2>
           <p className="mt-4 text-lg text-white/70 leading-relaxed">
-            Otimize processos, reduza custos e garanta a melhor experiência para colaboradores. Fale com nossos especialistas e receba uma proposta personalizada.
+            {formSubtitle}
           </p>
         </div>
 
@@ -151,7 +208,7 @@ const Contact = () => {
                   <div>
                     <div className="text-xs uppercase tracking-wide text-white/50">Telefone</div>
                     <span className="text-[15px] font-semibold text-white/90">
-                      (51) 3516-0098
+                      {mainPhone}
                     </span>
                   </div>
                 </div>
@@ -162,7 +219,7 @@ const Contact = () => {
                   <div>
                     <div className="text-xs uppercase tracking-wide text-white/50">E-mail</div>
                     <span className="text-[15px] font-semibold text-white/90">
-                      contato@24h.tur.br
+                      {mainEmail}
                     </span>
                   </div>
                 </div>
@@ -171,9 +228,9 @@ const Contact = () => {
               <div className="mt-10">
                 <div className="text-xs uppercase tracking-wide text-white/50 mb-2">Escritórios</div>
                 <div className="space-y-2 text-[13px] font-medium text-white/80">
-                  <p>Porto Alegre, RS – Av. Carlos Gomes 1672</p>
-                  <p>Alphaville, SP – Alameda Rio Negro 503</p>
-                  <p>Florianópolis, SC – Av. Luiz Boiteaux Piazza 1302</p>
+                  {offices.map((office, index) => (
+                    <p key={index}>{office.city}, {office.state} – {office.address}</p>
+                  ))}
                 </div>
               </div>
             </div>
@@ -221,7 +278,7 @@ const Contact = () => {
                 <>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                      <label htmlFor="empresa" className="block text-xs font-semibold tracking-wide text-white/60">Empresa</label>
+                      <label htmlFor="empresa" className="block text-xs font-semibold tracking-wide text-white/60">{empresaLabel}</label>
                       <div className="mt-1 relative">
                         <input
                           id="empresa"
@@ -232,13 +289,13 @@ const Contact = () => {
                           onChange={(e) => setFormData({ ...formData, empresa: e.target.value })}
                           disabled={status === 'submitting'}
                           className="w-full h-12 rounded-xl bg-neutral-900 border border-white/10 focus:border-brand-gold focus:ring-brand-gold/30 text-white placeholder:text-white/30 pr-12 pl-3 text-sm"
-                          placeholder="Nome da empresa"
+                          placeholder={empresaPlaceholder}
                         />
                         <Building2 className="absolute right-3 top-1/2 -translate-y-1/2 h-5 w-5 text-white/30" />
                       </div>
                     </div>
                     <div>
-                      <label htmlFor="nome" className="block text-xs font-semibold tracking-wide text-white/60">Seu nome</label>
+                      <label htmlFor="nome" className="block text-xs font-semibold tracking-wide text-white/60">{nomeLabel}</label>
                       <div className="mt-1 relative">
                         <input
                           id="nome"
@@ -249,13 +306,13 @@ const Contact = () => {
                           onChange={(e) => setFormData({ ...formData, nome: e.target.value })}
                           disabled={status === 'submitting'}
                           className="w-full h-12 rounded-xl bg-neutral-900 border border-white/10 focus:border-brand-gold focus:ring-brand-gold/30 text-white placeholder:text-white/30 pr-12 pl-3 text-sm"
-                          placeholder="Seu nome completo"
+                          placeholder={nomePlaceholder}
                         />
                         <User className="absolute right-3 top-1/2 -translate-y-1/2 h-5 w-5 text-white/30" />
                       </div>
                     </div>
                     <div>
-                      <label htmlFor="email" className="block text-xs font-semibold tracking-wide text-white/60">E-mail</label>
+                      <label htmlFor="email" className="block text-xs font-semibold tracking-wide text-white/60">{emailLabel}</label>
                       <div className="mt-1 relative">
                         <input
                           id="email"
@@ -266,13 +323,13 @@ const Contact = () => {
                           onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                           disabled={status === 'submitting'}
                           className="w-full h-12 rounded-xl bg-neutral-900 border border-white/10 focus:border-brand-gold focus:ring-brand-gold/30 text-white placeholder:text-white/30 pr-12 pl-3 text-sm"
-                          placeholder="seuemail@empresa.com"
+                          placeholder={emailPlaceholder}
                         />
                         <AtSign className="absolute right-3 top-1/2 -translate-y-1/2 h-5 w-5 text-white/30" />
                       </div>
                     </div>
                     <div>
-                      <label htmlFor="telefone" className="block text-xs font-semibold tracking-wide text-white/60">Telefone</label>
+                      <label htmlFor="telefone" className="block text-xs font-semibold tracking-wide text-white/60">{telefoneLabel}</label>
                       <div className="mt-1 relative">
                         <input
                           id="telefone"
@@ -282,13 +339,13 @@ const Contact = () => {
                           onChange={(e) => setFormData({ ...formData, telefone: e.target.value })}
                           disabled={status === 'submitting'}
                           className="w-full h-12 rounded-xl bg-neutral-900 border border-white/10 focus:border-brand-gold focus:ring-brand-gold/30 text-white placeholder:text-white/30 pr-12 pl-3 text-sm"
-                          placeholder="(00) 00000-0000"
+                          placeholder={telefonePlaceholder}
                         />
                         <Phone className="absolute right-3 top-1/2 -translate-y-1/2 h-5 w-5 text-white/30" />
                       </div>
                     </div>
                     <div>
-                      <label htmlFor="assunto" className="block text-xs font-semibold tracking-wide text-white/60">Assunto</label>
+                      <label htmlFor="assunto" className="block text-xs font-semibold tracking-wide text-white/60">{assuntoLabel}</label>
                       <div className="mt-1 relative">
                         <select
                           id="assunto"
@@ -298,10 +355,9 @@ const Contact = () => {
                           disabled={status === 'submitting'}
                           className="w-full h-12 rounded-xl bg-neutral-900 border border-white/10 focus:border-brand-gold focus:ring-brand-gold/30 text-white text-sm pl-3 pr-10"
                         >
-                          <option className="bg-neutral-900">Proposta corporativa</option>
-                          <option className="bg-neutral-900">Suporte operacional</option>
-                          <option className="bg-neutral-900">Parcerias</option>
-                          <option className="bg-neutral-900">Outros</option>
+                          {assuntoOptions.map((option, index) => (
+                            <option key={index} className="bg-neutral-900">{option}</option>
+                          ))}
                         </select>
                       </div>
                     </div>
@@ -359,13 +415,13 @@ const Contact = () => {
                                   telefone: formData.telefone
                                 });
                                 registerInteraction('video_call_cta_click');
-                                
+
                                 // Redirecionar para Calendly
-                                window.open('https://calendly.com/liciane-24h', '_blank');
+                                window.open(calendlyUrl, '_blank');
                               } catch (error) {
                                 console.error('Erro ao capturar lead:', error);
                                 // Mesmo com erro, redireciona (para não perder conversão)
-                                window.open('https://calendly.com/liciane-24h', '_blank');
+                                window.open(calendlyUrl, '_blank');
                               }
                             }}
                             className={`inline-flex items-center gap-2 rounded-xl font-semibold text-xs tracking-wide px-4 py-2 shadow-lg transition focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-brand-gold/60 focus-visible:ring-offset-neutral-800 ${
@@ -384,7 +440,7 @@ const Contact = () => {
                   </div>
 
                   <div className="pt-2">
-                    <label htmlFor="mensagem" className="block text-xs font-semibold tracking-wide text-white/60">Mensagem</label>
+                    <label htmlFor="mensagem" className="block text-xs font-semibold tracking-wide text-white/60">{mensagemLabel}</label>
                     <textarea
                       id="mensagem"
                       name="mensagem"
@@ -393,7 +449,7 @@ const Contact = () => {
                       onChange={(e) => setFormData({ ...formData, mensagem: e.target.value })}
                       disabled={status === 'submitting'}
                       className="mt-1 w-full rounded-xl bg-neutral-900 border border-white/10 focus:border-brand-gold focus:ring-brand-gold/30 text-white placeholder:text-white/30 text-sm"
-                      placeholder="Conte um pouco sobre sua necessidade..."
+                      placeholder={mensagemPlaceholder}
                     />
                   </div>
 
@@ -408,7 +464,7 @@ const Contact = () => {
                       className="mt-1 rounded text-brand-gold focus:ring-brand-gold/40 bg-neutral-800 border-white/20"
                     />
                     <label htmlFor="lgpd" className="text-[13px] leading-relaxed text-white/60">
-                      Concordo em ser contatado e autorizo o uso dos meus dados conforme a LGPD.
+                      {lgpdText}
                     </label>
                   </div>
 
@@ -430,7 +486,7 @@ const Contact = () => {
                       ) : (
                         <>
                           <Send className="h-4 w-4" strokeWidth={1.5} />
-                          <span>Enviar mensagem</span>
+                          <span>{submitButtonText}</span>
                         </>
                       )}
                     </button>

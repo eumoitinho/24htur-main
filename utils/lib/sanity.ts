@@ -863,3 +863,116 @@ export const getDocuments = async (type: string, slug?: string) => {
     throw error;
   }
 };
+
+// Função para buscar as configurações globais do site
+export const getSiteSettings = async () => {
+  try {
+    console.log('🔄 Buscando configurações do site do Sanity...');
+
+    const query = `*[_type == "siteSettings"][0]{
+      _id,
+      _type,
+      headerNavigation{
+        phoneNumber,
+        menuItems[]{
+          _key,
+          label,
+          href,
+          hasDropdown,
+          dropdownItems[]{
+            _key,
+            label,
+            href
+          }
+        }
+      },
+      footerNavigation{
+        menuItems[]{
+          _key,
+          label,
+          href
+        },
+        socialLinks[]{
+          _key,
+          platform,
+          url,
+          label
+        },
+        copyrightText,
+        privacyLink{
+          label,
+          href
+        },
+        termsLink{
+          label,
+          href
+        }
+      },
+      whatsapp{
+        phoneNumber,
+        defaultMessage,
+        buttonTitle
+      },
+      contactForm{
+        title,
+        subtitle,
+        calendlyUrl,
+        fields{
+          empresa{label, placeholder},
+          nome{label, placeholder},
+          email{label, placeholder},
+          telefone{label, placeholder},
+          assunto{label, placeholder},
+          pax{label, placeholder},
+          interesses{label},
+          mensagem{label, placeholder}
+        },
+        interessesOptions[]{
+          _key,
+          value,
+          label
+        },
+        assuntoOptions,
+        paxOptions,
+        lgpdText,
+        submitButtonText,
+        successMessage,
+        errorMessage
+      },
+      contactInfo{
+        mainPhone,
+        mainEmail,
+        offices[]{
+          _key,
+          city,
+          state,
+          address,
+          phone,
+          email
+        }
+      },
+      branding{
+        logoAltText,
+        siteName,
+        siteDescription
+      }
+    }`;
+
+    const data = await client.fetch(query, {}, {
+      cache: 'no-store',
+      next: { revalidate: 0 }
+    });
+
+    if (data) {
+      console.log('✅ Configurações do site carregadas com sucesso');
+      return data;
+    }
+
+    console.warn('⚠️ Nenhuma configuração do site encontrada no Sanity');
+    return null;
+
+  } catch (error: any) {
+    console.error('❌ Erro ao buscar configurações do site:', error);
+    throw error;
+  }
+};
