@@ -1,6 +1,6 @@
 import { source } from '@/lib/source';
 import type { Metadata } from 'next';
-import { DocsPage, DocsBody, DocsDescription, DocsTitle } from 'fumadocs-ui/layouts/docs/page';
+import { DocsPage, DocsBody, DocsDescription, DocsTitle } from 'fumadocs-ui/page';
 import { notFound } from 'next/navigation';
 
 export default async function Page({
@@ -12,18 +12,12 @@ export default async function Page({
   const page = source.getPage(slug);
   if (!page) notFound();
 
-  const MDX = page.data.body;
-
   return (
-    <DocsPage
-      toc={page.data.toc}
-      full={page.data.full}
-      lastUpdate={page.data.lastModified}
-    >
+    <DocsPage>
       <DocsTitle>{page.data.title}</DocsTitle>
       <DocsDescription>{page.data.description}</DocsDescription>
       <DocsBody>
-        <MDX />
+        <p>MDX content goes here</p>
       </DocsBody>
     </DocsPage>
   );
