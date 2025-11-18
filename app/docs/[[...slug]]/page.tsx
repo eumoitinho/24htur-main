@@ -1,6 +1,5 @@
 import { source } from '@/lib/source';
 import type { Metadata } from 'next';
-import { DocsPage, DocsBody, DocsDescription, DocsTitle } from 'fumadocs-ui/page';
 import { notFound } from 'next/navigation';
 
 export default async function Page({
@@ -12,14 +11,16 @@ export default async function Page({
   const page = source.getPage(slug);
   if (!page) notFound();
 
+  const Content = page.body;
+
   return (
-    <DocsPage>
-      <DocsTitle>{page.data.title}</DocsTitle>
-      <DocsDescription>{page.data.description}</DocsDescription>
-      <DocsBody>
-        <p>MDX content goes here</p>
-      </DocsBody>
-    </DocsPage>
+    <article className="prose prose-slate max-w-none">
+      <h1 className="text-3xl font-bold mb-2">{page.title}</h1>
+      {page.description && (
+        <p className="text-gray-600 mb-8">{page.description}</p>
+      )}
+      <Content />
+    </article>
   );
 }
 
@@ -37,7 +38,7 @@ export async function generateMetadata({
   if (!page) notFound();
 
   return {
-    title: page.data.title,
-    description: page.data.description,
+    title: page.title || 'Documentação',
+    description: page.description || '',
   };
 }

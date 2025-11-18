@@ -1,13 +1,23 @@
 import { docs, meta } from '@/.source';
-import { loader } from 'fumadocs-core/source';
-import { icons } from 'lucide-react';
-import { createElement } from 'react';
 
-export const source = loader({
-  baseUrl: '/docs',
-  icon(icon) {
-    if (icon && icon in icons)
-      return createElement(icons[icon as keyof typeof icons]);
+export const source = {
+  getPage(slugs?: string[]) {
+    // If no slug or empty array, we're looking for the index page
+    if (!slugs || slugs.length === 0) {
+      return docs.find((doc) => doc.info.path === 'index.mdx');
+    }
+
+    // Join the slugs and add .mdx extension to match fumadocs paths
+    const targetPath = `${slugs.join('/')}.mdx`;
+    return docs.find((doc) => doc.info.path === targetPath);
   },
-  source: { docs, meta },
-});
+  generateParams() {
+    return docs.map((doc) => {
+      const path = doc.info.path.replace('.mdx', '');
+      return {
+        slug: path === 'index' ? [] : path.split('/'),
+      };
+    });
+  },
+  pageTree: meta,
+};
