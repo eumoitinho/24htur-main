@@ -13,8 +13,8 @@ export default function Layout({ children }: { children: ReactNode }) {
               <span className="text-sm text-gray-600">Documentação</span>
             </div>
             <div className="flex gap-4">
-              <a href="/studio" className="text-sm hover:underline">📝 Sanity Studio</a>
-              <a href="/" className="text-sm hover:underline">🏠 Voltar ao Site</a>
+              <a href="/studio" className="text-sm hover:underline">Sanity Studio</a>
+              <a href="/" className="text-sm hover:underline">Voltar ao Site</a>
             </div>
           </div>
         </div>
@@ -23,7 +23,7 @@ export default function Layout({ children }: { children: ReactNode }) {
         <Sidebar pageTree={source.pageTree} />
         <main className="flex-1 px-8 py-8 max-w-4xl">
           <div className="bg-gradient-to-r from-[#DDB86A] to-[#c9a558] text-[#06060a] p-4 rounded-lg mb-8">
-            <p className="font-semibold text-sm">📚 Guia completo para gerenciar seu site</p>
+            <p className="font-semibold text-sm">Guia completo para gerenciar seu site</p>
             <p className="text-xs mt-1 opacity-90">Aprenda a atualizar conteúdo, imagens e configurações</p>
           </div>
           {children}

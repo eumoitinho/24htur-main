@@ -13,7 +13,6 @@ export function Sidebar({ pageTree }: SidebarProps) {
   return (
     <aside className="w-64 border-r bg-white p-6 overflow-y-auto sticky top-0 h-screen">
       <nav className="space-y-6">
-        {/* Link para página inicial da documentação */}
         <div>
           <Link
             href="/docs"
@@ -23,25 +22,26 @@ export function Sidebar({ pageTree }: SidebarProps) {
                 : 'text-gray-700 hover:bg-gray-100'
             }`}
           >
-            🏠 Início
+            Início
           </Link>
         </div>
 
         {pageTree.map((section) => {
           const sectionData = section.data as any;
-          // Skip the root meta.json which contains all sections
-          if (section.info.path === 'meta.json' || !sectionData) return null;
+
+          // Skip root meta.json
+          if (section.info.path === 'meta.json') return null;
+          if (!sectionData || !sectionData.pages) return null;
 
           const basePath = section.info.path.replace('/meta.json', '');
 
           return (
             <div key={section.info.path}>
-              <h3 className="font-semibold text-sm text-[#06060a] mb-2 flex items-center gap-2">
-                {sectionData?.icon && <span>{getIcon(sectionData.icon)}</span>}
-                {sectionData?.title || basePath}
+              <h3 className="font-semibold text-sm text-[#06060a] mb-2">
+                {sectionData.title}
               </h3>
               <ul className="space-y-1">
-                {sectionData?.pages?.map((page: string) => {
+                {sectionData.pages.map((page: string) => {
                   const isIndex = page === 'index';
                   const pagePath = isIndex
                     ? `/docs/${basePath}`
@@ -73,18 +73,6 @@ export function Sidebar({ pageTree }: SidebarProps) {
   );
 }
 
-function getIcon(iconName: string) {
-  const icons: Record<string, string> = {
-    BookOpen: '📖',
-    Home: '🏠',
-    Settings: '⚙️',
-    Image: '🖼️',
-    FileText: '📄',
-    AlertCircle: '⚠️',
-  };
-  return icons[iconName] || '📄';
-}
-
 function getPageTitle(basePath: string, page: string): string {
   const titles: Record<string, string> = {
     index: 'Visão Geral',
@@ -99,8 +87,8 @@ function getPageTitle(basePath: string, page: string): string {
     header: 'Header',
     footer: 'Footer',
     whatsapp: 'WhatsApp',
-    upload: 'Upload de Imagens',
-    tamanhos: 'Tamanhos Recomendados',
+    upload: 'Upload',
+    tamanhos: 'Tamanhos',
     otimizacao: 'Otimização',
   };
   return titles[page] || page;
