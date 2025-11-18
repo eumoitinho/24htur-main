@@ -36,11 +36,15 @@ const HeroLazer = () => {
         <div className="relative overflow-hidden rounded-[40px] sm:rounded-[44px] lg:rounded-[50px] px-6 sm:px-10 md:px-12 lg:px-16 py-12 sm:py-16 md:py-20 lg:py-24 bg-brand-dark bg-center bg-cover bg-no-repeat">
           <div className="absolute inset-0 z-0">
             <Image
-              src={resolveImage(lazerData?.hero?.backgroundImage, '/hero-lazer-fallback.jpg')}
+              src={resolveImage(lazerData?.hero?.backgroundImage, '/smiling-mother-and-her-two-children-looking-out-at-2025-10-12-02-10-19-utc.jpg')}
               alt={lazerData?.hero?.title || 'Hero background'}
               fill
               className="object-cover"
               sizes="100vw"
+              priority
+              onError={(e) => {
+                e.currentTarget.src = '/smiling-mother-and-her-two-children-looking-out-at-2025-10-12-02-10-19-utc.jpg';
+              }}
             />
           </div>
           <div className="absolute inset-0" aria-hidden="true">

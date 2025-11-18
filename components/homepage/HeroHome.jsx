@@ -18,17 +18,27 @@ const HeroHome = () => {
     subtitle: "Soluções estratégicas com atendimento 24/7 e mais de 20 anos de experiência no mercado",
     ctaText: "FALE COM UM ESPECIALISTA!"
   };
+
+  // Resolver imagem de background - sempre retorna uma string válida
+  // Fallback: mulher profissional no aeroporto (primeira foto)
+  const imageSrc = resolveImage(homepageData?.hero?.backgroundImage, '/my-business-is-about-to-take-off-2025-04-06-10-49-24-utc.jpg');
+
   return (
     <section id="inicio" className="relative py-10 sm:py-12 lg:py-14">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="relative overflow-hidden rounded-[40px] sm:rounded-[44px] lg:rounded-[50px] px-6 sm:px-10 md:px-12 lg:px-16 py-12 sm:py-16 md:py-20 lg:py-24 bg-brand-dark bg-center bg-cover bg-no-repeat">
           <div className="absolute inset-0 z-0">
             <Image
-              src={resolveImage(homepageData?.hero?.backgroundImage, '/hero-home-fallback.jpg')}
+              src={imageSrc}
               alt={homepageData?.hero?.title || 'Hero background'}
               fill
               className="object-cover"
               sizes="100vw"
+              priority
+              onError={(e) => {
+                console.error('Erro ao carregar imagem:', imageSrc);
+                e.currentTarget.src = '/my-business-is-about-to-take-off-2025-04-06-10-49-24-utc.jpg';
+              }}
             />
           </div>
           <div className="absolute inset-0" aria-hidden="true">

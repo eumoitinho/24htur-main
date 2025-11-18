@@ -15,7 +15,7 @@ const HeroEventosInfo = () => {
     <section className="relative min-h-screen pt-20 pb-16 overflow-hidden flex flex-col justify-center">
       <div className="absolute inset-0 z-0">
         <Image
-          src={resolveImage(eventosInfoData?.hero?.backgroundImage, '/hero-eventos-info.jpg')}
+          src={resolveImage(eventosInfoData?.hero?.backgroundImage, '/hero.jpg')}
           alt={eventosInfoData?.hero?.title || 'Hero background'}
           fill
           className="object-cover"

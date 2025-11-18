@@ -22,11 +22,15 @@ const HeroEventos = () => {
         <div className="relative overflow-hidden rounded-[40px] sm:rounded-[44px] lg:rounded-[50px] px-6 sm:px-10 md:px-12 lg:px-16 py-12 sm:py-16 md:py-20 lg:py-24 bg-brand-dark bg-center bg-cover bg-no-repeat">
           <div className="absolute inset-0 z-0">
             <Image
-              src={resolveImage(eventosData?.hero?.backgroundImage, '/hero-eventos-fallback.jpg')}
+              src={resolveImage(eventosData?.hero?.backgroundImage, '/close-up-of-businesswomen-shaking-hands-in-the-off-2025-08-11-03-02-17-utc.jpg')}
               alt={titleText || 'Hero background'}
               fill
               className="object-cover"
               sizes="100vw"
+              priority
+              onError={(e) => {
+                e.currentTarget.src = '/close-up-of-businesswomen-shaking-hands-in-the-off-2025-08-11-03-02-17-utc.jpg';
+              }}
             />
           </div>
           <div className="absolute inset-0" aria-hidden="true">

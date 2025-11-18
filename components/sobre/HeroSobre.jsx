@@ -28,7 +28,7 @@ const HeroSobre = () => {
         <div className="relative overflow-hidden rounded-[40px] sm:rounded-[44px] lg:rounded-[50px] px-6 sm:px-10 md:px-12 lg:px-16 py-12 sm:py-16 md:py-20 lg:py-24 bg-brand-dark bg-center bg-cover bg-no-repeat">
           <div className="absolute inset-0 z-0">
             <Image
-              src={resolveImage(sobreData?.hero?.backgroundImage, '/hero-sobre.jpg')}
+              src={resolveImage(sobreData?.hero?.backgroundImage, '/hero.jpg')}
               alt={sobreData?.hero?.title || 'Hero background'}
               fill
               className="object-cover"

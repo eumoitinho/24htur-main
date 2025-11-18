@@ -19,12 +19,15 @@ const builder = imageUrlBuilder(client);
 export const urlFor = (source: any) => builder.image(source);
 
 // Utility to resolve an image value (string URL, Sanity image object) to a URL string.
-export const resolveImage = (value: any, fallback?: string): string | undefined => {
-  if (!value) return fallback;
-  if (typeof value === 'string') return value;
+export const resolveImage = (value: any, fallback?: string): string => {
+  // Sempre retorna uma string, nunca undefined
+  const defaultFallback = fallback || '/placeholder.svg';
+  
+  if (!value) return defaultFallback;
+  if (typeof value === 'string' && value.trim()) return value;
   
   // Se tem URL direta do asset (quando expandido pela query)
-  if (value?.asset?.url) {
+  if (value?.asset?.url && typeof value.asset.url === 'string') {
     return value.asset.url;
   }
   
@@ -38,10 +41,11 @@ export const resolveImage = (value: any, fallback?: string): string | undefined 
           _type: 'reference'
         }
       };
-      return urlFor(imageObj).url();
+      const url = urlFor(imageObj).url();
+      return url || defaultFallback;
     } catch (e) {
       console.warn('Erro ao gerar URL da imagem Sanity:', e);
-      return fallback;
+      return defaultFallback;
     }
   }
   
@@ -55,20 +59,22 @@ export const resolveImage = (value: any, fallback?: string): string | undefined 
           _type: 'reference'
         }
       };
-      return urlFor(imageObj).url();
+      const url = urlFor(imageObj).url();
+      return url || defaultFallback;
     } catch (e) {
       console.warn('Erro ao gerar URL da imagem Sanity:', e);
-      return fallback;
+      return defaultFallback;
     }
   }
   
   // Se é um objeto de imagem do Sanity (com _type='image')
   if (typeof value === 'object' && value._type === 'image') {
     try {
-      return urlFor(value).url();
+      const url = urlFor(value).url();
+      return url || defaultFallback;
     } catch (e) {
       console.warn('Erro ao gerar URL da imagem Sanity:', e);
-      return fallback;
+      return defaultFallback;
     }
   }
   
@@ -86,14 +92,15 @@ export const resolveImage = (value: any, fallback?: string): string | undefined 
           _type: 'reference'
         } : value.asset
       };
-      return urlFor(imageObj).url();
+      const url = urlFor(imageObj).url();
+      return url || defaultFallback;
     } catch (e) {
       console.warn('Erro ao gerar URL da imagem Sanity:', e);
-      return fallback;
+      return defaultFallback;
     }
   }
   
-  return fallback;
+  return defaultFallback;
 };
 
 // Remove HTML tags de uma string
