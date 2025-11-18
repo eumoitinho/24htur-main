@@ -10,11 +10,7 @@ interface SidebarProps {
 export function Sidebar({ pageTree }: SidebarProps) {
   const pathname = usePathname();
 
-  console.log('DEBUG pageTree:', pageTree);
-  console.log('DEBUG pageTree length:', pageTree?.length || 0);
-
-  if (!pageTree) {
-    console.error('pageTree is null or undefined!');
+  if (!pageTree || pageTree.length === 0) {
     return <div>Loading sidebar...</div>;
   }
 
@@ -34,23 +30,24 @@ export function Sidebar({ pageTree }: SidebarProps) {
           </Link>
         </div>
 
-        {pageTree && pageTree.map((section) => {
-          const sectionData = section.data as any;
+        {pageTree.map((section) => {
+          // Skip root meta.json or sections without pages
+          if (!section || !section.pages || section.pages.length === 0) return null;
+          if (section.info && section.info.path === 'meta.json') return null;
 
-          // Skip root meta.json
-          if (section.info.path === 'meta.json') return null;
-          if (!sectionData || !sectionData.pages) return null;
+          // Extract base path by removing /meta.json from end if it exists
+          const basePath = section.info ? section.info.path.replace(/\/meta\.json$/, '') : '';
 
-          // Extract base path by removing /meta.json from end
-          const basePath = section.info.path.replace(/\/meta\.json$/, '');
+          // Use title if available, fallback to basePath
+          const sectionTitle = section.title || basePath;
 
           return (
-            <div key={section.info.path}>
+            <div key={section.info?.path || basePath}>
               <h3 className="font-semibold text-sm text-[#06060a] mb-2">
-                {sectionData.title}
+                {sectionTitle}
               </h3>
               <ul className="space-y-1">
-                {sectionData.pages.map((page: string) => {
+                {section.pages.map((page: string) => {
                   const isIndex = page === 'index';
                   const pagePath = isIndex
                     ? `/docs/${basePath}`

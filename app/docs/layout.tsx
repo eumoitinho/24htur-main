@@ -1,23 +1,11 @@
 import type { ReactNode } from 'react';
+import Link from 'next/link';
 import { Sidebar } from './components/Sidebar';
 import { source } from '@/lib/source';
 
 export default function Layout({ children }: { children: ReactNode }) {
-  // Extract serializable data from pageTree for client component
-  const pageTreeData = source.pageTree.map((section) => {
-    // section may have a non-exact type from the source; cast to any to access runtime "data"
-    const data = (section as any).data;
-    return {
-      info: {
-        path: section.info.path,
-      },
-      data: data ? JSON.parse(JSON.stringify({
-        title: data.title,
-        pages: data.pages,
-        icon: data.icon,
-      })) : null,
-    };
-  });
+  // Force serialize the entire pageTree to break the proxy chain
+  const pageTreeData = JSON.parse(JSON.stringify(source.pageTree));
 
   return (
     <div className="min-h-screen bg-white">
@@ -29,8 +17,8 @@ export default function Layout({ children }: { children: ReactNode }) {
               <span className="text-sm text-gray-600">Documentação</span>
             </div>
             <div className="flex gap-4">
-              <a href="/studio" className="text-sm hover:underline">Sanity Studio</a>
-              <a href="/" className="text-sm hover:underline">Voltar ao Site</a>
+              <Link href="/studio" className="text-sm hover:underline">Sanity Studio</Link>
+              <Link href="/" className="text-sm hover:underline">Voltar ao Site</Link>
             </div>
           </div>
         </div>
