@@ -1,0 +1,122 @@
+---
+title: Gerenciamento de Imagens
+description: Guia completo sobre imagens no site
+---
+
+import { VideoPlaceholder } from '@/components/docs/VideoPlaceholder';
+import { Callout } from '@/components/docs/Callout';
+
+# Gerenciamento de Imagens
+
+Imagens são elementos fundamentais do site. Este guia ensina como fazer upload, otimizar e gerenciar imagens no Sanity CMS.
+
+<VideoPlaceholder
+  title="Trabalhando com Imagens no Sanity"
+  description="Tutorial completo sobre upload e gerenciamento de imagens (4-6 min)"
+/>
+
+## Tópicos
+
+<div className="grid grid-cols-1 md:grid-cols-2 gap-4 my-6">
+  <a href="/docs/imagens/upload" className="block p-4 border border-border rounded-lg hover:bg-muted/50 transition-colors">
+    <h3 className="font-semibold mb-2">📤 Como Fazer Upload</h3>
+    <p className="text-sm text-muted-foreground">Passo a passo para enviar imagens</p>
+  </a>
+
+  <a href="/docs/imagens/tamanhos" className="block p-4 border border-border rounded-lg hover:bg-muted/50 transition-colors">
+    <h3 className="font-semibold mb-2">📏 Tamanhos Recomendados</h3>
+    <p className="text-sm text-muted-foreground">Dimensões ideais por seção do site</p>
+  </a>
+
+  <a href="/docs/imagens/otimizacao" className="block p-4 border border-border rounded-lg hover:bg-muted/50 transition-colors">
+    <h3 className="font-semibold mb-2">⚡ Otimização</h3>
+    <p className="text-sm text-muted-foreground">Como reduzir tamanho sem perder qualidade</p>
+  </a>
+</div>
+
+## Formatos Aceitos
+
+O Sanity aceita os seguintes formatos de imagem:
+
+| Formato | Uso Recomendado | Observações |
+|---------|-----------------|-------------|
+| **JPG** | Fotos, backgrounds | Melhor para imagens com muitas cores |
+| **PNG** | Logos, ícones | Suporta transparência |
+| **WebP** | Qualquer uso | Melhor compressão (recomendado) |
+| **SVG** | Logos, ícones | Vetorial, não perde qualidade |
+
+<Callout type="success" title="WebP é o melhor formato">
+Se possível, use WebP para todas as imagens. Oferece melhor qualidade com menor tamanho de arquivo.
+</Callout>
+
+## Limite de Tamanho
+
+- **Máximo por arquivo**: 10MB
+- **Recomendado**: Menos de 500KB por imagem
+- **Ideal**: Entre 100-300KB
+
+<Callout type="warning">
+Imagens muito grandes deixam o site lento. Sempre otimize antes de fazer upload!
+</Callout>
+
+## Biblioteca de Mídia
+
+O Sanity mantém uma biblioteca com todas as imagens enviadas. Você pode:
+
+✅ Reutilizar a mesma imagem em vários lugares
+✅ Ver onde cada imagem está sendo usada
+✅ Substituir imagem em todos os lugares de uma vez
+✅ Deletar imagens não utilizadas
+
+**Como acessar:**
+1. Ao clicar em um campo de imagem
+2. Clique em "Select" (não em Upload)
+3. Você verá todas as imagens já enviadas
+
+## Boas Práticas
+
+### ✅ Fazer
+
+- Otimizar imagens antes do upload
+- Usar nomes descritivos (hero-turismo.jpg, logo-cliente-abc.png)
+- Manter proporções corretas para cada seção
+- Testar em dispositivos móveis
+- Usar imagens de alta qualidade
+- Adicionar texto alternativo (ALT) para acessibilidade
+
+### ❌ Evitar
+
+- Fazer upload de imagens gigantes (> 2MB)
+- Usar imagens pixeladas ou de baixa qualidade
+- Enviar imagens com proporção errada
+- Esquecer de otimizar
+- Usar stock photos genéricas demais
+- Ignorar direitos autorais
+
+## Direitos Autorais
+
+<Callout type="error" title="Atenção Legal">
+Use apenas imagens que você tem direito de usar:
+- Fotos próprias da empresa
+- Imagens compradas (shutterstock, etc.)
+- Imagens gratuitas com licença (Unsplash, Pexels)
+- Nunca use imagens do Google sem verificar licença!
+</Callout>
+
+## Sites de Imagens Gratuitas
+
+Caso precise de imagens stock:
+
+- **Unsplash**: unsplash.com (alta qualidade, grátis)
+- **Pexels**: pexels.com (fotos e vídeos)
+- **Pixabay**: pixabay.com (vasto catálogo)
+
+Sempre verifique a licença antes de usar.
+
+## Próximos Passos
+
+Comece pelo guia de upload para aprender a enviar suas primeiras imagens:
+
+<a href="/docs/imagens/upload" className="inline-block mt-4 px-6 py-3 bg-[#DDB86A] hover:bg-[#c9a558] text-[#06060a] font-semibold rounded-lg transition-colors">
+  Aprender a Fazer Upload →
+</a>

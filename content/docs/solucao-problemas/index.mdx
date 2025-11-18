@@ -1,0 +1,282 @@
+---
+title: Solução de Problemas
+description: Respostas para problemas comuns e dúvidas frequentes
+---
+
+import { Callout } from '@/components/docs/Callout';
+
+# Solução de Problemas
+
+Respostas para os problemas mais comuns ao usar o Sanity Studio e gerenciar o site.
+
+## Problemas de Acesso
+
+### Não consigo fazer login no Sanity
+
+**Possíveis causas e soluções:**
+
+1. **E-mail não cadastrado**
+   - Verifique se está usando o e-mail correto
+   - Entre em contato com o administrador para liberar acesso
+
+2. **Problemas de autenticação**
+   - Tente usar modo anônimo/privado do navegador
+   - Limpe cookies e cache do navegador
+   - Tente outro navegador (Chrome, Firefox, Safari)
+
+3. **Senha incorreta**
+   - Se usando e-mail, clique em "Esqueci minha senha"
+   - Prefira login com Google ou GitHub (mais seguro)
+
+### Erro "Permission Denied"
+
+**Solução:**
+- Suas permissões podem não estar configuradas
+- Aguarde até 5 minutos após configuração inicial
+- Entre em contato com administrador do sistema
+
+## Problemas com Imagens
+
+### Imagem não aparece no site
+
+**Checklist de verificação:**
+
+- [ ] Cliquei em "Publish" após fazer upload?
+- [ ] Aguardei 1-2 minutos para cache atualizar?
+- [ ] Recarreguei a página com Ctrl+Shift+R?
+- [ ] A imagem está no formato correto (JPG, PNG, WebP)?
+- [ ] O arquivo não está corrompido?
+
+**Solução:**
+1. Verifique se publicou as alterações
+2. Aguarde alguns minutos
+3. Limpe o cache: Ctrl+Shift+R (Windows) ou Cmd+Shift+R (Mac)
+4. Se ainda não funcionar, tente fazer upload novamente
+
+### Upload de imagem falha
+
+**Causas comuns:**
+
+1. **Arquivo muito grande**
+   - Limite: 10MB
+   - Solução: Comprima a imagem (ver [Otimização](/docs/imagens/otimizacao))
+
+2. **Formato não suportado**
+   - Use JPG, PNG ou WebP
+   - Evite BMP, TIFF, PSD
+
+3. **Conexão instável**
+   - Verifique sua internet
+   - Tente novamente em alguns minutos
+   - Use Wi-Fi em vez de dados móveis
+
+### Imagem aparece cortada ou distorcida
+
+**Solução:**
+- Verifique os [Tamanhos Recomendados](/docs/imagens/tamanhos)
+- Redimensione a imagem antes do upload
+- Certifique-se de usar a proporção correta para cada seção
+
+## Problemas com Conteúdo
+
+### Mudanças não aparecem no site
+
+**Passo a passo:**
+
+1. **Verificar publicação**
+   - O botão "Publish" está verde? Se sim, você não publicou
+   - Clique em "Publish" no canto superior direito
+
+2. **Aguardar cache**
+   - Aguarde 1-2 minutos
+   - O Vercel pode levar um tempo para atualizar
+
+3. **Forçar atualização**
+   - Ctrl+Shift+R (hard reload)
+   - Ou abra em modo anônimo
+
+4. **Verificar deployment**
+   - Pode haver um build em andamento
+   - Aguarde até 5 minutos
+
+### Não consigo salvar alterações
+
+**Possíveis causas:**
+
+1. **Campos obrigatórios vazios**
+   - Campos com * são obrigatórios
+   - Preencha todos antes de publicar
+
+2. **Sessão expirada**
+   - Faça logout e login novamente
+   - Copie seu conteúdo antes de sair
+
+3. **Erro de validação**
+   - Leia a mensagem de erro
+   - Corrija o campo indicado
+
+### Texto está desformatado
+
+**Solução:**
+- Evite copiar texto direto do Word (traz formatação escondida)
+- Cole primeiro no Bloco de Notas (limpa formatação)
+- Depois copie do Bloco de Notas para o Sanity
+- Ou use "Colar sem formatação": Ctrl+Shift+V
+
+## Problemas de Performance
+
+### Sanity Studio está lento
+
+**Soluções:**
+
+1. **Limpar cache do navegador**
+   - Chrome: Ctrl+Shift+Delete
+   - Selecione "Imagens e arquivos em cache"
+   - Limpe
+
+2. **Fechar abas desnecessárias**
+   - Muitas abas consomem memória
+   - Feche outras abas
+
+3. **Atualizar navegador**
+   - Use a versão mais recente do Chrome/Firefox
+
+4. **Verificar internet**
+   - Teste velocidade em fast.com
+   - Mínimo recomendado: 5 Mbps
+
+### Site está carregando devagar
+
+**Causas e soluções:**
+
+1. **Imagens muito pesadas**
+   - [Otimize todas as imagens](/docs/imagens/otimizacao)
+   - Objetivo: < 500KB por imagem
+
+2. **Muitas imagens grandes**
+   - Reduza quantidade de imagens em uma página
+   - Use imagens menores quando possível
+
+3. **Cache não configurado**
+   - Problema técnico - contate suporte
+
+## Problemas Técnicos
+
+### Erro 404 - Página não encontrada
+
+**Causas:**
+
+1. **URL incorreta**
+   - Verifique o link
+   - URLs são case-sensitive: `/sobre` ≠ `/Sobre`
+
+2. **Página foi removida**
+   - Contate administrador
+
+### Erro 500 - Erro do servidor
+
+**Solução:**
+- Problema temporário do servidor
+- Aguarde 5-10 minutos
+- Tente novamente
+- Se persistir, contate suporte técnico
+
+### Formulário não envia
+
+**Checklist:**
+
+- [ ] Todos os campos obrigatórios preenchidos?
+- [ ] E-mail em formato válido?
+- [ ] Telefone em formato válido?
+- [ ] Conexão de internet ativa?
+
+**Solução:**
+- Verifique campos obrigatórios
+- Teste sua internet
+- Tente em outro navegador
+- Se persistir, problema técnico - contate suporte
+
+## Problemas de Browser
+
+### Recomendações de navegador
+
+**Melhor experiência:**
+1. Google Chrome (recomendado)
+2. Mozilla Firefox
+3. Safari (Mac)
+4. Microsoft Edge
+
+**Evite:**
+- Internet Explorer (obsoleto)
+- Versões antigas de qualquer navegador
+
+### Limpar cache do navegador
+
+**Chrome:**
+1. Ctrl+Shift+Delete
+2. Selecione "Todos os períodos"
+3. Marque "Imagens e arquivos em cache"
+4. Clique em "Limpar dados"
+
+**Firefox:**
+1. Ctrl+Shift+Delete
+2. Selecione "Tudo"
+3. Marque "Cache"
+4. Clique em "Limpar agora"
+
+**Safari:**
+1. Cmd+Option+E
+2. Ou Safari → Limpar Histórico
+
+## Contato para Suporte
+
+Se nenhuma solução acima resolver seu problema:
+
+### Informações para fornecer ao suporte:
+
+1. **Descrição do problema**
+   - O que você estava tentando fazer?
+   - O que aconteceu?
+
+2. **Mensagens de erro**
+   - Copie textos de erro exatos
+   - Tire screenshot se possível
+
+3. **Seu ambiente**
+   - Navegador e versão
+   - Sistema operacional
+   - Quando começou o problema
+
+4. **Passos para reproduzir**
+   - Liste o que fez antes do erro
+   - Isso ajuda a identificar a causa
+
+### Como tirar screenshot
+
+**Windows:**
+- Tecla Windows + Shift + S
+- Ou use Ferramenta de Captura
+
+**Mac:**
+- Cmd + Shift + 4
+- Clique e arraste para selecionar área
+
+<Callout type="info" title="Suporte Técnico">
+Para problemas técnicos complexos ou que não constam nesta lista, entre em contato com a equipe de suporte técnico fornecendo o máximo de detalhes possível.
+</Callout>
+
+## Dicas de Prevenção
+
+### Boas práticas para evitar problemas:
+
+✅ **Sempre faça backup**: Copie textos importantes antes de editar
+✅ **Teste em ambiente de teste**: Se possível, teste mudanças grandes primeiro
+✅ **Publique fora de horário de pico**: Evite horários de muito tráfego
+✅ **Verifique antes de publicar**: Releia tudo cuidadosamente
+✅ **Mantenha registro**: Anote o que mudou e quando
+✅ **Otimize imagens**: Sempre antes do upload
+✅ **Use navegador atualizado**: Mantenha Chrome/Firefox atualizados
+
+<Callout type="success" title="Prevenção é a melhor solução">
+Seguindo as boas práticas desta documentação, você evitará a maioria dos problemas comuns!
+</Callout>

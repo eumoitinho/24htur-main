@@ -1,0 +1,141 @@
+---
+title: Configurações Globais
+description: Gerencie elementos que aparecem em todo o site
+---
+
+import { Callout } from '@/components/docs/Callout';
+import { VideoPlaceholder } from '@/components/docs/VideoPlaceholder';
+
+# Configurações Globais
+
+As Configurações Globais (Site Settings) controlam elementos que aparecem em todas as páginas do site: menu de navegação, rodapé, botão WhatsApp, informações de contato e mais.
+
+<VideoPlaceholder
+  title="Tour pelas Configurações Globais"
+  description="Visão geral de todas as configurações do site (5-6 min)"
+/>
+
+## Como Acessar
+
+1. Acesse `/studio`
+2. No menu lateral, clique em **"Site Settings"**
+3. Você verá várias seções de configuração
+
+<Callout type="info" title="Uma única fonte de verdade">
+Ao editar aqui, as mudanças são aplicadas em TODAS as páginas do site automaticamente. Você não precisa editar página por página.
+</Callout>
+
+## Seções Disponíveis
+
+### 🔝 Header Navigation
+Menu de navegação superior e logo.
+
+[📖 Ver guia detalhado →](/docs/configuracoes-globais/header)
+
+**O que você pode editar:**
+- Itens do menu principal
+- Menus dropdown
+- Telefone no header
+- Links de redes sociais
+
+### 🔽 Footer Navigation
+Rodapé com links, redes sociais e copyright.
+
+[📖 Ver guia detalhado →](/docs/configuracoes-globais/footer)
+
+**O que você pode editar:**
+- Colunas de links do rodapé
+- Ícones de redes sociais
+- Texto de copyright
+- Endereços e contatos
+
+### 💬 WhatsApp Settings
+Botão flutuante do WhatsApp.
+
+[📖 Ver guia detalhado →](/docs/configuracoes-globais/whatsapp)
+
+**O que você pode editar:**
+- Número do WhatsApp
+- Mensagem padrão
+- Texto do botão
+
+### 📋 Contact Form Settings
+Configurações do formulário de contato.
+
+**O que você pode editar:**
+- Labels dos campos
+- Opções de dropdowns
+- Mensagens de sucesso/erro
+- Texto LGPD
+
+### 📞 Contact Information
+Informações de contato da empresa.
+
+**O que você pode editar:**
+- Telefones
+- E-mails
+- Endereços dos escritórios
+- Horário de atendimento
+
+### 🏢 Branding
+Informações da marca.
+
+**O que você pode editar:**
+- Nome do site
+- Slogan
+- Logo (alt text)
+- Descrição da empresa
+
+## Impacto das Mudanças
+
+<Callout type="warning" title="Atenção: Mudanças Globais">
+Quando você edita as Configurações Globais, as alterações afetam TODAS as páginas do site simultaneamente. Verifique cuidadosamente antes de publicar.
+</Callout>
+
+### Exemplo
+
+Se você mudar o telefone em **Contact Information**:
+- ✅ Atualiza no header de todas as páginas
+- ✅ Atualiza no rodapé de todas as páginas
+- ✅ Atualiza na página de contato
+- ✅ Atualiza em qualquer outro lugar que exiba telefone
+
+Você faz UMA mudança, ela aparece em TODOS os lugares!
+
+## Quando Usar
+
+Use Site Settings para:
+
+✅ Adicionar/remover itens do menu
+✅ Atualizar telefones e e-mails
+✅ Modificar links de redes sociais
+✅ Ajustar o rodapé
+✅ Configurar mensagem do WhatsApp
+✅ Personalizar formulário de contato
+
+## Quando NÃO Usar
+
+❌ Para conteúdo específico de uma página (use a página correspondente)
+❌ Para textos que variam por seção (use a página da seção)
+❌ Para imagens de hero/banners (use a página específica)
+
+## Próximos Passos
+
+Explore os guias detalhados de cada seção:
+
+<div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+  <a href="/docs/configuracoes-globais/header" className="block p-4 border border-border rounded-lg hover:bg-muted/50 transition-colors">
+    <h3 className="font-semibold mb-2">Header (Menu)</h3>
+    <p className="text-sm text-muted-foreground">Editar navegação superior</p>
+  </a>
+
+  <a href="/docs/configuracoes-globais/footer" className="block p-4 border border-border rounded-lg hover:bg-muted/50 transition-colors">
+    <h3 className="font-semibold mb-2">Footer (Rodapé)</h3>
+    <p className="text-sm text-muted-foreground">Editar rodapé e links</p>
+  </a>
+
+  <a href="/docs/configuracoes-globais/whatsapp" className="block p-4 border border-border rounded-lg hover:bg-muted/50 transition-colors">
+    <h3 className="font-semibold mb-2">WhatsApp</h3>
+    <p className="text-sm text-muted-foreground">Configurar botão flutuante</p>
+  </a>
+</div>

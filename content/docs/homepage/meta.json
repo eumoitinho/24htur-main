@@ -1,0 +1,5 @@
+{
+  "title": "Homepage",
+  "icon": "Home",
+  "pages": ["index", "hero", "metricas", "servicos", "clientes", "depoimentos", "contato"]
+}

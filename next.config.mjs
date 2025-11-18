@@ -14,7 +14,7 @@ const nextConfig = {
     NEXT_PUBLIC_SANITY_PROJECT_ID: 'kyx4ncqy',
     NEXT_PUBLIC_SANITY_TOKEN: process.env.SANITY_TOKEN,
   },
-  pageExtensions: ['js', 'jsx', 'ts', 'tsx'],
+  pageExtensions: ['js', 'jsx', 'ts', 'tsx', 'md', 'mdx'],
   // Configurações para resolver problemas de CORS
   async headers() {
     return [

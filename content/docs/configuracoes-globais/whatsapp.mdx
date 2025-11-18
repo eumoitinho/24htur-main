@@ -1,0 +1,107 @@
+---
+title: Botão WhatsApp
+description: Configurar o botão flutuante do WhatsApp
+---
+
+import { Callout } from '@/components/docs/Callout';
+
+# Botão WhatsApp Flutuante
+
+O botão verde do WhatsApp que fica fixo no canto da tela em todas as páginas.
+
+## Como Acessar
+
+1. `/studio` → **Site Settings**
+2. Localize **"WhatsApp Settings"**
+
+## Campos Disponíveis
+
+### Phone Number (Número)
+
+Número do WhatsApp com código do país e DDD.
+
+**Formato correto:**
+```
+5511999999999
+```
+
+**Estrutura:**
+- `55` - Código do Brasil
+- `11` - DDD
+- `999999999` - Número (9 dígitos para celular)
+
+<Callout type="warning" title="Sem caracteres especiais">
+Digite APENAS números. Sem espaços, parênteses, hífens ou `+`.
+</Callout>
+
+### Default Message (Mensagem Padrão)
+
+Mensagem que já vem escrita quando o usuário clica no botão.
+
+**Exemplo:**
+```
+Olá! Gostaria de saber mais sobre os serviços da 24H Turismo.
+```
+
+**Dicas:**
+- Seja específico sobre o que o cliente pode perguntar
+- Incentive a conversação
+- Mencione o site se quiser rastrear origem
+
+**Variações:**
+```
+Viagens Corporativas:
+"Olá! Preciso de uma cotação para viagem corporativa."
+
+Eventos:
+"Olá! Gostaria de organizar um evento com a 24H Turismo."
+
+Geral:
+"Olá! Vi o site e gostaria de mais informações."
+```
+
+### Button Title (Texto do Botão)
+
+Texto que aparece quando o usuário passa o mouse sobre o botão.
+
+**Exemplo:**
+```
+Fale conosco no WhatsApp
+```
+
+**Alternativas:**
+- "Tire suas dúvidas"
+- "Atendimento pelo WhatsApp"
+- "Fale com nossa equipe"
+
+## Testando
+
+Após publicar:
+
+1. Abra qualquer página do site
+2. Procure o botão verde no canto inferior direito
+3. Clique no botão
+4. Verifique se abre o WhatsApp com a mensagem correta
+
+<Callout type="success">
+O WhatsApp deve abrir em nova aba/app com o número e mensagem configurados.
+</Callout>
+
+## Problemas Comuns
+
+### Botão não aparece
+- Verifique se publicou as alterações
+- Limpe o cache do navegador
+
+### Número errado
+- Confirme o formato: 5511999999999
+- Sem espaços ou caracteres especiais
+- Inclua o DDD
+
+### Mensagem não aparece
+- Verifique se há caracteres especiais problemáticos
+- Evite aspas duplas, use aspas simples se necessário
+
+<Callout type="info" title="Horário de Atendimento">
+Considere mencionar na mensagem padrão o horário de atendimento: "Olá! Gostaria de saber mais sobre os serviços da 24H. (Atendemos de seg-sex, 9h-18h)"
+</Callout>

@@ -1,0 +1,193 @@
+---
+title: Hero Section
+description: Como editar a seção principal da homepage
+---
+
+import { VideoPlaceholder } from '@/components/docs/VideoPlaceholder';
+import { StepByStep } from '@/components/docs/StepByStep';
+import { Callout } from '@/components/docs/Callout';
+
+# Hero Section - Seção Principal
+
+A Hero Section é a primeira coisa que os visitantes veem ao acessar o site. É uma área grande com imagem de fundo, título impactante e um botão de call-to-action.
+
+<VideoPlaceholder
+  title="Como editar o Hero da Homepage"
+  description="Vídeo mostrando como alterar título, subtítulo e imagem de fundo (3-5 min)"
+/>
+
+## O que está incluído no Hero
+
+A seção Hero contém os seguintes elementos:
+
+- **Imagem de Fundo**: Foto grande que aparece por trás do texto
+- **Título**: Frase principal em destaque (geralmente com uma palavra em dourado)
+- **Subtítulo**: Texto menor abaixo do título
+- **Botão CTA**: Botão com link (geralmente "Fale Conosco" ou similar)
+
+## Como Editar
+
+<StepByStep>
+1. Acesse `/studio` e faça login no Sanity
+
+2. No menu lateral, clique em **"Home Page"**
+
+3. Role até encontrar a seção **"Hero"**
+
+4. Clique na seção Hero para expandir os campos
+
+5. Você verá os seguintes campos disponíveis:
+   - **Title** (Título)
+   - **Subtitle** (Subtítulo)
+   - **Background Image** (Imagem de Fundo)
+   - **CTA Text** (Texto do Botão)
+   - **CTA Link** (Link do Botão)
+
+6. Edite os campos desejados (ver detalhes abaixo)
+
+7. Clique em **"Publish"** no canto superior direito
+</StepByStep>
+
+## Campos Disponíveis
+
+### Title (Título)
+
+O título principal que aparece em grande destaque.
+
+**Exemplo atual:**
+```
+Sua viagem dos sonhos começa aqui
+```
+
+**Dicas:**
+- Mantenha entre 4-8 palavras para máximo impacto
+- Use linguagem emocional e inspiradora
+- A palavra em dourado é configurada automaticamente
+
+### Subtitle (Subtítulo)
+
+Texto complementar que aparece abaixo do título.
+
+**Exemplo atual:**
+```
+Experiências inesquecíveis em viagens corporativas,
+lazer e eventos com a expertise de 30 anos da 24H Turismo
+```
+
+**Dicas:**
+- Descreva brevemente o que a empresa faz
+- Destaque diferenciais principais
+- Máximo de 2 linhas para não ficar pesado
+
+### Background Image (Imagem de Fundo)
+
+A foto que aparece por trás do texto.
+
+<VideoPlaceholder
+  title="Alterando a Imagem de Fundo do Hero"
+  description="Demonstração do processo de upload e seleção de imagem"
+/>
+
+**Especificações recomendadas:**
+- **Tamanho**: 1920x1080px (Full HD) ou maior
+- **Formato**: JPG ou WebP
+- **Peso máximo**: 500KB (otimizar antes de enviar)
+- **Estilo**: Imagens com espaço vazio na parte esquerda/central para o texto
+
+<Callout type="info" title="Dica de Composição">
+Escolha imagens que tenham um espaço "limpo" no centro ou esquerda, onde o texto possa ser lido facilmente. Evite imagens muito poluídas ou com pessoas/objetos no centro.
+</Callout>
+
+**Como trocar a imagem:**
+
+<StepByStep>
+1. No campo **Background Image**, clique em **"Select"** ou arraste uma imagem
+
+2. Uma janela se abrirá mostrando as imagens já enviadas (se houver)
+
+3. Para usar uma imagem existente: clique nela
+
+4. Para enviar nova imagem:
+   - Clique em **"Upload"** no canto superior
+   - Escolha a imagem do seu computador
+   - Aguarde o upload completar
+   - A imagem será selecionada automaticamente
+
+5. Clique em **"Publish"** para aplicar
+</StepByStep>
+
+<Callout type="warning" title="Tamanho de Arquivo">
+Se a imagem for maior que 2MB, o upload pode demorar ou falhar. Use ferramentas como TinyPNG ou Squoosh para comprimir antes de enviar.
+</Callout>
+
+### CTA Text (Texto do Botão)
+
+O texto que aparece dentro do botão de call-to-action.
+
+**Exemplo:**
+```
+Fale Conosco
+```
+
+**Alternativas:**
+- "Solicite um Orçamento"
+- "Planeje sua Viagem"
+- "Saiba Mais"
+- "Entre em Contato"
+
+### CTA Link (Link do Botão)
+
+Para onde o botão leva quando clicado.
+
+**Exemplos:**
+- Para página de contato: `/contato` ou `#contato`
+- Para WhatsApp: use o link configurado em [Configurações Globais](/docs/configuracoes-globais/whatsapp)
+- Para formulário: `#formulario`
+
+## Visualizando as Mudanças
+
+Depois de publicar:
+
+1. Abra o site em uma nova aba
+2. Recarregue a página (F5 ou Ctrl+R)
+3. Você deve ver as alterações imediatamente
+4. Se não ver, aguarde 1-2 minutos e recarregue novamente
+
+<Callout type="success">
+Em dispositivos móveis, pode levar um pouco mais de tempo para o cache atualizar. Teste em modo anônimo se necessário.
+</Callout>
+
+## Exemplos de Bons Títulos
+
+Inspiração para criar títulos impactantes:
+
+✅ **"Viagens corporativas sem complicação"**
+✅ **"Transforme eventos em experiências"**
+✅ **"Seu parceiro em viagens de negócios"**
+✅ **"Lazer com segurança e conforto"**
+✅ **"30 anos criando memórias inesquecíveis"**
+
+## Problemas Comuns
+
+### A imagem não aparece
+
+- Verifique se você clicou em "Publish"
+- Aguarde 1-2 minutos para o cache atualizar
+- Recarregue a página com Ctrl+Shift+R (força reload)
+- Veja o [guia de solução de problemas](/docs/solucao-problemas)
+
+### O texto não está legível na imagem
+
+- Escolha uma imagem mais clara
+- Ou escolha uma imagem com áreas mais escuras onde o texto pode ficar
+- O sistema aplica automaticamente um gradiente escuro para melhorar legibilidade
+
+### O botão não funciona
+
+- Verifique se o link está correto
+- Links internos começam com `/`
+- Links externos começam com `https://`
+
+<Callout type="info" title="Precisa de ajuda?">
+Se encontrar dificuldades, consulte a seção de [Solução de Problemas](/docs/solucao-problemas) ou entre em contato com o suporte técnico.
+</Callout>
