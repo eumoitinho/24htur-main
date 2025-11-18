@@ -1,5 +1,4 @@
 import type { Config } from "tailwindcss";
-import { createPreset } from 'fumadocs-ui/tailwind-plugin';
 
 const config: Config = {
   content: [
@@ -10,7 +9,6 @@ const config: Config = {
     "./mdx-components.tsx",
     "./node_modules/fumadocs-ui/dist/**/*.js",
   ],
-  presets: [createPreset()],
   theme: {
     extend: {
       colors: {
@@ -23,9 +21,16 @@ const config: Config = {
         dark: {
           DEFAULT: '#06060a',
         },
+        'brand-dark': '#2d251c',
+        'brand-gold': '#DDBE73',
+        'brand-red': '#AE2724',
+        'brand-beige': '#f5f2ed',
       },
       fontFamily: {
-        sans: ['Plus Jakarta Sans', 'sans-serif'],
+        sans: ['Plus Jakarta Sans', 'system-ui', '-apple-system', 'Segoe UI', 'Roboto', 'Ubuntu', 'Cantarell', 'Noto Sans', 'sans-serif'],
+      },
+      animation: {
+        'whatsapp-pulse': 'pulse 2s infinite',
       },
     },
   },
