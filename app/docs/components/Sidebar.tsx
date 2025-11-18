@@ -10,13 +10,13 @@ interface SidebarProps {
 export function Sidebar({ pageTree }: SidebarProps) {
   const pathname = usePathname();
 
-  console.log('🔍 DEBUG - pageTree length:', pageTree.length);
-  console.log('🔍 DEBUG - pageTree:', JSON.stringify(pageTree.map(s => ({
-    path: s.info.path,
-    title: s.data?.title,
-    pages: s.data?.pages,
-    hasData: !!s.data
-  })), null, 2));
+  console.log('DEBUG pageTree:', pageTree);
+  console.log('DEBUG pageTree length:', pageTree?.length || 0);
+
+  if (!pageTree) {
+    console.error('pageTree is null or undefined!');
+    return <div>Loading sidebar...</div>;
+  }
 
   return (
     <aside className="w-64 border-r bg-white p-6 overflow-y-auto sticky top-0 h-screen">
@@ -34,7 +34,7 @@ export function Sidebar({ pageTree }: SidebarProps) {
           </Link>
         </div>
 
-        {pageTree.map((section) => {
+        {pageTree && pageTree.map((section) => {
           const sectionData = section.data as any;
 
           // Skip root meta.json
