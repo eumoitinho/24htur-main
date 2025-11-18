@@ -3,6 +3,22 @@ import { Sidebar } from './components/Sidebar';
 import { source } from '@/lib/source';
 
 export default function Layout({ children }: { children: ReactNode }) {
+  // Extract serializable data from pageTree for client component
+  const pageTreeData = source.pageTree.map((section) => {
+    // section may have a non-exact type from the source; cast to any to access runtime "data"
+    const data = (section as any).data;
+    return {
+      info: {
+        path: section.info.path,
+      },
+      data: data ? JSON.parse(JSON.stringify({
+        title: data.title,
+        pages: data.pages,
+        icon: data.icon,
+      })) : null,
+    };
+  });
+
   return (
     <div className="min-h-screen bg-white">
       <header className="border-b sticky top-0 bg-white z-10">
@@ -20,7 +36,7 @@ export default function Layout({ children }: { children: ReactNode }) {
         </div>
       </header>
       <div className="flex">
-        <Sidebar pageTree={source.pageTree} />
+        <Sidebar pageTree={pageTreeData} />
         <main className="flex-1 px-8 py-8 max-w-4xl">
           <div className="bg-gradient-to-r from-[#DDB86A] to-[#c9a558] text-[#06060a] p-4 rounded-lg mb-8">
             <p className="font-semibold text-sm">Guia completo para gerenciar seu site</p>

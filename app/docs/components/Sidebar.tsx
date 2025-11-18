@@ -10,6 +10,14 @@ interface SidebarProps {
 export function Sidebar({ pageTree }: SidebarProps) {
   const pathname = usePathname();
 
+  console.log('🔍 DEBUG - pageTree length:', pageTree.length);
+  console.log('🔍 DEBUG - pageTree:', JSON.stringify(pageTree.map(s => ({
+    path: s.info.path,
+    title: s.data?.title,
+    pages: s.data?.pages,
+    hasData: !!s.data
+  })), null, 2));
+
   return (
     <aside className="w-64 border-r bg-white p-6 overflow-y-auto sticky top-0 h-screen">
       <nav className="space-y-6">
@@ -33,7 +41,8 @@ export function Sidebar({ pageTree }: SidebarProps) {
           if (section.info.path === 'meta.json') return null;
           if (!sectionData || !sectionData.pages) return null;
 
-          const basePath = section.info.path.replace('/meta.json', '');
+          // Extract base path by removing /meta.json from end
+          const basePath = section.info.path.replace(/\/meta\.json$/, '');
 
           return (
             <div key={section.info.path}>
