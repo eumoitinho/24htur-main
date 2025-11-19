@@ -98,9 +98,20 @@ export function VideoPlaceholder({
   return (
     <div className="my-6 border-2 border-dashed border-[#DDB86A]/40 rounded-lg p-6 bg-[#DDB86A]/5">
       <div className="flex flex-col items-center text-center gap-3">
-        <div className="w-16 h-16 rounded-full bg-[#DDB86A]/20 flex items-center justify-center">
-          <Play className="w-8 h-8 text-[#DDB86A]" />
+        {/* Skeleton do vídeo */}
+        <div className="relative w-full max-w-md mx-auto">
+          <div className="aspect-video bg-gradient-to-r from-[#DDB86A]/20 via-[#DDB86A]/30 to-[#DDB86A]/20 rounded-lg overflow-hidden">
+            {/* Skeleton animation */}
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-pulse"></div>
+            {/* Play button overlay */}
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="w-16 h-16 rounded-full bg-[#DDB86A]/80 backdrop-blur-sm flex items-center justify-center shadow-lg">
+                <Play className="w-8 h-8 text-white ml-1" />
+              </div>
+            </div>
+          </div>
         </div>
+
         <div>
           <h4 className="font-semibold text-foreground mb-1">
             📹 {title}
