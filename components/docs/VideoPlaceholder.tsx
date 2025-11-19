@@ -66,7 +66,18 @@ export function VideoPlaceholder({
       );
     }
 
-    return null;
+    return (
+        <div className="relative w-full">
+          <video
+            className="w-full rounded-lg bg-black"
+            controls
+            src={videoUrl}
+            poster={thumbnail}
+          >
+            Seu navegador não suporta a tag de vídeo.
+          </video>
+        </div>
+    );
   };
 
   if (videoUrl) {
