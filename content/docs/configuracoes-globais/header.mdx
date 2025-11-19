@@ -1,81 +1,29 @@
 ---
 title: Menu de Navegação (Header)
-description: Como editar o menu superior do site
+description: Como editar o menu superior
 ---
 
-import { VideoPlaceholder } from '@/components/docs/VideoPlaceholder';
 import { Callout } from '@/components/docs/Callout';
 
-# Menu de Navegação (Header)
+# Menu (Header)
 
-O header é o menu de navegação que aparece no topo de todas as páginas do site.
+Menu superior presente em todas as páginas.
 
-<VideoPlaceholder
-  title="Editando o Menu de Navegação"
-  description="Como adicionar, remover e organizar itens do menu"
-/>
+## Como editar
 
-## Como Acessar
-1. `/studio` → **Site Settings**
-2. Localize **"Header Navigation"**
+1. No Sanity Studio, vá em **Site Settings** > **Header Navigation**.
+2. Gerencie os itens do menu e telefone.
 
-## Componentes do Header
+## Componentes
 
-### Menu Items (Itens do Menu)
-
-Lista de links que aparecem no menu principal.
-
-**Cada item tem:**
-- **Label**: Texto que aparece no menu
-- **Link**: URL de destino
-- **Dropdown**: Submenu (opcional)
-
-**Adicionar item:**
-1. Clique em "Add item" em Menu Items
-2. Preencha Label e Link
-```
-Label: Home | Link: /
-Label: Sobre | Link: /sobre
-Label: Contato | Link: /contato
-```
-
-### Dropdown Menus
-
-Menus com subitens que aparecem ao passar o mouse.
-
-**Criar dropdown:**
-1. Em um Menu Item, marque opção "Has Dropdown"
-2. Adicione Dropdown Items
-3. Cada item tem Label e Link
-
-  **Exemplo - Menu "Serviços":**
-    - Viagens Corporativas | /corporate
-    - Eventos | /eventos
+### Menu Items
+*   **Label:** Texto do link (ex: "Sobre").
+*   **Link:** URL (ex: `/sobre`).
+*   **Dropdown:** Marque para criar submenus (ex: Serviços > Corporativo).
 
 ### Phone Number
+Telefone exibido no topo (com DDD).
 
-Telefone exibido no header.
-
-**Formato:**
-```
-(11) 99999-9999
-```
-
-<Callout type="info">
-Este telefone aparece também no botão de ligação do header. Certifique-se de incluir DDD.
-</Callout>
-
-## Reordenando Menu
-
-Use drag & drop (arrastar) para reordenar itens do menu.
-
-## Dicas
-
-✅ Máximo 5-7 itens principais para não poluir
-✅ Use dropdowns para agrupar páginas relacionadas
-✅ Mantenha labels curtos (1-2 palavras)
-✅ Links internos começam com `/`
-
-<Callout type="warning">
-Após publicar mudanças no menu, pode levar 1-2 minutos para atualizar em todo o site devido ao cache.
+<Callout type="warning" title="Links">
+  Links internos devem começar com `/`. Links externos devem ter `https://`.
 </Callout>
