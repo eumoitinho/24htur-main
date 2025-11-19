@@ -1,5 +1,18 @@
 {
   "title": "Homepage",
   "icon": "Home",
-  "pages": ["index", "hero", "metricas", "servicos", "clientes", "depoimentos", "contato"]
+  "pages": [
+    "index",
+    "hero",
+    "metricas",
+    "problemas-que-resolvemos",
+    "experiencia-24h",
+    "clientes",
+    "servicos",
+    "por-que-escolher",
+    "sobre-empresa",
+    "equipe",
+    "depoimentos",
+    "contato"
+  ]
 }
