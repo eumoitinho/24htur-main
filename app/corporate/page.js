@@ -1,5 +1,6 @@
 import HeaderCorporate from '../../components/corporate/HeaderCorporate';
 import HeroCorporate from '../../components/corporate/HeroCorporate';
+import DiagnosticoCorporate from '../../components/corporate/DiagnosticoCorporate';
 import ClientsCorporate from '../../components/corporate/ClientsCorporate';
 import DilemaCorporate from '../../components/corporate/DilemaCorporate';
 import SolucaoCorporate from '../../components/corporate/SolucaoCorporate';
@@ -17,8 +18,11 @@ export default function Corporate() {
     <div className="min-h-screen bg-white">
       <HeaderCorporate />
       <main>
-        {/* Bloco 1 - Hook + Formulário */}
+        {/* Bloco 1 - Hook */}
         <HeroCorporate />
+        
+        {/* Bloco 1.5 - Formulário de Diagnóstico + Métricas */}
+        <DiagnosticoCorporate />
         
         {/* Bloco 2 - Prova social (logos clientes) */}
         <ClientsCorporate />

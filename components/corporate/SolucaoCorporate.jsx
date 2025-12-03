@@ -29,7 +29,7 @@ const SolucaoCorporate = () => {
   ];
 
   return (
-    <section className="py-14 sm:py-16 lg:py-18">
+    <section id="solucao" className="py-16 sm:py-20 lg:py-24 bg-white">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         {/* Header */}
         <div className="max-w-3xl">
