@@ -48,7 +48,7 @@ const TestimonialsCorporate = () => {
           </motion.div>
           
           <motion.h2 
-            className="text-4xl sm:text-5xl font-bold tracking-tight text-slate-900 mb-6"
+            className="text-4xl sm:text-5xl lg:text-6xl font-semibold tracking-tight text-slate-900 mb-6"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}

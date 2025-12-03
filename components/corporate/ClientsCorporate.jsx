@@ -3,6 +3,7 @@
 import React, { useMemo } from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
+import { Users } from 'lucide-react';
 
 // Logos hardcoded para fallback
 const rawLogos = [
@@ -31,19 +32,20 @@ const ClientsCorporate = () => {
   const duplicatedLogos = useMemo(() => [...rawLogos, ...rawLogos], []);
 
   return (
-    <section className="relative py-16 sm:py-20 bg-brand-beige/60 overflow-hidden">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-3xl text-center">
-          <motion.h2 
-            className="text-3xl sm:text-4xl lg:text-5xl font-semibold tracking-tight text-brand-dark leading-tight"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-          >
+    <section className="py-14 sm:py-16 lg:py-18">
+      <div className="mx-auto max-w-7xl px-6 lg:px-8">
+        {/* Header */}
+        <div className="max-w-2xl">
+          <div className="inline-flex items-center gap-2">
+            <Users className="h-5 w-5 text-brand-dark" strokeWidth={1.5} />
+            <span className="text-[14px] font-semibold uppercase tracking-[0.09em] text-brand-dark">
+              Prova Social
+            </span>
+          </div>
+          <h2 className="mt-3 text-4xl font-semibold tracking-tight text-slate-900">
             A escolha de quem não abre mão de{' '}
             <span className="text-brand-red">controle e cuidado</span>
-          </motion.h2>
+          </h2>
         </div>
 
         {/* Marquee Container */}
