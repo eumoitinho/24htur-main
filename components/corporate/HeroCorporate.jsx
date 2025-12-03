@@ -6,7 +6,6 @@ import { motion } from 'framer-motion';
 import { ArrowRight, Building2, Clock, Award, Users, RotateCw, CheckCircle2, User, AtSign, Phone } from 'lucide-react';
 import { trackFormSubmit } from '../../utils/gtm';
 import { registerInteraction } from '../../utils/tracking/engagement';
-import Logo from '../Logo';
 
 const HeroCorporate = () => {
   const [formData, setFormData] = useState({
@@ -84,8 +83,8 @@ const HeroCorporate = () => {
           
           {/* Overlays */}
           <div className="absolute inset-0" aria-hidden="true">
-            <div className="absolute inset-0 bg-[#06060a]/45" />
-            <div className="absolute inset-0 bg-gradient-to-r from-[#06060a]/95 via-[#06060a]/70 to-[#06060a]/30" />
+            <div className="absolute inset-0 bg-[#06060a]/35" />
+            <div className="absolute inset-0 bg-gradient-to-r from-[#06060a]/90 via-[#06060a]/60 to-[#06060a]/10" />
           </div>
 
           {/* Decorative elements */}
@@ -93,8 +92,8 @@ const HeroCorporate = () => {
             <div className="absolute -left-16 -top-20 h-64 w-64 rounded-full opacity-25 blur-2xl bg-brand-gold"></div>
             <div className="absolute -right-24 -bottom-24 h-80 w-80 rounded-full opacity-15 blur-3xl bg-brand-gold"></div>
             {/* Logo no canto */}
-            <div className="absolute right-6 top-6 hidden lg:block">
-              <Logo className="w-[180px] h-[180px]" />
+            <div className="absolute right-6 top-6 hidden md:block">
+              <img src="/selo-vermelho.png" alt="24H" className="w-[180px] h-[180px] object-contain opacity-30" />
             </div>
           </div>
 
@@ -160,26 +159,23 @@ const HeroCorporate = () => {
               transition={{ duration: 0.8, delay: 0.2 }}
               className="relative"
             >
-              <div className="relative overflow-hidden rounded-3xl bg-neutral-900/95 ring-1 ring-white/10 p-6 sm:p-8 shadow-xl backdrop-blur-sm">
-                {/* Ambient gradient */}
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(245,197,24,.12),transparent_50%),radial-gradient(circle_at_70%_80%,rgba(220,38,38,.10),transparent_55%)]" />
-                
+              <div className="relative overflow-hidden rounded-3xl bg-white/10 backdrop-blur-md ring-1 ring-white/20 p-6 sm:p-8">
                 <div className="relative">
                   {/* Form header */}
                   <div className="text-center mb-6">
-                    <div className="inline-flex items-center gap-2 rounded-full bg-brand-gold/15 px-4 py-2 ring-1 ring-inset ring-brand-gold/30 mb-4">
+                    <div className="inline-flex items-center gap-2 rounded-full bg-brand-gold/20 px-4 py-2 ring-1 ring-inset ring-brand-gold/40 mb-4">
                       <span className="text-xs font-semibold tracking-[0.12em] text-brand-gold uppercase">Diagnóstico Gratuito</span>
                     </div>
                     <h3 className="text-xl sm:text-2xl font-semibold text-white tracking-tight">
                       Receba seu diagnóstico gratuito de otimização
                     </h3>
-                    <p className="mt-3 text-white/60 text-sm leading-relaxed">
+                    <p className="mt-3 text-white/70 text-sm leading-relaxed">
                       Nossa equipe de especialistas fará uma análise rápida do seu cenário atual e apresentará um plano de economia e eficiência.
                     </p>
                   </div>
 
                   {status === 'success' ? (
-                    <div className="rounded-2xl border border-emerald-400/30 bg-emerald-500/10 p-6 flex items-start gap-3 backdrop-blur-sm">
+                    <div className="rounded-2xl border border-emerald-400/30 bg-emerald-500/20 p-6 flex items-start gap-3 backdrop-blur-sm">
                       <CheckCircle2 className="h-6 w-6 text-emerald-400 mt-0.5" />
                       <div className="text-sm text-emerald-200">
                         <p className="font-semibold text-emerald-300">Enviado com sucesso!</p>
@@ -196,7 +192,6 @@ const HeroCorporate = () => {
                   ) : (
                     <form onSubmit={handleSubmit} className="space-y-4">
                       <div>
-                        <label htmlFor="nome-hero" className="block text-xs font-semibold tracking-wide text-white/60 mb-1">Nome</label>
                         <div className="relative">
                           <input
                             id="nome-hero"
@@ -205,15 +200,14 @@ const HeroCorporate = () => {
                             value={formData.nome}
                             onChange={(e) => setFormData({ ...formData, nome: e.target.value })}
                             disabled={status === 'submitting'}
-                            className="w-full h-12 rounded-xl bg-neutral-900 border border-white/10 focus:border-brand-gold focus:ring-brand-gold/30 text-white placeholder:text-white/30 pr-12 pl-3 text-sm"
+                            className="w-full h-12 rounded-xl bg-white/10 border border-white/20 focus:border-brand-gold focus:ring-1 focus:ring-brand-gold/50 text-white placeholder:text-white/50 pl-4 pr-12 text-sm backdrop-blur-sm"
                             placeholder="Seu nome completo"
                           />
-                          <User className="absolute right-3 top-1/2 -translate-y-1/2 h-5 w-5 text-white/30" />
+                          <User className="absolute right-4 top-1/2 -translate-y-1/2 h-5 w-5 text-white/40" />
                         </div>
                       </div>
                       
                       <div>
-                        <label htmlFor="email-hero" className="block text-xs font-semibold tracking-wide text-white/60 mb-1">E-mail</label>
                         <div className="relative">
                           <input
                             id="email-hero"
@@ -222,15 +216,14 @@ const HeroCorporate = () => {
                             value={formData.email}
                             onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                             disabled={status === 'submitting'}
-                            className="w-full h-12 rounded-xl bg-neutral-900 border border-white/10 focus:border-brand-gold focus:ring-brand-gold/30 text-white placeholder:text-white/30 pr-12 pl-3 text-sm"
+                            className="w-full h-12 rounded-xl bg-white/10 border border-white/20 focus:border-brand-gold focus:ring-1 focus:ring-brand-gold/50 text-white placeholder:text-white/50 pl-4 pr-12 text-sm backdrop-blur-sm"
                             placeholder="seu@email.com"
                           />
-                          <AtSign className="absolute right-3 top-1/2 -translate-y-1/2 h-5 w-5 text-white/30" />
+                          <AtSign className="absolute right-4 top-1/2 -translate-y-1/2 h-5 w-5 text-white/40" />
                         </div>
                       </div>
                       
                       <div>
-                        <label htmlFor="telefone-hero" className="block text-xs font-semibold tracking-wide text-white/60 mb-1">Telefone</label>
                         <div className="relative">
                           <input
                             id="telefone-hero"
@@ -239,15 +232,14 @@ const HeroCorporate = () => {
                             value={formData.telefone}
                             onChange={(e) => setFormData({ ...formData, telefone: e.target.value })}
                             disabled={status === 'submitting'}
-                            className="w-full h-12 rounded-xl bg-neutral-900 border border-white/10 focus:border-brand-gold focus:ring-brand-gold/30 text-white placeholder:text-white/30 pr-12 pl-3 text-sm"
+                            className="w-full h-12 rounded-xl bg-white/10 border border-white/20 focus:border-brand-gold focus:ring-1 focus:ring-brand-gold/50 text-white placeholder:text-white/50 pl-4 pr-12 text-sm backdrop-blur-sm"
                             placeholder="(00) 00000-0000"
                           />
-                          <Phone className="absolute right-3 top-1/2 -translate-y-1/2 h-5 w-5 text-white/30" />
+                          <Phone className="absolute right-4 top-1/2 -translate-y-1/2 h-5 w-5 text-white/40" />
                         </div>
                       </div>
                       
                       <div>
-                        <label htmlFor="empresa-hero" className="block text-xs font-semibold tracking-wide text-white/60 mb-1">Empresa</label>
                         <div className="relative">
                           <input
                             id="empresa-hero"
@@ -256,17 +248,17 @@ const HeroCorporate = () => {
                             value={formData.empresa}
                             onChange={(e) => setFormData({ ...formData, empresa: e.target.value })}
                             disabled={status === 'submitting'}
-                            className="w-full h-12 rounded-xl bg-neutral-900 border border-white/10 focus:border-brand-gold focus:ring-brand-gold/30 text-white placeholder:text-white/30 pr-12 pl-3 text-sm"
+                            className="w-full h-12 rounded-xl bg-white/10 border border-white/20 focus:border-brand-gold focus:ring-1 focus:ring-brand-gold/50 text-white placeholder:text-white/50 pl-4 pr-12 text-sm backdrop-blur-sm"
                             placeholder="Nome da sua empresa"
                           />
-                          <Building2 className="absolute right-3 top-1/2 -translate-y-1/2 h-5 w-5 text-white/30" />
+                          <Building2 className="absolute right-4 top-1/2 -translate-y-1/2 h-5 w-5 text-white/40" />
                         </div>
                       </div>
 
                       <motion.button
                         type="submit"
                         disabled={status === 'submitting'}
-                        className="w-full mt-4 inline-flex items-center justify-center gap-2 rounded-full px-8 py-4 text-sm font-semibold text-white tracking-wide transition shadow-lg shadow-brand-red/20 ring-1 ring-brand-red/40 bg-gradient-to-b from-brand-red to-brand-red/90 hover:from-brand-red/90 hover:to-brand-red focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="w-full mt-2 inline-flex items-center justify-center gap-2 rounded-full px-6 py-4 text-sm font-semibold text-white tracking-wide transition shadow-lg bg-brand-red hover:bg-brand-red/90 focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed"
                         whileHover={{ scale: status === 'submitting' ? 1 : 1.02 }}
                         whileTap={{ scale: 0.98 }}
                       >

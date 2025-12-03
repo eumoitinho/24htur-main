@@ -3,7 +3,6 @@
 import React from 'react';
 import { Phone } from 'lucide-react';
 import { motion } from 'framer-motion';
-import Logo from '../Logo';
 
 const HeaderCorporate = () => {
   return (
@@ -18,12 +17,16 @@ const HeaderCorporate = () => {
           {/* Logo */}
           <motion.a
             href="/"
-            className="flex items-center"
+            className="flex items-center h-10"
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <Logo className="h-10" />
+            <img
+              src="/selo-vermelho.png"
+              alt="24H Escritório de Viagens"
+              className="h-full w-auto"
+            />
           </motion.a>
 
           {/* CTA Button */}
