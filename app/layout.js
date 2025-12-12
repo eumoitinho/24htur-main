@@ -1,6 +1,7 @@
 import { Plus_Jakarta_Sans } from 'next/font/google'
 import './globals.css'
 import TrackingProvider from '../components/TrackingProvider'
+import RDStationWhatsApp from '../components/RDStationWhatsApp'
 
 const plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ['latin'],
@@ -26,12 +27,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
 })(window,document,'script','dataLayer','GTM-M24J5ZPS');`
         }} />
-        {/* WhatsApp Script */}
-        <script 
-          type="text/javascript" 
-          async 
-          src="https://d335luupugsy2.cloudfront.net/js/loader-scripts/2deb2af1-fe70-43e5-ab3b-70dc4e7a9a77-loader.js"
-        />
       </head>
       <body>
         {/* Google Tag Manager (noscript) */}
@@ -42,6 +37,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         <TrackingProvider>
           {children}
         </TrackingProvider>
+        <RDStationWhatsApp />
       </body>
     </html>
   )
