@@ -58,7 +58,7 @@ const OfertaCorporate = () => {
   };
 
   return (
-    <section className="relative py-24 sm:py-32 bg-gradient-to-br from-brand-dark via-brand-dark to-slate-900 overflow-hidden">
+    <section id="contato" className="relative py-24 sm:py-32 bg-gradient-to-br from-brand-dark via-brand-dark to-slate-900 overflow-hidden">
       {/* Background effects */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(245,197,24,0.15),transparent_50%),radial-gradient(circle_at_70%_80%,rgba(220,38,38,0.15),transparent_55%)]" />
       
