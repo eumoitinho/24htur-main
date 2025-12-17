@@ -1,0 +1,5 @@
+{
+  "title": "Configurações Globais",
+  "icon": "Settings",
+  "pages": ["index", "header", "footer", "whatsapp"]
+}

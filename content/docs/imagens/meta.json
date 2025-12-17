@@ -1,0 +1,5 @@
+{
+  "title": "Gerenciamento de Imagens",
+  "icon": "Image",
+  "pages": ["index", "upload", "tamanhos", "otimizacao"]
+}

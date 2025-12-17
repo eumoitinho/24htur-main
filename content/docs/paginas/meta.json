@@ -1,0 +1,14 @@
+{
+  "title": "Páginas do Site",
+  "icon": "FileText",
+  "pages": [
+    "index",
+    "sobre",
+    "equipe",
+    "eventos",
+    "lazer",
+    "opcoes-viagem",
+    "trabalhe-conosco",
+    "cbenf"
+  ]
+}

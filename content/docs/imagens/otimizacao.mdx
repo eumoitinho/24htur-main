@@ -1,0 +1,182 @@
+---
+title: Otimização de Imagens
+description: Como reduzir tamanho de arquivo sem perder qualidade
+---
+
+import { Callout } from '@/components/docs/Callout';
+import { StepByStep } from '@/components/docs/StepByStep';
+
+# Otimização de Imagens
+
+Imagens otimizadas carregam mais rápido, economizam internet e melhoram a experiência do usuário. Aprenda a comprimir imagens mantendo a qualidade.
+
+## Por que Otimizar?
+
+✅ Site carrega mais rápido
+✅ Melhor experiência do usuário
+✅ Melhor posicionamento no Google (SEO)
+✅ Economiza banda de internet
+✅ Funciona melhor em celulares
+
+<Callout type="warning">
+Uma imagem de 5MB pode ser reduzida para 300KB sem perda visível de qualidade!
+</Callout>
+
+## Ferramenta Recomendada: Squoosh
+
+**Site**: squoosh.app (Google)
+
+<StepByStep>
+1. Acesse squoosh.app no navegador
+
+2. Arraste sua imagem para a página
+
+3. A ferramenta mostrará o tamanho original
+
+4. No painel direito, escolha:
+   - **Format**: WebP (recomendado) ou MozJPEG
+   - **Quality**: 75-85 (equilíbrio qualidade/tamanho)
+
+5. Use o slider de comparação para ver diferença
+
+6. Quando estiver satisfeito, clique em **"Download"**
+
+7. Use a imagem otimizada no Sanity
+</StepByStep>
+
+## Outras Ferramentas Online
+
+### TinyPNG (tinypng.com)
+- **Pros**: Muito fácil de usar, excelente compressão
+- **Limite**: 5MB por imagem, 20 imagens por vez
+- **Formatos**: PNG e JPG
+
+### Compressor.io
+- **Pros**: Suporta JPG, PNG, GIF, SVG, WebP
+- **Limite**: 10MB por arquivo
+- **Feature**: Compressão lossy e lossless
+
+### ImageOptim (Mac)
+- **Pros**: Aplicativo desktop, processa múltiplas imagens
+- **Cons**: Apenas para macOS
+- **Grátis**: Sim
+
+## Ferramentas Desktop
+
+### Para Windows
+- **FileOptimizer** (grátis)
+- **RIOT** (grátis)
+- **XnConvert** (grátis)
+
+### Para Mac
+- **ImageOptim** (grátis)
+- **JPEGmini** (pago, excelente)
+
+## Configurações Recomendadas
+
+### Para JPG
+- **Quality**: 75-85%
+- **Progressive**: Sim
+- **Remover metadata**: Sim
+
+### Para PNG
+- **Compression**: 75-85%
+- **Dithering**: Nenhum
+- **Remover metadata**: Sim
+
+### Para WebP
+- **Quality**: 80%
+- **Method**: 4-6
+- **Remover metadata**: Sim
+
+<Callout type="success" title="WebP é o Futuro">
+WebP oferece 25-35% mais compressão que JPG com a mesma qualidade visual. Use sempre que possível!
+</Callout>
+
+## Comparação de Formatos
+
+**Mesmo imagem, diferentes formatos:**
+
+| Formato | Tamanho | Qualidade |
+|---------|---------|-----------|
+| JPG Original | 2.5MB | Alta |
+| JPG Otimizado | 400KB | Alta |
+| PNG Original | 4.2MB | Alta |
+| PNG Otimizado | 800KB | Alta |
+| WebP | 280KB | Alta |
+
+## Batch Processing (Múltiplas Imagens)
+
+Se precisa otimizar muitas imagens de uma vez:
+
+### Online
+1. Acesse **iloveimg.com/compress-image**
+2. Selecione até 15 imagens
+3. Clique em "Compress Images"
+4. Download do ZIP com todas otimizadas
+
+### Desktop (Windows)
+1. Baixe **XnConvert** (grátis)
+2. Adicione múltiplas imagens
+3. Configure ações: Resize + Output
+4. Processe em lote
+
+## Checklist de Otimização
+
+Antes de fazer upload no Sanity:
+
+- [ ] Imagem está no tamanho correto? (ver [Tamanhos](/docs/imagens/tamanhos))
+- [ ] Formato é JPG, PNG ou WebP?
+- [ ] Arquivo é menor que 500KB?
+- [ ] Se maior que 500KB, foi comprimido?
+- [ ] Qualidade visual ainda está boa?
+- [ ] Metadata removida? (data, localização, câmera)
+
+## Erros Comuns
+
+### ❌ Sobre-comprimir
+Comprimir demais cria artefatos e pixelização.
+
+**Solução**: Mantenha quality acima de 70%
+
+### ❌ Formato errado
+Usar PNG para fotos (arquivos enormes).
+
+**Solução**: PNG para logos/ícones, JPG/WebP para fotos
+
+### ❌ Redimensionar no Sanity
+Upload de imagem gigante esperando que o Sanity redimensione.
+
+**Solução**: Redimensione ANTES do upload
+
+## Automatização Avançada
+
+Para sites com muitas imagens, considere:
+
+- **Cloudinary** (serviço de otimização automática)
+- **ImageKit** (CDN com otimização)
+- **Sanity's built-in image pipeline** (já otimiza automaticamente)
+
+<Callout type="info">
+O Sanity já faz alguma otimização automática, mas imagens menores desde o início são sempre melhores!
+</Callout>
+
+## Teste de Performance
+
+Após otimizar imagens, teste o site:
+
+1. Abra o Chrome
+2. Pressione F12 (DevTools)
+3. Vá em "Network"
+4. Recarregue a página
+5. Veja o tamanho total transferido
+6. Objetivo: < 3MB para página inicial
+
+**Ferramentas de teste:**
+- **PageSpeed Insights**: pagespeed.web.dev
+- **GTmetrix**: gtmetrix.com
+- **WebPageTest**: webpagetest.org
+
+<Callout type="success" title="Otimização é Investimento">
+Tempo gasto otimizando imagens retorna em melhor experiência, mais conversões e melhor SEO!
+</Callout>
