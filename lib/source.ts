@@ -1,4 +1,4 @@
-import { docs, meta } from '@/.source';
+import { docs, meta } from '../.source';
 
 export const source = {
   getPage(slugs?: string[]) {

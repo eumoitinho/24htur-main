@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react';
 import Link from 'next/link';
 import { Sidebar } from './components/Sidebar';
-import { source } from '@/lib/source';
+import { source } from '../../lib/source';
 
 export default function Layout({ children }: { children: ReactNode }) {
   // Force serialize the entire pageTree to break the proxy chain
