@@ -3,21 +3,22 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Users, ArrowRight } from 'lucide-react';
-import { useCBEnfPage } from '../../utils/hooks/useSanityData';
+import { useEventPageContext } from './EventPageContext';
 import { resolveImage, portableTextToPlain } from '../../utils/lib/sanity';
 import Image from 'next/image';
 import TourModalCBEnf from './modals/TourModalCBEnf';
 
 const ToursCBEnf = () => {
-  const { data: cbenfData } = useCBEnfPage();
+  const eventData = useEventPageContext();
   const [selectedTour, setSelectedTour] = useState(null);
   const [showAll, setShowAll] = useState(false);
 
-  const tours = cbenfData?.tours || {};
+  const tours = eventData?.tours || {};
   const title = portableTextToPlain(tours.title) || 'Aproveite sua estadia para conhecer o melhor de Porto Alegre e região com nossos tours privativos.';
   const info = Array.isArray(tours.info) ? tours.info : [];
   const tourItems = Array.isArray(tours.items) ? tours.items : [];
   const displayedTours = showAll ? tourItems : tourItems.slice(0, 6);
+  const eventName = eventData?.hero?.eventName || eventData?.card?.name || 'Evento 24H';
 
   if (tourItems.length === 0) {
     return null;
@@ -164,6 +165,7 @@ const ToursCBEnf = () => {
       {selectedTour && (
         <TourModalCBEnf
           tour={selectedTour}
+          eventName={eventName}
           onClose={() => setSelectedTour(null)}
         />
       )}

@@ -3,11 +3,11 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { CheckCircle, Award, Users, Shield, Clock } from 'lucide-react';
-import { useCBEnfPage } from '../../utils/hooks/useSanityData';
+import { useEventPageContext } from './EventPageContext';
 import { portableTextToPlain } from '../../utils/lib/sanity';
 
 const WhyChooseCBEnf = () => {
-  const { data: cbenfData } = useCBEnfPage();
+  const eventData = useEventPageContext();
 
   const defaultBenefits = [
     "Experiência de 15+ anos organizando viagens para eventos científicos",
@@ -41,12 +41,12 @@ const WhyChooseCBEnf = () => {
     }
   ];
 
-  const benefits = Array.isArray(cbenfData?.whyChoose?.benefits) && cbenfData.whyChoose.benefits.length > 0
-    ? cbenfData.whyChoose.benefits
+  const benefits = Array.isArray(eventData?.whyChoose?.benefits) && eventData.whyChoose.benefits.length > 0
+    ? eventData.whyChoose.benefits
     : defaultBenefits;
 
-  const stats = Array.isArray(cbenfData?.whyChoose?.stats) && cbenfData.whyChoose.stats.length > 0
-    ? cbenfData.whyChoose.stats.map(stat => ({
+  const stats = Array.isArray(eventData?.whyChoose?.stats) && eventData.whyChoose.stats.length > 0
+    ? eventData.whyChoose.stats.map(stat => ({
         ...stat,
         icon: stat.number?.includes('2.500') ? Users : 
               stat.number?.includes('15') ? Award :
@@ -54,8 +54,8 @@ const WhyChooseCBEnf = () => {
       }))
     : defaultStats;
 
-  const title = portableTextToPlain(cbenfData?.whyChoose?.title) || 'Especialistas em turismo científico';
-  const description = portableTextToPlain(cbenfData?.whyChoose?.description) || 'Somos referência na organização de viagens para eventos científicos e congressos médicos. Nossa experiência garante que você chegue descansado, hospedado no melhor local e pronto para aproveitar cada momento do CBEnf 2024.';
+  const title = portableTextToPlain(eventData?.whyChoose?.title) || 'Especialistas em turismo científico';
+  const description = portableTextToPlain(eventData?.whyChoose?.description) || 'Somos referência na organização de viagens para eventos científicos e congressos médicos. Nossa experiência garante que você chegue descansado, hospedado no melhor local e pronto para aproveitar cada momento do CBEnf 2024.';
 
   return (
     <section className="py-16 sm:py-20 lg:py-24 bg-white">

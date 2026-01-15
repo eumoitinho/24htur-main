@@ -11,7 +11,7 @@ import {
   EventosInfoPage,
   OpcoesViagemPage,
   TrabalheConoscoPage,
-  CBEnfPage
+  EventPage
 } from '../types/sanity';
 
 // Static fallbacks imported directly to avoid dynamic import expressions
@@ -211,8 +211,29 @@ export const useTrabalheConoscoPage = createPageHook<TrabalheConoscoPage>(
   'Erro ao carregar página trabalhe conosco'
 );
 
-export const useCBEnfPage = createPageHook<CBEnfPage>(
-  'cbenfPage',
-  null,
-  'Erro ao carregar página CBENF'
-);
+export const useEventPages = () => {
+  const [data, setData] = useState<EventPage[] | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+        const result = await getDocuments('eventPage');
+        setData(Array.isArray(result) ? result : result ? [result] : []);
+      } catch (err) {
+        const errorMessage = err instanceof Error ? err.message : 'Erro ao carregar páginas de evento';
+        setError(errorMessage);
+        console.error('Erro ao carregar páginas de evento:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  return { data, loading, error };
+};

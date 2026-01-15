@@ -3,11 +3,11 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { CreditCard, Calendar, Shield, DollarSign, Heart, Check } from 'lucide-react';
-import { useCBEnfPage } from '../../utils/hooks/useSanityData';
+import { useEventPageContext } from './EventPageContext';
 import { portableTextToPlain } from '../../utils/lib/sanity';
 
 const PaymentCBEnf = () => {
-  const { data: cbenfData } = useCBEnfPage();
+  const eventData = useEventPageContext();
 
   const handleSolicitarCotacao = () => {
     const formSection = document.getElementById('contato');
@@ -16,7 +16,7 @@ const PaymentCBEnf = () => {
     }
   };
 
-  const payment = cbenfData?.payment || {};
+  const payment = eventData?.payment || {};
   const title = portableTextToPlain(payment.title) || 'Conheça nossas formas de pagamento';
   const accommodationAndTours = payment.accommodationAndTours || {};
   const travelInsurance = payment.travelInsurance || {};
@@ -217,4 +217,3 @@ const PaymentCBEnf = () => {
 };
 
 export default PaymentCBEnf;
-
