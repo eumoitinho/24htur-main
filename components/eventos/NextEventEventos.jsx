@@ -4,11 +4,12 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { ExternalLink } from 'lucide-react';
-import { useEventosPage } from '../../utils/hooks/useSanityData';
+import { useEventosPage, useEventPages } from '../../utils/hooks/useSanityData';
 import { portableTextToPlain } from '../../utils/lib/sanity';
 
 const NextEventEventos = () => {
   const { data: eventosData } = useEventosPage();
+  const { data: eventPages } = useEventPages();
 
   // Garante que sempre seja um array
   const upcomingEvents = Array.isArray(eventosData?.upcomingEvents?.events)
@@ -19,8 +20,9 @@ const NextEventEventos = () => {
 
   const sectionTitle = eventosData?.upcomingEvents?.title || 'Confira as condições especiais para nossos próximos eventos:';
 
-  // Se não houver eventos, usa fallback
-  const events = upcomingEvents.length > 0 ? upcomingEvents : [{
+  const activeEvents = Array.isArray(eventPages) ? eventPages : [];
+
+  const events = activeEvents.length > 0 ? activeEvents : upcomingEvents.length > 0 ? upcomingEvents : [{
     name: '75º Congresso Brasileiro de Enfermagem - Porto Alegre/RS',
     preCongress: '22 e 23 de novembro',
     mainEvent: '23 a 26 de novembro de 2025',
@@ -46,13 +48,14 @@ const NextEventEventos = () => {
 
           <div className="grid gap-8">
             {events.map((event, index) => {
-              const eventName = event.name || event.title || '';
-              const preCongress = event.preCongress || '';
-              const mainEvent = event.mainEvent || event.mainEventDates || '';
-              const location = event.location || '';
-              const address = event.address || '';
-              const link = event.link || '/eventos/cbenf';
-              const linkText = event.linkText || 'SAIBA MAIS!';
+              const eventCard = event.card || {};
+              const eventName = eventCard.name || event.hero?.eventName || event.name || event.title || '';
+              const preCongress = eventCard.preCongress || event.hero?.preCongressDates || event.preCongress || '';
+              const mainEvent = eventCard.mainEvent || event.hero?.mainEventDates || event.mainEvent || '';
+              const location = eventCard.location || event.hero?.location || event.location || '';
+              const address = eventCard.address || event.about?.locationDescription || event.address || '';
+              const link = event.slug?.current ? `/eventos/${event.slug.current}` : event.link || '/eventos/cbenf';
+              const linkText = eventCard.linkText || event.linkText || 'SAIBA MAIS!';
               
               return (
                 <div key={index} className="bg-white rounded-2xl p-8 shadow-lg">

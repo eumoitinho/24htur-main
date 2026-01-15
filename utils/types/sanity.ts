@@ -654,3 +654,137 @@ export interface CBEnfPage {
     subtitle?: string;
   };
 }
+
+export interface EventPage {
+  _id: string;
+  _type: 'eventPage';
+  title: string;
+  slug: {
+    current: string;
+  };
+  isActive: boolean;
+  seoTitle?: string;
+  seoDescription?: string;
+  card?: {
+    name?: string;
+    preCongress?: string;
+    mainEvent?: string;
+    location?: string;
+    address?: string;
+    linkText?: string;
+  };
+  hero: {
+    title: string;
+    subtitle: string;
+    ctaText: string;
+    eventName: string;
+    preCongressDates?: string;
+    mainEventDates: string;
+    location: string;
+    participants?: string;
+    backgroundImage?: SanityImage;
+  };
+  about: {
+    title: string;
+    subtitle?: string;
+    description: string;
+    expectedParticipants?: string;
+    edition?: string;
+    parallelEvents?: string;
+    preCongressDescription?: string;
+    mainEventDescription?: string;
+    locationDescription?: string;
+    ctaText: string;
+    image?: SanityImage;
+  };
+  services: {
+    title: string;
+    subtitle?: string;
+    items: {
+      _key: string;
+      title: string;
+      description: string;
+    }[];
+  };
+  accommodation: {
+    title: string;
+    subtitle?: string;
+    hotels: {
+      _key: string;
+      name: string;
+      distance: string;
+      basePrice: string;
+      badge?: string;
+      image?: SanityImage;
+      details: string[];
+    }[];
+  };
+  whyChoose: {
+    title: string;
+    description?: string;
+    benefits: string[];
+    stats: {
+      _key: string;
+      number: string;
+      text: string;
+    }[];
+  };
+  flights: {
+    title: string;
+    description?: string;
+    benefits: {
+      _key?: string;
+      title: string;
+      description: string;
+    }[];
+    note?: string;
+    ctaText?: string;
+    image?: SanityImage;
+  };
+  tours: {
+    title: string;
+    info?: string[];
+    items: {
+      _key: string;
+      name: string;
+      price: string;
+      priceDetail?: string;
+      minimum?: string;
+      description: string;
+      image?: SanityImage;
+    }[];
+  };
+  payment: {
+    title: string;
+    accommodationAndTours?: {
+      options?: {
+        times: string;
+        method: string;
+      }[];
+      note?: string;
+    };
+    travelInsurance?: {
+      period?: string;
+      planName?: string;
+      prices?: {
+        ageRange: string;
+        price: string;
+      }[];
+      note?: string;
+      paymentMethods?: string[];
+    };
+    ctaText?: string;
+  };
+  about24H: {
+    title: string;
+    description?: any[];
+    foundedYear?: string;
+    image?: SanityImage;
+    ctaText?: string;
+  };
+  contact: {
+    title: string;
+    subtitle?: string;
+    ctaText?: string;
+  };
+}

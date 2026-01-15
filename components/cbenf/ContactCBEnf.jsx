@@ -1,11 +1,14 @@
 'use client'
 
 import React, { useState, useEffect } from 'react';
-import { Mail, Phone, MapPin, User, AtSign, Send, CheckCircle2, RotateCw, Calendar, Users } from 'lucide-react';
+import { Mail, Phone, User, AtSign, Send, CheckCircle2, RotateCw, Calendar } from 'lucide-react';
 import { trackFormSubmit } from '../../utils/gtm';
 import { initFormTracking, registerInteraction } from '../../utils/tracking/engagement';
+import { useEventPageContext } from './EventPageContext';
+import { portableTextToPlain } from '../../utils/lib/sanity';
 
 const ContactCBEnf = () => {
+  const eventData = useEventPageContext();
   const [formData, setFormData] = useState({
     nome: '',
     email: '',
@@ -19,6 +22,16 @@ const ContactCBEnf = () => {
     lgpd: false
   });
   const [status, setStatus] = useState('idle'); // idle | submitting | success | error
+  const eventName = eventData?.hero?.eventName || eventData?.card?.name || 'Evento 24H';
+  const contact = eventData?.contact || {};
+  const contactTitle = portableTextToPlain(contact.title) || `Garanta sua participação no ${eventName}`;
+  const contactSubtitle = portableTextToPlain(contact.subtitle) || 'Preencha o formulário e receba uma proposta personalizada para sua viagem.';
+  const ctaText = portableTextToPlain(contact.ctaText) || 'SOLICITAR PROPOSTA';
+  const eventLabel = [eventName, eventData?.hero?.location].filter(Boolean).join(' - ');
+  const eventDates = [
+    eventData?.hero?.preCongressDates ? `Pré-evento: ${eventData.hero.preCongressDates}` : null,
+    eventData?.hero?.mainEventDates ? `Evento principal: ${eventData.hero.mainEventDates}` : null
+  ].filter(Boolean);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -41,8 +54,8 @@ const ContactCBEnf = () => {
           periodo: formData.periodo,
           pessoas: formData.pessoas,
           observacoes: formData.observacoes,
-          source: 'form_cbenf',
-          evento: 'CBEnf 2024'
+          source: 'form_evento',
+          evento: eventName
         })
       });
 
@@ -51,7 +64,7 @@ const ContactCBEnf = () => {
       if (result.success) {
         setStatus('success');
         trackFormSubmit('success', {
-          evento: 'CBEnf 2024',
+          evento: eventName,
           pacote: formData.pacote
         });
         registerInteraction('form_submit');
@@ -73,7 +86,7 @@ const ContactCBEnf = () => {
   };
 
   useEffect(() => {
-    initFormTracking('#form-contato-cbenf');
+    initFormTracking('#form-contato-evento');
   }, []);
 
   return (
@@ -88,10 +101,16 @@ const ContactCBEnf = () => {
             <span className="text-xs font-semibold tracking-[0.15em] text-brand-gold uppercase">Reserve sua vaga</span>
           </div>
           <h2 className="mt-6 text-4xl sm:text-5xl font-semibold tracking-tight text-white leading-tight">
-            Garanta sua participação no <span className="text-brand-gold">CBEnf 2024</span>
+            {contactTitle.includes(eventName) ? (
+              <>
+                Garanta sua participação no <span className="text-brand-gold">{eventName}</span>
+              </>
+            ) : (
+              contactTitle
+            )}
           </h2>
           <p className="mt-4 text-lg text-white/70 leading-relaxed">
-            Preencha o formulário e receba uma proposta personalizada para sua viagem ao Congresso Brasileiro de Enfermagem em Goiânia.
+            {contactSubtitle}
           </p>
         </div>
 
@@ -101,19 +120,19 @@ const ContactCBEnf = () => {
           <div className="relative grid grid-cols-1 lg:grid-cols-2 divide-y lg:divide-y-0 lg:divide-x divide-white/10">
             {/* Left info column */}
             <div className="p-6 sm:p-10">
-              <p className="text-[11px] uppercase tracking-[0.18em] text-white/50">CBEnf 2024 - Goiânia</p>
+              <p className="text-[11px] uppercase tracking-[0.18em] text-white/50">{eventLabel}</p>
               <h3 className="mt-3 text-3xl sm:text-4xl text-white tracking-tight">Pacotes exclusivos para congressistas</h3>
               <p className="mt-4 text-sm text-white/70 leading-relaxed max-w-md">
-                Oferecemos soluções completas para sua participação no maior evento de enfermagem do Brasil, com hospedagem estratégica e suporte especializado.
+                Oferecemos soluções completas para sua participação no evento, com hospedagem estratégica e suporte especializado.
               </p>
 
               <ul className="mt-8 space-y-3 text-[15px]">
                 {[
-                  "Hospedagem próxima ao convention center",
+                  "Hospedagem próxima ao local do evento",
                   "Transfer aeroporto-hotel-evento",
-                  "Suporte presencial durante o congresso",
+                  "Suporte durante o evento",
                   "Tarifas especiais para grupos",
-                  "City tour opcional em Goiânia"
+                  "City tour opcional"
                 ].map(item => (
                   <li key={item} className="flex items-center gap-3 text-white/85">
                     <span className="h-1.5 w-1.5 rounded-full bg-brand-gold shadow-[0_0_0_3px_rgba(245,197,24,0.25)]" />
@@ -129,9 +148,17 @@ const ContactCBEnf = () => {
                   <span className="text-sm font-semibold">Informações do Evento</span>
                 </div>
                 <div className="space-y-1 text-sm text-white/80">
-                  <p><span className="text-white/60">Data:</span> 12 a 15 de Novembro de 2024</p>
-                  <p><span className="text-white/60">Local:</span> Goiânia Convention Center</p>
-                  <p><span className="text-white/60">Esperados:</span> 15.000+ profissionais</p>
+                  {eventDates.length > 0 ? (
+                    eventDates.map((date) => (
+                      <p key={date}><span className="text-white/60">Data:</span> {date}</p>
+                    ))
+                  ) : (
+                    <p><span className="text-white/60">Data:</span> Consulte a programação do evento</p>
+                  )}
+                  <p><span className="text-white/60">Local:</span> {eventData?.hero?.location || 'Consulte o local do evento'}</p>
+                  {eventData?.about?.expectedParticipants && (
+                    <p><span className="text-white/60">Esperados:</span> {eventData.about.expectedParticipants}</p>
+                  )}
                 </div>
               </div>
 
@@ -164,17 +191,17 @@ const ContactCBEnf = () => {
 
             {/* Right form column */}
             <form
-              id="form-contato-cbenf"
+              id="form-contato-evento"
               onSubmit={handleSubmit}
               className="p-6 sm:p-10 space-y-6"
-              aria-label="Formulário de reserva CBEnf 2024"
+              aria-label={`Formulário de reserva ${eventName}`}
             >
               {status === 'success' ? (
                 <div className="rounded-2xl border border-emerald-400/30 bg-emerald-500/10 p-6 flex items-start gap-3 backdrop-blur-sm" role="status" aria-live="polite">
                   <CheckCircle2 className="h-6 w-6 text-emerald-400 mt-0.5" />
                   <div className="text-sm text-emerald-200">
                     <p className="font-semibold text-emerald-300">Solicitação enviada com sucesso!</p>
-                    <p className="mt-1 leading-relaxed">Recebemos seus dados e entraremos em contato em breve com uma proposta personalizada para o CBEnf 2024.</p>
+                    <p className="mt-1 leading-relaxed">Recebemos seus dados e entraremos em contato em breve com uma proposta personalizada para o {eventName}.</p>
                     <button
                       type="button"
                       onClick={() => setStatus('idle')}
@@ -375,7 +402,7 @@ const ContactCBEnf = () => {
                       ) : (
                         <>
                           <Send className="h-4 w-4" strokeWidth={1.5} />
-                          <span>Solicitar Proposta CBEnf 2024</span>
+                          <span>{ctaText}</span>
                         </>
                       )}
                     </button>

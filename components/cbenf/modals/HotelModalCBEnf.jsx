@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, MapPin, Check, Phone, Mail, User } from 'lucide-react';
 
-const HotelModalCBEnf = ({ hotel, onClose }) => {
+const HotelModalCBEnf = ({ hotel, eventName, onClose }) => {
   const [formData, setFormData] = useState({
     nome: '',
     email: '',
@@ -30,8 +30,8 @@ const HotelModalCBEnf = ({ hotel, onClose }) => {
           cidade: '',
           mensagem: `Interesse no hotel: ${hotel.name} - Distância: ${hotel.distance} - Preço base: ${hotel.basePrice}`,
           timestamp: new Date().toISOString(),
-          origem: 'Hotel - Modal CBENF',
-          evento: 'CBEnf 2025'
+          origem: 'Hotel - Modal Evento',
+          evento: eventName || 'Evento 24H'
         })
       });
 
@@ -178,4 +178,3 @@ const HotelModalCBEnf = ({ hotel, onClose }) => {
 };
 
 export default HotelModalCBEnf;
-

@@ -6,7 +6,7 @@ import { X, Users, Phone, Mail, User } from 'lucide-react';
 import { resolveImage, portableTextToPlain } from '../../../utils/lib/sanity';
 import Image from 'next/image';
 
-const TourModalCBEnf = ({ tour, onClose }) => {
+const TourModalCBEnf = ({ tour, eventName, onClose }) => {
   const [formData, setFormData] = useState({
     nome: '',
     email: '',
@@ -32,8 +32,8 @@ const TourModalCBEnf = ({ tour, onClose }) => {
           cidade: '',
           mensagem: `Interesse no passeio: ${portableTextToPlain(tour.name) || tour.name} - Preço: ${tour.price || 'R$ 0,00'}`,
           timestamp: new Date().toISOString(),
-          origem: 'Passeio - Modal CBENF',
-          evento: 'CBEnf 2025'
+          origem: 'Passeio - Modal Evento',
+          evento: eventName || 'Evento 24H'
         })
       });
 
@@ -189,4 +189,3 @@ const TourModalCBEnf = ({ tour, onClose }) => {
 };
 
 export default TourModalCBEnf;
-

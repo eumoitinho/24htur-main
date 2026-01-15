@@ -3,22 +3,23 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { MapPin, ArrowRight } from 'lucide-react';
-import { useCBEnfPage } from '../../utils/hooks/useSanityData';
+import { useEventPageContext } from './EventPageContext';
 import { resolveImage, portableTextToPlain } from '../../utils/lib/sanity';
 import Image from 'next/image';
 import HotelModalCBEnf from './modals/HotelModalCBEnf';
 
 const AccommodationCBEnf = () => {
-  const { data: cbenfData } = useCBEnfPage();
+  const eventData = useEventPageContext();
   const [selectedHotel, setSelectedHotel] = useState(null);
   const [showAll, setShowAll] = useState(false);
 
-  const hotels = Array.isArray(cbenfData?.accommodation?.hotels) && cbenfData.accommodation.hotels.length > 0
-    ? cbenfData.accommodation.hotels
+  const hotels = Array.isArray(eventData?.accommodation?.hotels) && eventData.accommodation.hotels.length > 0
+    ? eventData.accommodation.hotels
     : [];
 
-  const title = portableTextToPlain(cbenfData?.accommodation?.title) || 'Hospedagem com localização estratégica';
-  const subtitle = portableTextToPlain(cbenfData?.accommodation?.subtitle) || 'Selecionamos as melhores opções de hospedagem com diferentes perfis e orçamentos, todas com fácil acesso ao evento';
+  const title = portableTextToPlain(eventData?.accommodation?.title) || 'Hospedagem com localização estratégica';
+  const subtitle = portableTextToPlain(eventData?.accommodation?.subtitle) || 'Selecionamos as melhores opções de hospedagem com diferentes perfis e orçamentos, todas com fácil acesso ao evento';
+  const eventName = eventData?.hero?.eventName || eventData?.card?.name || 'Evento 24H';
 
   if (hotels.length === 0) {
     return null;
@@ -164,6 +165,7 @@ const AccommodationCBEnf = () => {
       {selectedHotel && (
         <HotelModalCBEnf
           hotel={selectedHotel}
+          eventName={eventName}
           onClose={() => setSelectedHotel(null)}
         />
       )}

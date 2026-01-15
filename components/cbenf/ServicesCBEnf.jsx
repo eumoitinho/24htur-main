@@ -2,12 +2,12 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { useCBEnfPage } from '../../utils/hooks/useSanityData';
+import { useEventPageContext } from './EventPageContext';
 import { portableTextToPlain } from '../../utils/lib/sanity';
 import { Plane, Hotel, Car, Camera, MapPin, Users, Clock, Shield, ArrowRight } from 'lucide-react';
 
 const ServicesCBEnf = () => {
-  const { data: cbenfData } = useCBEnfPage();
+  const eventData = useEventPageContext();
 
   const localServices = [
     {
@@ -67,16 +67,16 @@ const ServicesCBEnf = () => {
   };
 
   // Prefer services from Sanity when available, otherwise use localServices
-  const services = Array.isArray(cbenfData?.services?.items) && cbenfData.services.items.length > 0
-    ? cbenfData.services.items.map((s, i) => ({
+  const services = Array.isArray(eventData?.services?.items) && eventData.services.items.length > 0
+    ? eventData.services.items.map((s, i) => ({
         icon: getIconForService(s.title),
         title: portableTextToPlain(s.title) || s.title || (localServices[i] && localServices[i].title) || 'Serviço',
         description: portableTextToPlain(s.description) || s.description || (localServices[i] && localServices[i].description) || ''
       }))
     : localServices;
 
-  const title = portableTextToPlain(cbenfData?.services?.title) || 'Tudo incluído para sua experiência completa';
-  const subtitle = portableTextToPlain(cbenfData?.services?.subtitle) || 'Cuidamos de cada detalhe da sua viagem ao CBEnf 2024. Desde a chegada até a partida, nossa equipe especializada garante que você aproveite ao máximo este importante evento.';
+  const title = portableTextToPlain(eventData?.services?.title) || 'Tudo incluído para sua experiência completa';
+  const subtitle = portableTextToPlain(eventData?.services?.subtitle) || 'Cuidamos de cada detalhe da sua viagem ao CBEnf 2024. Desde a chegada até a partida, nossa equipe especializada garante que você aproveite ao máximo este importante evento.';
 
   return (
     <section id="pacotes" className="py-16 sm:py-20 lg:py-24 bg-gradient-to-br from-slate-50 via-white to-slate-50">

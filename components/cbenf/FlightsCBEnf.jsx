@@ -3,12 +3,12 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Plane, ArrowRight } from 'lucide-react';
-import { useCBEnfPage } from '../../utils/hooks/useSanityData';
+import { useEventPageContext } from './EventPageContext';
 import { resolveImage, portableTextToPlain } from '../../utils/lib/sanity';
 import Image from 'next/image';
 
 const FlightsCBEnf = () => {
-  const { data: cbenfData } = useCBEnfPage();
+  const eventData = useEventPageContext();
 
   const handleCotacao = () => {
     const formSection = document.getElementById('contato');
@@ -17,7 +17,7 @@ const FlightsCBEnf = () => {
     }
   };
 
-  const flights = cbenfData?.flights || {};
+  const flights = eventData?.flights || {};
   const title = portableTextToPlain(flights.title) || 'Passagens aéreas com os melhores preços';
   const description = portableTextToPlain(flights.description) || 'Trabalhamos com todas as companhias aéreas nacionais e internacionais. Nossa expertise garante os melhores preços e horários para sua viagem.';
   const benefits = Array.isArray(flights.benefits) ? flights.benefits : [];
@@ -113,4 +113,3 @@ const FlightsCBEnf = () => {
 };
 
 export default FlightsCBEnf;
-

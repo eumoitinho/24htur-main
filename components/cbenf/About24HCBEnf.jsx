@@ -3,12 +3,12 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
-import { useCBEnfPage } from '../../utils/hooks/useSanityData';
+import { useEventPageContext } from './EventPageContext';
 import { resolveImage, portableTextToPlain } from '../../utils/lib/sanity';
 import Image from 'next/image';
 
 const About24HCBEnf = () => {
-  const { data: cbenfData } = useCBEnfPage();
+  const eventData = useEventPageContext();
 
   const handleFalarEspecialista = () => {
     const formSection = document.getElementById('contato');
@@ -17,7 +17,7 @@ const About24HCBEnf = () => {
     }
   };
 
-  const about24H = cbenfData?.about24H || {};
+  const about24H = eventData?.about24H || {};
   const title = portableTextToPlain(about24H.title) || 'Soluções completas para sua viagem de lazer ou negócios';
   const description = about24H.description || [];
   const foundedYear = about24H.foundedYear || '2015';
@@ -134,4 +134,3 @@ const About24HCBEnf = () => {
 };
 
 export default About24HCBEnf;
-
